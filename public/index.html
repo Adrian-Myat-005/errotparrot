@@ -23,12 +23,16 @@
                     <h1>ErrotParrot</h1>
                     <div class="hud">
                         <span class="badge-pill">Lv.<span id="hud-lvl">1</span></span>
-                        <div class="xp-track"><div id="hud-xp-bar"></div></div>
-                        <span class="energy-pill">⚡ <span id="hud-energy">10</span> <small id="hud-energy-timer" style="display:none">00:00</small></span>
+                        <div class="xp-track"><div id="hud-xp-bar" class="xp-fill"></div></div>
+                        <span class="streak-pill">🔥 <span id="hud-streak">0</span></span>
+                        <span class="energy-pill">⚡ <span id="hud-energy">5</span> <small id="hud-energy-timer" style="display:none">00:00</small></span>
                     </div>
                 </div>
             </div>
-            <button id="btn-premium-nav" class="btn-premium">Get Premium</button>
+            <div class="premium-nav-box">
+                <span id="premium-time-left" class="premium-timer-badge hidden"></span>
+                <button id="btn-premium-nav" class="btn-premium">Get Premium</button>
+            </div>
         </header>
 
         <!-- Main Content Area -->
@@ -36,6 +40,23 @@
             
             <!-- Screen: Lesson List -->
             <section id="screen-lessons" class="screen">
+                
+                <!-- Stats Row -->
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <span class="stat-val" id="stat-completed">0</span>
+                        <span class="stat-label">Lessons</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-val" id="stat-xp">0</span>
+                        <span class="stat-label">Total XP</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-val" id="stat-rank">Newbie</span>
+                        <span class="stat-label">Rank</span>
+                    </div>
+                </div>
+
                 <!-- Teacher Bot Banner -->
                 <div class="teacher-banner" onclick="startTeacherMode()">
                     <div class="teacher-icon">👨‍🏫</div>
@@ -77,10 +98,22 @@
                 </div>
 
                 <!-- Shadow Mode View -->
-                <div id="shadow-box" class="shadow-viewport">
+                <div id="shadow-box" class="shadow-viewport hidden">
                     <div class="card-shadow">
                         <h3 id="active-role">ROLE A</h3>
                         <p id="shadow-text">...</p>
+                    </div>
+                </div>
+
+                <!-- Grammar/Reading Mode View -->
+                <div id="grammar-box" class="grammar-viewport hidden">
+                    <div class="grammar-content">
+                        <div id="grammar-notes" class="notes-area"></div>
+                        <div id="grammar-quiz" class="quiz-area hidden">
+                            <h3 id="quiz-question">Question?</h3>
+                            <div id="quiz-options" class="options-grid"></div>
+                        </div>
+                        <button id="btn-start-quiz" class="btn-secondary">Start Quick Quiz</button>
                     </div>
                 </div>
 
@@ -156,12 +189,30 @@
         </div>
     </div>
 
+    <!-- Ad Modal -->
+    <div id="modal-ad" class="modal-overlay hidden">
+        <div class="modal-card center-text">
+            <h2>Unlock Lesson</h2>
+            <p>Watch this short video to unlock the lesson.</p>
+            <div id="ad-video-container" class="video-placeholder">
+                <!-- YouTube Embed will go here -->
+                <iframe id="ad-iframe" width="100%" height="200" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div id="ad-timer" class="ad-countdown">30s</div>
+            <button id="btn-ad-claim" class="btn-main hidden">Start Lesson</button>
+        </div>
+    </div>
+
     <!-- Admin Modal -->
     <div id="modal-admin" class="modal-overlay hidden">
         <div class="modal-card">
             <button class="close-modal" onclick="this.parentElement.parentElement.classList.add('hidden')">×</button>
             <h2>Admin Dashboard</h2>
             <div class="admin-tools">
+                <label>Ad Video ID (YouTube):</label>
+                <input type="text" id="admin-ad-url" class="input-field" placeholder="e.g. dQw4w9WgXcQ">
+                <button id="btn-admin-save-ad" class="btn-secondary">Save Ad Settings</button>
+                <hr>
                 <select id="admin-code-type" class="input-field">
                     <option value="api-license">API License (1k)</option>
                     <option value="pro-access">Pro Access (10k)</option>

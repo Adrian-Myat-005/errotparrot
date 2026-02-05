@@ -17,13 +17,13 @@ module.exports = async (req, res) => {
     };
 
     try {
-        const prompt = `Provide a dictionary-style translation for the English word: "${word}" into ${langNames[lang]}. 
-        Return ONLY the translated word or short phrase. No explanation.`;
+        const prompt = `Translate the following English text into natural ${langNames[lang]}: "${word}"
+        Return ONLY the translated text. No explanation or notes.`;
 
         const completion = await groq.chat.completions.create({
             messages: [{ role: "user", content: prompt }],
             model: "llama-3.3-70b-versatile",
-            max_tokens: 20
+            max_tokens: 100
         });
 
         const translation = completion.choices[0].message.content.trim();

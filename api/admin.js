@@ -30,13 +30,14 @@ module.exports = async (req, res) => {
 
     if (action === 'redeem') {
         if (code === 'ADMIN-FREE-ACCESS') {
-            return res.json({ success: true, type: 'full-mode' });
+            return res.json({ success: true, type: 'pro-access', expiry: Date.now() + (30 * 24 * 60 * 60 * 1000) });
         }
         const codes = getCodes();
         if (codes[code] && !codes[code].redeemed) {
             codes[code].redeemed = true;
             saveCodes(codes);
-            return res.json({ success: true, type: codes[code].type });
+            const expiry = Date.now() + (30 * 24 * 60 * 60 * 1000); // 30 Days
+            return res.json({ success: true, type: codes[code].type, expiry });
         }
         return res.status(400).json({ success: false, error: 'Invalid or used code' });
     }
