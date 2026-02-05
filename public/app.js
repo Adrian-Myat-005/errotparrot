@@ -424,24 +424,27 @@ function bindEvents() {
     };
     
     // Redeem
-    document.getElementById('btn-redeem').onclick = async () => {
-        const code = ui.inputs.code.value;
-        const res = await fetch('/api/admin', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ action: 'redeem', code })
-        });
-        const data = await res.json();
-        if (data.success) {
-            state.subscriptionType = data.type;
-            state.userEnergy = CONFIG[data.type].maxEnergy;
-            alert("Unlocked: " + CONFIG[data.type].label);
-            closeAllModals();
-            saveState();
-            updateHUD();
-        } else {
-            alert("Invalid Code");
-        }
+    const redeemBtn = document.getElementById('btn-redeem-submit');
+    if (redeemBtn) {
+        redeemBtn.onclick = async () => {
+            const code = ui.inputs.code.value;
+            const res = await fetch('/api/admin', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ action: 'redeem', code })
+            });
+            const data = await res.json();
+            if (data.success) {
+                state.subscriptionType = data.type;
+                state.userEnergy = CONFIG[data.type].maxEnergy;
+                alert("Unlocked: " + CONFIG[data.type].label);
+                closeAllModals();
+                saveState();
+                updateHUD();
+            } else {
+                alert("Invalid Code");
+            }
+        };
     }
     
     // Filtering
@@ -461,7 +464,7 @@ function bindEvents() {
 }
 
 function renderLessons(list = state.lessons) {
-    ui.lesson.list.innerHTML = list.slice(0,50).map(l => `
+    ui.lesson.list.innerHTML = list.map(l => `
         <div class="lesson-card" onclick="startLesson(${l.id})">
             <div class="card-icon">${l.type === 'conversation' ? '💬' : l.type === 'grammar' ? '📘' : '🏆'}</div>
             <div class="card-info">

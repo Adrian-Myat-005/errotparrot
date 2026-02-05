@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
 
         // Tier Logic for scoring
         let apiKey;
-        if (tier === 'api-mode') {
+        if (tier === 'api-license') {
             if (!userApiKey) {
                 if (fs.existsSync(audioFile.path)) fs.unlinkSync(audioFile.path);
                 return res.status(401).json({ error: 'API Key required.' });
