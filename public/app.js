@@ -7,10 +7,11 @@ const state = {
     currentLineIndex: 0,
     currentQuizIndex: 0,
     modeIndex: 0,
-    modes: ['Shadowing', 'RolePlay'],
+    modes: [], 
     audioBlob: null,
     chatHistory: [],
     isAISpeaking: false,
+    isLoading: false, // New: Global loading state
     
     // User State
     isPremium: false,
@@ -95,6 +96,7 @@ const ui = {
     inputs: {
         apiKey: document.getElementById('input-api-key'),
         code: document.getElementById('input-redeem-code'),
+        adminCodeType: document.getElementById('admin-code-type'),
         adminAdUrl: document.getElementById('admin-ad-url')
     },
     ad: {
@@ -137,21 +139,13 @@ function loadState() {
     if (saved) {
         const data = JSON.parse(saved);
         Object.assign(state, data);
-        
-        // Expiry check
         if (state.subscriptionExpiry && Date.now() > state.subscriptionExpiry) {
-            state.subscriptionType = 'free';
-            state.subscriptionExpiry = null;
-            state.isPremium = false;
+            state.subscriptionType = 'free'; state.subscriptionExpiry = null;
         }
-        
-        // Streak check
         const today = new Date().toDateString();
         if (state.lastActiveDay && state.lastActiveDay !== today) {
             const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-            if (state.lastActiveDay !== yesterday.toDateString()) {
-                state.streak = 0; // Reset streak if missed a day
-            }
+            if (state.lastActiveDay !== yesterday.toDateString()) state.streak = 0;
         }
     }
     ui.inputs.apiKey.value = state.userApiKey;
@@ -166,16 +160,13 @@ function energyLoop() {
         state.subscriptionType = 'free'; state.subscriptionExpiry = null;
         updateHUD(); saveState();
     }
-
     const tier = CONFIG[state.subscriptionType];
     if (state.userEnergy >= tier.maxEnergy) {
         ui.hud.energyTimer.style.display = 'none'; return;
     }
-
     const now = Date.now();
     const diff = now - state.lastEnergyUpdate;
     const regenMs = tier.regenMins * 60 * 1000;
-
     if (diff >= regenMs) {
         const gained = Math.floor(diff / regenMs);
         state.userEnergy = Math.min(tier.maxEnergy, state.userEnergy + gained);
@@ -195,13 +186,10 @@ function updateHUD() {
     ui.hud.energy.textContent = state.userEnergy;
     ui.hud.streak.textContent = state.streak;
     ui.hud.xpBar.style.width = `${Math.min(100, (state.userExp / (state.userLevel * 100)) * 100)}%`;
-
     ui.stats.completed.textContent = state.completedLessons.length;
     ui.stats.xp.textContent = state.totalXp;
-    
     const ranks = ["Newbie", "Beginner", "Learner", "Speaker", "Pro", "Expert", "Master", "Parrot King"];
     ui.stats.rank.textContent = ranks[Math.min(ranks.length-1, Math.floor(state.userLevel / 5))];
-
     const timerBadge = document.getElementById('premium-time-left');
     if (state.subscriptionType !== 'free' && state.subscriptionExpiry) {
         ui.btns.premium.textContent = "👑 " + CONFIG[state.subscriptionType].label;
@@ -217,57 +205,65 @@ function updateHUD() {
     }
 }
 
+function setLoading(active) {
+    state.isLoading = active;
+    if (active) {
+        ui.btns.record.disabled = true;
+        ui.btns.record.style.opacity = '0.7';
+    } else {
+        ui.btns.record.disabled = false;
+        ui.btns.record.style.opacity = '1';
+    }
+}
+
 function startTeacherMode() {
     if (state.subscriptionType === 'free') { openModal('premium'); return; }
     if (state.userEnergy < 2) { alert("Need 2 Energy"); return; }
     state.userEnergy -= 2;
     state.currentLesson = { id: 'teacher', type: 'teacher', title: 'Tr. Adrian', lines: [] };
-    state.modeIndex = 0; state.chatHistory = []; state.sessionStartTime = Date.now();
+    state.modeIndex = 0; state.modes = ['Teacher Chat']; state.chatHistory = []; state.sessionStartTime = Date.now();
     updateHUD(); switchScreen('active'); renderActiveScreen();
-    const greeting = "Hello! I am Tr. Adrian. What would you like to talk about?";
-    addChatMessage('ai', greeting); playTTS(greeting, 'B', true); 
-    state.chatHistory.push({ role: "assistant", content: greeting });
+    const aiStarts = document.getElementById('check-ai-starts').checked;
+    if (aiStarts) {
+        const greeting = "Hello! I am Tr. Adrian. I'm excited to help you practice English today. What would you like to talk about?";
+        addChatMessage('ai', greeting); playTTS(greeting, 'B', true); 
+        state.chatHistory.push({ role: "assistant", content: greeting });
+    } else {
+        ui.active.feedback.textContent = "Your turn! Tap record to start talking.";
+        ui.active.feedback.classList.remove('hidden');
+    }
 }
 
 function startLesson(id) {
     const isFullPremium = state.subscriptionType === 'pro-access';
-    const isLicenseUser = state.subscriptionType === 'api-license';
+    if (!isFullPremium && !state.unlockedLessons.includes(id)) { showAdModal(id); return; }
     
-    // Locked if not full premium and not already unlocked
-    if (!isFullPremium && !state.unlockedLessons.includes(id)) {
-        showAdModal(id);
-        return;
-    }
-
-    if (state.userEnergy <= 0) {
-        openModal('premium');
-        return;
-    }
-    state.userEnergy -= 1;
     state.currentLesson = state.lessons.find(l => l.id === id);
     state.currentLineIndex = 0; state.currentQuizIndex = 0; state.modeIndex = 0;
     state.chatHistory = []; state.sessionStartTime = Date.now();
     
+    if (state.currentLesson.type === 'grammar') state.modes = ['Study'];
+    else if (state.currentLesson.type === 'conversation') state.modes = ['Shadowing', 'RolePlay'];
+    else if (state.currentLesson.type === 'exam') state.modes = ['Exam Shadowing'];
+
     const today = new Date().toDateString();
-    if (state.lastActiveDay !== today) {
-        state.streak++; state.lastActiveDay = today;
-    }
+    if (state.lastActiveDay !== today) { state.streak++; state.lastActiveDay = today; }
     
     updateHUD(); saveState(); switchScreen('active'); renderActiveScreen();
 }
 
 function showAdModal(lessonId) {
     const isLicenseUser = state.subscriptionType === 'api-license';
-    ui.ad.iframe.src = `https://www.youtube.com/embed/${state.adVideoId}?autoplay=1&controls=0&disablekb=1&modestbranding=1`;
+    ui.ad.iframe.src = `https://www.youtube.com/embed/${state.adVideoId}?autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&rel=0`;
     openModal('ad'); ui.ad.claim.classList.add('hidden'); ui.ad.timer.classList.remove('hidden');
-    
-    let seconds = isLicenseUser ? 10 : 30; // 10s for License, 30s for Free
+    let seconds = isLicenseUser ? 10 : 30;
     ui.ad.timer.textContent = seconds + "s";
     
-    const interval = setInterval(() => {
+    if (window.adInterval) clearInterval(window.adInterval);
+    window.adInterval = setInterval(() => {
         seconds--; ui.ad.timer.textContent = seconds + "s";
         if (seconds <= 0) {
-            clearInterval(interval); ui.ad.timer.classList.add('hidden');
+            clearInterval(window.adInterval); ui.ad.timer.classList.add('hidden');
             ui.ad.claim.classList.remove('hidden');
             ui.ad.claim.onclick = () => {
                 state.unlockedLessons.push(lessonId); saveState();
@@ -279,31 +275,49 @@ function showAdModal(lessonId) {
 
 function renderActiveScreen() {
     const l = state.currentLesson;
-    const isGrammar = l.type === 'grammar';
-    const isTeacher = l.type === 'teacher';
-    const isRoleplay = state.modes[state.modeIndex] === 'RolePlay' || isTeacher;
-
+    const mode = state.modes[state.modeIndex];
     ui.active.title.textContent = l.title;
-    ui.active.badge.textContent = l.type.toUpperCase();
+    ui.active.badge.textContent = mode.toUpperCase();
     
     ui.active.chatBox.classList.add('hidden'); ui.active.shadowBox.classList.add('hidden');
     ui.active.grammarBox.classList.add('hidden'); ui.active.controls.classList.add('hidden');
 
-    if (isGrammar) {
+    if (mode === 'Study') {
         ui.active.grammarBox.classList.remove('hidden');
-        ui.active.grammarNotes.innerHTML = `<strong>Notes</strong><br>${l.notes}<br><br><strong>Examples:</strong><br>${l.examples.map(ex => `• ${ex.en} (${ex.my})`).join('<br>')}`;
+        ui.active.grammarNotes.innerHTML = `<strong>Lesson Notes</strong><br>${l.notes}<br><br><strong>Examples:</strong><br>${l.examples.map(ex => `• ${ex.en} (${ex.my})`).join('<br>')}`;
         ui.active.btnStartQuiz.classList.remove('hidden');
         ui.active.grammarQuiz.classList.add('hidden');
-    } else if (isRoleplay) {
+    } else if (mode === 'RolePlay' || mode === 'Teacher Chat') {
         ui.active.chatBox.classList.remove('hidden'); ui.active.controls.classList.remove('hidden');
         ui.btns.listen.classList.add('hidden');
+        if (state.chatHistory.length === 0 && mode === 'RolePlay') {
+            ui.active.chatList.innerHTML = '';
+            addChatMessage('ai', l.lines[0].text);
+            playTTS(l.lines[0].text, 'A', true);
+            state.chatHistory.push({role: "system", content: "Init"});
+        }
     } else {
         ui.active.shadowBox.classList.remove('hidden'); ui.active.controls.classList.remove('hidden');
         ui.btns.listen.classList.remove('hidden');
         const line = l.lines[state.currentLineIndex];
         ui.active.role.textContent = line.role;
-        ui.active.shadowText.textContent = line.text;
-        if (state.autoPlay) setTimeout(() => playTTS(line.text, line.role), 500);
+        const displayContainer = document.createElement('span');
+        displayContainer.className = 'msg-content';
+        displayContainer.innerHTML = (mode === 'Exam Shadowing' ? "???" : line.text).split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
+        ui.active.shadowText.innerHTML = '';
+        ui.active.shadowText.appendChild(displayContainer);
+        
+        if (mode === 'Shadowing') {
+            const transBtn = document.createElement('button');
+            transBtn.className = 'btn-relisten'; transBtn.innerHTML = '🌐';
+            transBtn.onclick = async () => { 
+                const res = await fetch('/api/translate', { method:'POST', body: JSON.stringify({word: line.text, lang:'my'}), headers:{'Content-Type':'application/json'}});
+                const d = await res.json(); alert(d.translation);
+            };
+            ui.active.shadowText.appendChild(transBtn);
+        }
+
+        if (state.autoPlay) setTimeout(() => playTTS(line.text, line.role, true, displayContainer), 500);
     }
 }
 
@@ -332,33 +346,46 @@ window.checkAnswer = (idx) => {
 };
 
 async function handleRecord() {
+    if (state.isLoading) return;
     if (ui.btns.record.classList.contains('recording')) { mediaRecorder.stop(); return; }
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         mediaRecorder = new MediaRecorder(stream); audioChunks = [];
-        ui.btns.record.classList.add('recording'); ui.btns.record.textContent = "Stop";
+        ui.btns.record.classList.add('recording'); ui.btns.record.textContent = "Listening...";
         mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
         mediaRecorder.onstop = async () => {
             ui.btns.record.classList.remove('recording'); ui.btns.record.textContent = "🎤 Record";
+            setLoading(true);
+            ui.active.feedback.textContent = "Thinking...";
+            ui.active.feedback.classList.remove('hidden');
+            
             const blob = new Blob(audioChunks, { type: 'audio/webm' });
             const formData = new FormData(); formData.append('audio', blob, 'audio.webm');
-            formData.append('tier', state.subscriptionType); formData.append('userApiKey', state.userApiKey);
+            formData.append('tier', state.subscriptionType); formData.append('userApiKey', ui.inputs.apiKey.value);
             const isTeacher = state.currentLesson?.id === 'teacher';
-            if (!isTeacher && state.modes[state.modeIndex] === 'Shadowing') {
-                formData.append('originalText', state.currentLesson.lines[state.currentLineIndex].text);
-                const res = await fetch('/api/score', { method: 'POST', body: formData });
-                handleResult(await res.json());
-            } else {
-                formData.append('history', JSON.stringify(state.chatHistory));
-                formData.append('scenario', isTeacher ? "English Teacher" : state.currentLesson.title);
-                formData.append('duration', state.discussionDuration);
-                ui.active.typing.classList.remove('hidden');
-                const res = await fetch('/api/chat', { method: 'POST', body: formData });
-                ui.active.typing.classList.add('hidden');
-                const data = await res.json();
-                addChatMessage('user', data.userText); addChatMessage('ai', data.aiResponse);
-                playTTS(data.aiResponse, 'B', true);
-                state.chatHistory.push({ role: "user", content: data.userText }, { role: "assistant", content: data.aiResponse });
+            const mode = state.modes[state.modeIndex];
+            
+            try {
+                if (mode === 'Shadowing' || mode === 'Exam Shadowing') {
+                    formData.append('originalText', state.currentLesson.lines[state.currentLineIndex].text);
+                    const res = await fetch('/api/score', { method: 'POST', body: formData });
+                    handleResult(await res.json());
+                } else {
+                    formData.append('history', JSON.stringify(state.chatHistory));
+                    formData.append('scenario', isTeacher ? "English Teacher" : state.currentLesson.title);
+                    formData.append('duration', state.discussionDuration);
+                    ui.active.typing.classList.remove('hidden');
+                    const res = await fetch('/api/chat', { method: 'POST', body: formData });
+                    ui.active.typing.classList.add('hidden');
+                    const data = await res.json();
+                    addChatMessage('user', data.userText); addChatMessage('ai', data.aiResponse);
+                    playTTS(data.aiResponse, 'B', true);
+                    state.chatHistory.push({ role: "user", content: data.userText }, { role: "assistant", content: data.aiResponse });
+                }
+            } catch(e) {
+                alert("Connection Error. Try again.");
+            } finally {
+                setLoading(false);
             }
         };
         mediaRecorder.start();
@@ -387,10 +414,10 @@ function gainExp(amount) {
 }
 
 function finishLesson() {
-    if (!state.completedLessons.includes(state.currentLesson.id)) {
+    if (state.currentLesson.id !== 'teacher' && !state.completedLessons.includes(state.currentLesson.id)) {
         state.completedLessons.push(state.currentLesson.id);
     }
-    alert("Lesson Finished!"); switchScreen('list'); renderLessons();
+    alert("Well done! Lesson Complete."); switchScreen('list'); renderLessons();
 }
 
 function addChatMessage(role, text) {
@@ -398,7 +425,6 @@ function addChatMessage(role, text) {
     const span = document.createElement('span'); span.className = 'msg-content';
     span.innerHTML = text.split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
     div.appendChild(span);
-    
     const row = document.createElement('div'); row.style.display = 'flex'; row.style.gap = '10px';
     if (role === 'ai') {
         const relisten = document.createElement('button'); relisten.className = 'btn-relisten'; relisten.innerHTML = '🔊';
@@ -433,7 +459,7 @@ async function playTTS(text, role, isKaraoke = false, container = null) {
 
 function bindEvents() {
     ui.btns.record.onclick = handleRecord;
-    ui.btns.listen.onclick = () => playTTS(state.currentLesson.lines[state.currentLineIndex].text, state.currentLesson.lines[state.currentLineIndex].role);
+    ui.btns.listen.onclick = () => playTTS(state.currentLesson.lines[state.currentLineIndex].text, state.currentLesson.lines[state.currentLineIndex].role, true);
     ui.btns.next.onclick = () => {
         state.currentLineIndex++;
         if (state.currentLineIndex >= state.currentLesson.lines.length) {
@@ -445,7 +471,6 @@ function bindEvents() {
     ui.btns.back.onclick = () => switchScreen('list');
     ui.btns.premium.onclick = () => openModal('premium');
     ui.active.btnStartQuiz.onclick = handleStartQuiz;
-
     document.getElementById('btn-redeem-submit').onclick = async () => {
         const code = ui.inputs.code.value;
         const res = await fetch('/api/admin', { method: 'POST', body: JSON.stringify({ action: 'redeem', code }), headers: {'Content-Type': 'application/json'} });
@@ -456,11 +481,9 @@ function bindEvents() {
             saveState(); updateHUD(); closeAllModals();
         }
     };
-
     document.getElementById('btn-admin-save-ad').onclick = () => {
         state.adVideoId = ui.inputs.adminAdUrl.value; saveState(); alert("Saved");
     };
-
     ui.lesson.search.oninput = (e) => renderLessons(state.lessons.filter(l => l.title.toLowerCase().includes(e.target.value.toLowerCase())));
     ui.lesson.tabs.forEach(t => t.onclick = (e) => {
         ui.lesson.tabs.forEach(x => x.classList.remove('active')); e.target.classList.add('active');
@@ -487,13 +510,15 @@ function renderLessons(list = state.lessons) {
 
 function switchScreen(name) {
     Object.values(ui.screens).forEach(s => s?.classList.add('hidden'));
-    ui.screens[name].classList.remove('hidden');
+    ui.screens[name === 'list' ? 'list' : 'active'].classList.remove('hidden');
+    closeAllModals();
 }
 
 function openModal(name) { ui.screens[name].classList.remove('hidden'); }
 function closeAllModals() {
     Object.values(ui.screens).forEach(s => { if(s.classList.contains('modal-overlay')) s.classList.add('hidden'); });
     ui.ad.iframe.src = "";
+    if (window.adInterval) clearInterval(window.adInterval);
 }
 
 init();
