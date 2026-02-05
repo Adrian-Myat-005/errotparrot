@@ -11,7 +11,7 @@ const state = {
     audioBlob: null,
     chatHistory: [],
     isAISpeaking: false,
-    isLoading: false, // New: Global loading state
+    isLoading: false,
     
     // User State
     isPremium: false,
@@ -123,8 +123,10 @@ async function init() {
 
     try {
         const res = await fetch('lessons.json');
-        state.lessons = await res.json();
-        loadState();
+        const lessonsData = await res.json();
+        // IMPORTANT: Load lessons FIRST, then load state without overwriting them
+        state.lessons = lessonsData;
+        loadState(); // This function now skips overwriting state.lessons
         renderLessons();
     } catch (e) { console.error("Load failed", e); }
 
@@ -137,36 +139,66 @@ async function init() {
 function loadState() {
     const saved = localStorage.getItem('ep_save_v4');
     if (saved) {
-        const data = JSON.parse(saved);
-        Object.assign(state, data);
-        if (state.subscriptionExpiry && Date.now() > state.subscriptionExpiry) {
-            state.subscriptionType = 'free'; state.subscriptionExpiry = null;
-        }
-        const today = new Date().toDateString();
-        if (state.lastActiveDay && state.lastActiveDay !== today) {
-            const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
-            if (state.lastActiveDay !== yesterday.toDateString()) state.streak = 0;
-        }
+        try {
+            const data = JSON.parse(saved);
+            // DO NOT Object.assign(state, data) because it might overwrite state.lessons
+            // Manual merge of persisted user data only
+            state.unlockedLessons = data.unlockedLessons || [1, 2, 3, 4, 5];
+            state.completedLessons = data.completedLessons || [];
+            state.subscriptionType = data.subscriptionType || 'free';
+            state.subscriptionExpiry = data.subscriptionExpiry || null;
+            state.userApiKey = data.userApiKey || '';
+            state.userLevel = data.userLevel || 1;
+            state.userExp = data.userExp || 0;
+            state.userEnergy = data.userEnergy !== undefined ? data.userEnergy : 5;
+            state.lastEnergyUpdate = data.lastEnergyUpdate || Date.now();
+            state.streak = data.streak || 0;
+            state.lastActiveDay = data.lastActiveDay || null;
+            state.totalXp = data.totalXp || 0;
+            state.isDarkMode = data.isDarkMode || false;
+            state.adVideoId = data.adVideoId || 'dQw4w9WgXcQ';
+            state.isPremium = state.subscriptionType !== 'free';
+
+            if (state.subscriptionExpiry && Date.now() > state.subscriptionExpiry) {
+                state.subscriptionType = 'free';
+                state.subscriptionExpiry = null;
+                state.isPremium = false;
+            }
+            
+            const today = new Date().toDateString();
+            if (state.lastActiveDay && state.lastActiveDay !== today) {
+                const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+                if (state.lastActiveDay !== yesterday.toDateString()) state.streak = 0;
+            }
+        } catch (e) { console.error("Corrupt save"); }
     }
     ui.inputs.apiKey.value = state.userApiKey;
+    if (ui.inputs.adminAdUrl) ui.inputs.adminAdUrl.value = state.adVideoId;
 }
 
 function saveState() {
-    localStorage.setItem('ep_save_v4', JSON.stringify(state));
+    // Save everything except the large lessons array
+    const toSave = { ...state };
+    delete toSave.lessons; 
+    localStorage.setItem('ep_save_v4', JSON.stringify(toSave));
 }
 
 function energyLoop() {
     if (state.subscriptionExpiry && Date.now() > state.subscriptionExpiry) {
         state.subscriptionType = 'free'; state.subscriptionExpiry = null;
+        state.isPremium = false;
         updateHUD(); saveState();
     }
+
     const tier = CONFIG[state.subscriptionType];
     if (state.userEnergy >= tier.maxEnergy) {
         ui.hud.energyTimer.style.display = 'none'; return;
     }
+
     const now = Date.now();
     const diff = now - state.lastEnergyUpdate;
     const regenMs = tier.regenMins * 60 * 1000;
+
     if (diff >= regenMs) {
         const gained = Math.floor(diff / regenMs);
         state.userEnergy = Math.min(tier.maxEnergy, state.userEnergy + gained);
@@ -186,10 +218,13 @@ function updateHUD() {
     ui.hud.energy.textContent = state.userEnergy;
     ui.hud.streak.textContent = state.streak;
     ui.hud.xpBar.style.width = `${Math.min(100, (state.userExp / (state.userLevel * 100)) * 100)}%`;
+
     ui.stats.completed.textContent = state.completedLessons.length;
     ui.stats.xp.textContent = state.totalXp;
+    
     const ranks = ["Newbie", "Beginner", "Learner", "Speaker", "Pro", "Expert", "Master", "Parrot King"];
     ui.stats.rank.textContent = ranks[Math.min(ranks.length-1, Math.floor(state.userLevel / 5))];
+
     const timerBadge = document.getElementById('premium-time-left');
     if (state.subscriptionType !== 'free' && state.subscriptionExpiry) {
         ui.btns.premium.textContent = "👑 " + CONFIG[state.subscriptionType].label;
@@ -207,13 +242,7 @@ function updateHUD() {
 
 function setLoading(active) {
     state.isLoading = active;
-    if (active) {
-        ui.btns.record.disabled = true;
-        ui.btns.record.style.opacity = '0.7';
-    } else {
-        ui.btns.record.disabled = false;
-        ui.btns.record.style.opacity = '1';
-    }
+    ui.btns.record.disabled = active;
 }
 
 function startTeacherMode() {
@@ -223,14 +252,12 @@ function startTeacherMode() {
     state.currentLesson = { id: 'teacher', type: 'teacher', title: 'Tr. Adrian', lines: [] };
     state.modeIndex = 0; state.modes = ['Teacher Chat']; state.chatHistory = []; state.sessionStartTime = Date.now();
     updateHUD(); switchScreen('active'); renderActiveScreen();
+    
     const aiStarts = document.getElementById('check-ai-starts').checked;
     if (aiStarts) {
         const greeting = "Hello! I am Tr. Adrian. I'm excited to help you practice English today. What would you like to talk about?";
         addChatMessage('ai', greeting); playTTS(greeting, 'B', true); 
         state.chatHistory.push({ role: "assistant", content: greeting });
-    } else {
-        ui.active.feedback.textContent = "Your turn! Tap record to start talking.";
-        ui.active.feedback.classList.remove('hidden');
     }
 }
 
@@ -351,17 +378,14 @@ async function handleRecord() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         mediaRecorder = new MediaRecorder(stream); audioChunks = [];
-        ui.btns.record.classList.add('recording'); ui.btns.record.textContent = "Listening...";
+        ui.btns.record.classList.add('recording'); ui.btns.record.textContent = "Stop";
         mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
         mediaRecorder.onstop = async () => {
             ui.btns.record.classList.remove('recording'); ui.btns.record.textContent = "🎤 Record";
             setLoading(true);
-            ui.active.feedback.textContent = "Thinking...";
-            ui.active.feedback.classList.remove('hidden');
-            
             const blob = new Blob(audioChunks, { type: 'audio/webm' });
             const formData = new FormData(); formData.append('audio', blob, 'audio.webm');
-            formData.append('tier', state.subscriptionType); formData.append('userApiKey', ui.inputs.apiKey.value);
+            formData.append('tier', state.subscriptionType); formData.append('userApiKey', state.userApiKey);
             const isTeacher = state.currentLesson?.id === 'teacher';
             const mode = state.modes[state.modeIndex];
             
@@ -382,11 +406,8 @@ async function handleRecord() {
                     playTTS(data.aiResponse, 'B', true);
                     state.chatHistory.push({ role: "user", content: data.userText }, { role: "assistant", content: data.aiResponse });
                 }
-            } catch(e) {
-                alert("Connection Error. Try again.");
-            } finally {
-                setLoading(false);
-            }
+            } catch(e) { alert("Error connecting to AI"); }
+            finally { setLoading(false); }
         };
         mediaRecorder.start();
     } catch (e) { alert("Microphone Error"); }
@@ -417,7 +438,7 @@ function finishLesson() {
     if (state.currentLesson.id !== 'teacher' && !state.completedLessons.includes(state.currentLesson.id)) {
         state.completedLessons.push(state.currentLesson.id);
     }
-    alert("Well done! Lesson Complete."); switchScreen('list'); renderLessons();
+    alert("Lesson Complete!"); switchScreen('list'); renderLessons();
 }
 
 function addChatMessage(role, text) {
@@ -443,7 +464,7 @@ async function playTTS(text, role, isKaraoke = false, container = null) {
         const res = await fetch('/api/tts', { method: 'POST', body: JSON.stringify({ text, role }) });
         const data = await res.json(); activeAudio = new Audio("data:audio/mp3;base64," + data.audio);
         if (isKaraoke && data.alignment) {
-            const words = (container || ui.active.chatList.lastElementChild.querySelector('.msg-content')).querySelectorAll('.word');
+            const words = (container || ui.active.chatList.lastElementChild?.querySelector('.msg-content')).querySelectorAll('.word');
             activeAudio.ontimeupdate = () => {
                 const cur = activeAudio.currentTime;
                 data.alignment.forEach((align, i) => {
@@ -471,6 +492,18 @@ function bindEvents() {
     ui.btns.back.onclick = () => switchScreen('list');
     ui.btns.premium.onclick = () => openModal('premium');
     ui.active.btnStartQuiz.onclick = handleStartQuiz;
+
+    document.getElementById('btn-admin-gen').onclick = async () => {
+        const type = ui.inputs.adminCodeType.value;
+        const res = await fetch('/api/admin', { 
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ action: 'generate', type, password: 'admin123' }) 
+        });
+        const data = await res.json();
+        document.getElementById('admin-result').textContent = data.code || "Error";
+    };
+
     document.getElementById('btn-redeem-submit').onclick = async () => {
         const code = ui.inputs.code.value;
         const res = await fetch('/api/admin', { method: 'POST', body: JSON.stringify({ action: 'redeem', code }), headers: {'Content-Type': 'application/json'} });
@@ -478,12 +511,15 @@ function bindEvents() {
         if (data.success) {
             state.subscriptionType = data.type; state.subscriptionExpiry = data.expiry;
             state.userEnergy = CONFIG[data.type].maxEnergy; state.isPremium = true;
-            saveState(); updateHUD(); closeAllModals();
-        }
+            saveState(); updateHUD(); renderLessons(); closeAllModals();
+            alert("Premium Unlocked!");
+        } else { alert("Invalid Code"); }
     };
+
     document.getElementById('btn-admin-save-ad').onclick = () => {
         state.adVideoId = ui.inputs.adminAdUrl.value; saveState(); alert("Saved");
     };
+
     ui.lesson.search.oninput = (e) => renderLessons(state.lessons.filter(l => l.title.toLowerCase().includes(e.target.value.toLowerCase())));
     ui.lesson.tabs.forEach(t => t.onclick = (e) => {
         ui.lesson.tabs.forEach(x => x.classList.remove('active')); e.target.classList.add('active');
