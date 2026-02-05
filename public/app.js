@@ -16,7 +16,7 @@ const state = {
     userApiKey: '',
     userLevel: 1,
     userExp: 0,
-    userEnergy: 10, // Default for free
+    userEnergy: 5, // PROFIT: Reduced from 10
     lastEnergyUpdate: Date.now(),
     
     // Session Config
@@ -27,13 +27,16 @@ const state = {
     
     // Admin & System
     adminPassword: '',
-    isDarkMode: false
+    isDarkMode: false,
+    
+    // Teacher Bot State
+    lastTeacherSession: null // timestamp
 };
 
 // Configuration
 const CONFIG = {
-    free: { maxEnergy: 10, regenMins: 30, label: 'Free Plan' },
-    'api-license': { maxEnergy: 9999, regenMins: 0, label: 'API License' }, // Infinite for BYO Key
+    free: { maxEnergy: 5, regenMins: 60, label: 'Free Plan' }, // PROFIT: STRICT TUNING
+    'api-license': { maxEnergy: 9999, regenMins: 0, label: 'API License' }, 
     'pro-access': { maxEnergy: 100, regenMins: 10, label: 'Pro Access' }
 };
 
@@ -122,6 +125,8 @@ async function init() {
 
     // 5. Event Binding
     bindEvents();
+    
+    window.startTeacherMode = startTeacherMode;
 }
 
 function loadState() {
@@ -129,16 +134,15 @@ function loadState() {
     if (saved) {
         try {
             const data = JSON.parse(saved);
-            // Merge saved data carefully
             state.userLevel = data.userLevel || 1;
             state.userExp = data.userExp || 0;
             state.subscriptionType = data.subscriptionType || 'free';
             state.userApiKey = data.userApiKey || '';
             state.isDarkMode = data.isDarkMode || false;
+            state.lastTeacherSession = data.lastTeacherSession || null;
             
-            // Energy Math: Ensure it doesn't exceed current tier max
             const max = CONFIG[state.subscriptionType].maxEnergy;
-            state.userEnergy = Math.min(max, data.userEnergy !== undefined ? data.userEnergy : 10);
+            state.userEnergy = Math.min(max, data.userEnergy !== undefined ? data.userEnergy : 5);
             state.lastEnergyUpdate = data.lastEnergyUpdate || Date.now();
 
             if (state.isDarkMode) document.body.classList.add('dark');
@@ -156,10 +160,11 @@ function saveState() {
         userLevel: state.userLevel,
         userExp: state.userExp,
         subscriptionType: state.subscriptionType,
-        userApiKey: state.userApiKey,
+        userApiKey: ui.inputs.apiKey.value,
         userEnergy: state.userEnergy,
         lastEnergyUpdate: state.lastEnergyUpdate,
-        isDarkMode: state.isDarkMode
+        isDarkMode: state.isDarkMode,
+        lastTeacherSession: state.lastTeacherSession
     }));
 }
 
@@ -195,12 +200,10 @@ function updateHUD() {
     ui.hud.lvl.textContent = state.userLevel;
     ui.hud.energy.textContent = state.userEnergy;
     
-    // XP Bar Math
     const xpNeeded = state.userLevel * 100;
     const pct = Math.min(100, (state.userExp / xpNeeded) * 100);
     ui.hud.xpBar.style.width = `${pct}%`;
 
-    // Premium UI State
     if (state.subscriptionType !== 'free') {
         ui.btns.premium.textContent = "👑 " + CONFIG[state.subscriptionType].label;
         ui.btns.premium.classList.add('is-pro');
@@ -210,13 +213,68 @@ function updateHUD() {
     }
 }
 
+function startTeacherMode() {
+    const isFree = state.subscriptionType === 'free';
+    const aiStarts = document.getElementById('check-ai-starts').checked;
+    
+    if (isFree) {
+        const today = new Date().toDateString();
+        const last = state.lastTeacherSession ? new Date(state.lastTeacherSession).toDateString() : null;
+        
+        if (today === last) {
+            alert("⚠️ Free Plan Limit: One session with Tr. Adrian per day.\nUpgrade to Premium for unlimited access!");
+            openModal('premium');
+            return;
+        }
+        
+        if (state.userEnergy < 3) {
+            alert("Not enough energy (Need 3)");
+            openModal('premium');
+            return;
+        }
+        state.userEnergy -= 3;
+    } else {
+        if (state.userEnergy < 1) {
+             openModal('premium');
+             return;
+        }
+        state.userEnergy -= 1;
+    }
+
+    state.currentLesson = { 
+        id: 'teacher', 
+        type: 'teacher', 
+        title: 'Tr. Adrian', 
+        lines: [] 
+    };
+    state.modeIndex = 0;
+    state.modes = ['Teacher Chat'];
+    state.chatHistory = [];
+    state.sessionStartTime = Date.now();
+    state.lastTeacherSession = Date.now();
+    saveState();
+    updateHUD();
+
+    renderActiveScreen();
+    switchScreen('active');
+    
+    if (aiStarts) {
+        const greeting = "Hello! I am Tr. Adrian. I'm excited to help you practice English today. What would you like to talk about?";
+        addChatMessage('ai', greeting);
+        playTTS(greeting, 'B', true); 
+        state.chatHistory.push({ role: "assistant", content: greeting });
+    } else {
+        ui.active.feedback.textContent = "Your turn! Tap record to start the conversation with Tr. Adrian.";
+        ui.active.feedback.classList.remove('hidden');
+    }
+}
+
 function startLesson(id) {
     if (state.userEnergy <= 0) {
         openModal('premium');
         return;
     }
 
-    // Deduct Energy
     state.userEnergy -= 1;
     saveState();
     updateHUD();
@@ -224,6 +282,7 @@ function startLesson(id) {
     state.currentLesson = state.lessons.find(l => l.id === id);
     state.currentLineIndex = 0;
     state.modeIndex = 0;
+    state.modes = ['Shadowing', 'RolePlay'];
     state.chatHistory = [];
     state.sessionStartTime = Date.now();
 
@@ -233,30 +292,45 @@ function startLesson(id) {
 
 function renderActiveScreen() {
     const l = state.currentLesson;
+    const isTeacher = l.type === 'teacher';
     const isExam = l.type === 'exam';
-    const isRoleplay = state.modes[state.modeIndex] === 'RolePlay';
+    const isRoleplay = state.modes[state.modeIndex] === 'RolePlay' || isTeacher;
 
     ui.active.title.textContent = l.title;
-    ui.active.badge.textContent = isExam ? "EXAM MODE" : state.modes[state.modeIndex];
+    ui.active.badge.textContent = isTeacher ? "TR. ADRIAN" : (isExam ? "EXAM MODE" : state.modes[state.modeIndex]);
     ui.active.feedback.classList.add('hidden');
     ui.btns.next.classList.add('hidden');
+    
+    if (isTeacher) {
+        const isFree = state.subscriptionType === 'free';
+        ui.active.durSlider.max = isFree ? 5 : 30;
+        ui.active.durSlider.value = isFree ? 5 : 10;
+        ui.active.durDisplay.textContent = ui.active.durSlider.value;
+        state.discussionDuration = ui.active.durSlider.value;
+    }
 
-    // Toggle Views
+    if (l.explanation && state.currentLineIndex === 0) {
+        ui.active.feedback.innerHTML = `<div style="text-align:left; font-size:0.85rem; color:var(--text); background:var(--bg); padding:10px; border-radius:10px; border-left:4px solid var(--primary); margin-bottom:10px;">
+            <strong>💡 Grammar Tip:</strong><br>${l.explanation}
+        </div>`;
+        ui.active.feedback.classList.remove('hidden');
+    }
+
     if (isRoleplay) {
         ui.active.shadowBox.classList.add('hidden');
         ui.active.chatBox.classList.remove('hidden');
         ui.active.durSlider.parentElement.classList.remove('hidden');
-        ui.btns.listen.classList.add('hidden'); // No listen in RP
+        ui.btns.listen.classList.add('hidden');
         
-        // Init Chat
-        if (state.chatHistory.length === 0) {
+        if (!isTeacher && state.chatHistory.length === 0) {
             ui.active.chatList.innerHTML = '';
             addChatMessage('ai', l.lines[0].text);
-            playTTS(l.lines[0].text, 'A');
-            state.chatHistory.push({role: "system", content: "Init"}); // Placeholder
+            playTTS(l.lines[0].text, 'A', true);
+            state.chatHistory.push({role: "system", content: "Init"});
+        } else if (isTeacher && state.chatHistory.length === 0) {
+             ui.active.chatList.innerHTML = ''; 
         }
     } else {
-        // Shadowing
         ui.active.shadowBox.classList.remove('hidden');
         ui.active.chatBox.classList.add('hidden');
         ui.active.durSlider.parentElement.classList.add('hidden');
@@ -271,8 +345,6 @@ function renderActiveScreen() {
         }
     }
 }
-
-// --- RECORDING & API ---
 
 async function handleRecord() {
     if (ui.btns.record.classList.contains('recording')) {
@@ -298,24 +370,22 @@ async function handleRecord() {
             const blob = new Blob(audioChunks, { type: 'audio/webm' });
             const formData = new FormData();
             formData.append('audio', blob, 'audio.webm');
-            
-            // Meta Data
             formData.append('tier', state.subscriptionType);
-            formData.append('userApiKey', state.userApiKey); // Only used if tier=api-license
+            formData.append('userApiKey', ui.inputs.apiKey.value);
             
-            // Scenario Data
-            if (state.modes[state.modeIndex] === 'Shadowing') {
+            const isTeacher = state.currentLesson && state.currentLesson.type === 'teacher';
+
+            if (!isTeacher && state.modes[state.modeIndex] === 'Shadowing') {
                 formData.append('originalText', state.currentLesson.lines[state.currentLineIndex].text);
                 const res = await fetch('/api/score', { method: 'POST', body: formData });
                 handleResult(await res.json());
             } else {
-                // Roleplay
                 formData.append('history', JSON.stringify(state.chatHistory));
-                formData.append('scenario', state.currentLesson.title);
-                formData.append('userRole', 'B');
-                formData.append('aiRole', 'A');
+                formData.append('scenario', isTeacher ? "English Teacher" : state.currentLesson.title);
+                formData.append('userRole', "Student");
+                formData.append('aiRole', "Teacher");
                 formData.append('startTime', state.sessionStartTime);
-                formData.append('duration', state.discussionDuration);
+                formData.append('duration', isTeacher ? state.discussionDuration : ui.active.durSlider.value);
                 
                 ui.active.typing.classList.remove('hidden');
                 const res = await fetch('/api/chat', { method: 'POST', body: formData });
@@ -326,16 +396,15 @@ async function handleRecord() {
                 
                 addChatMessage('user', data.userText);
                 addChatMessage('ai', data.aiResponse);
-                playTTS(data.aiResponse, 'A');
+                playTTS(data.aiResponse, isTeacher ? 'B' : 'A', true);
                 
-                // Update History
                 state.chatHistory.push({ role: "user", content: data.userText });
                 state.chatHistory.push({ role: "assistant", content: data.aiResponse });
             }
         };
         mediaRecorder.start();
     } catch (e) {
-        alert("Microphone Error");
+        alert("Microphone Error: " + e.message);
     }
 }
 
@@ -350,15 +419,13 @@ function handleResult(data) {
     }
 }
 
-// --- HELPERS ---
-
 function gainExp(amount) {
     state.userExp += amount;
     const needed = state.userLevel * 100;
     if (state.userExp >= needed) {
         state.userLevel++;
         state.userExp -= needed;
-        state.userEnergy = CONFIG[state.subscriptionType].maxEnergy; // Refill
+        state.userEnergy = CONFIG[state.subscriptionType].maxEnergy;
         openModal('levelup');
         confetti({ particleCount: 200, spread: 100 });
     }
@@ -369,12 +436,27 @@ function gainExp(amount) {
 function addChatMessage(role, text) {
     const div = document.createElement('div');
     div.className = `chat-msg ${role}`;
-    div.innerText = text;
+    
+    // Karaoke Container
+    const textSpan = document.createElement('span');
+    textSpan.className = 'msg-content';
+    textSpan.innerHTML = text.split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
+    div.appendChild(textSpan);
+
+    if (role === 'ai') {
+        const relistenBtn = document.createElement('button');
+        relistenBtn.className = 'btn-relisten';
+        relistenBtn.innerHTML = '🔊 Re-listen';
+        relistenBtn.onclick = () => playTTS(text, 'B', true, textSpan);
+        div.appendChild(relistenBtn);
+    }
+
     ui.active.chatList.appendChild(div);
     ui.active.chatList.scrollTop = ui.active.chatList.scrollHeight;
+    return textSpan;
 }
 
-async function playTTS(text, role) {
+async function playTTS(text, role, isKaraoke = false, karaokeContainer = null) {
     if (activeAudio) activeAudio.pause();
     try {
         const res = await fetch('/api/tts', { 
@@ -383,6 +465,21 @@ async function playTTS(text, role) {
         });
         const data = await res.json();
         activeAudio = new Audio("data:audio/mp3;base64," + data.audio);
+        
+        if (isKaraoke && data.alignment) {
+            const words = (karaokeContainer || ui.active.chatList.lastElementChild.querySelector('.msg-content')).querySelectorAll('.word');
+            activeAudio.ontimeupdate = () => {
+                const cur = activeAudio.currentTime;
+                data.alignment.forEach((align, i) => {
+                    if (cur >= align.start && cur <= align.end) {
+                        words.forEach(w => w.classList.remove('active'));
+                        if (words[i]) words[i].classList.add('active');
+                    }
+                });
+            };
+            activeAudio.onended = () => words.forEach(w => w.classList.remove('active'));
+        }
+        
         activeAudio.play();
     } catch(e) {}
 }
@@ -396,7 +493,6 @@ function bindEvents() {
     ui.btns.next.onclick = () => {
         state.currentLineIndex++;
         if (state.currentLineIndex >= state.currentLesson.lines.length) {
-            // Next Mode? Or Finish?
             state.modeIndex++;
             state.currentLineIndex = 0;
             if (state.modeIndex >= state.modes.length) {
@@ -409,9 +505,11 @@ function bindEvents() {
     };
     ui.btns.back.onclick = () => switchScreen('list');
     ui.btns.premium.onclick = () => openModal('premium');
-    ui.active.durSlider.oninput = (e) => ui.active.durDisplay.textContent = e.target.value;
+    ui.active.durSlider.oninput = (e) => {
+        ui.active.durDisplay.textContent = e.target.value;
+        state.discussionDuration = e.target.value;
+    };
     
-    // Admin Code Gen
     document.getElementById('btn-admin-gen').onclick = async () => {
         const type = ui.inputs.adminCodeType.value;
         const res = await fetch('/api/admin', {
@@ -423,31 +521,26 @@ function bindEvents() {
         document.getElementById('admin-result').textContent = data.code || "Error";
     };
     
-    // Redeem
-    const redeemBtn = document.getElementById('btn-redeem-submit');
-    if (redeemBtn) {
-        redeemBtn.onclick = async () => {
-            const code = ui.inputs.code.value;
-            const res = await fetch('/api/admin', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ action: 'redeem', code })
-            });
-            const data = await res.json();
-            if (data.success) {
-                state.subscriptionType = data.type;
-                state.userEnergy = CONFIG[data.type].maxEnergy;
-                alert("Unlocked: " + CONFIG[data.type].label);
-                closeAllModals();
-                saveState();
-                updateHUD();
-            } else {
-                alert("Invalid Code");
-            }
-        };
-    }
+    document.getElementById('btn-redeem-submit').onclick = async () => {
+        const code = ui.inputs.code.value;
+        const res = await fetch('/api/admin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ action: 'redeem', code })
+        });
+        const data = await res.json();
+        if (data.success) {
+            state.subscriptionType = data.type;
+            state.userEnergy = CONFIG[data.type].maxEnergy;
+            alert("Unlocked: " + CONFIG[data.type].label);
+            closeAllModals();
+            saveState();
+            updateHUD();
+        } else {
+            alert("Invalid Code");
+        }
+    };
     
-    // Filtering
     ui.lesson.search.oninput = (e) => {
         const q = e.target.value.toLowerCase();
         const filtered = state.lessons.filter(l => l.title.toLowerCase().includes(q));
@@ -466,7 +559,7 @@ function bindEvents() {
 function renderLessons(list = state.lessons) {
     ui.lesson.list.innerHTML = list.map(l => `
         <div class="lesson-card" onclick="startLesson(${l.id})">
-            <div class="card-icon">${l.type === 'conversation' ? '💬' : l.type === 'grammar' ? '📘' : '🏆'}</div>
+            <div class="card-icon">${l.type === 'conversation' ? '💬' : l.type === 'grammar' ? '📘' : l.type === 'exam' ? '🏆' : '🎓'}</div>
             <div class="card-info">
                 <h4>${l.title}</h4>
                 <p>${l.lines.length} lines • ${l.type.toUpperCase()}</p>
@@ -476,24 +569,17 @@ function renderLessons(list = state.lessons) {
 }
 
 function switchScreen(name) {
-    // Hide all
     Object.values(ui.screens).forEach(s => s?.classList.add('hidden'));
-    
     if (name === 'list') ui.screens.list.classList.remove('hidden');
     if (name === 'active') ui.screens.active.classList.remove('hidden');
-    
     closeAllModals();
 }
 
-function openModal(name) {
-    ui.screens[name].classList.remove('hidden');
-}
-
+function openModal(name) { ui.screens[name].classList.remove('hidden'); }
 function closeAllModals() {
     ui.screens.premium.classList.add('hidden');
     ui.screens.admin.classList.add('hidden');
     ui.screens.levelup.classList.add('hidden');
 }
 
-// Start
 init();

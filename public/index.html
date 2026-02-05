@@ -36,8 +36,18 @@
             
             <!-- Screen: Lesson List -->
             <section id="screen-lessons" class="screen">
+                <!-- Teacher Bot Banner -->
+                <div class="teacher-banner" onclick="startTeacherMode()">
+                    <div class="teacher-icon">👨‍🏫</div>
+                    <div class="teacher-info">
+                        <h3>Chat with Tr. Adrian</h3>
+                        <p>Real-time English Conversation</p>
+                    </div>
+                    <div class="teacher-arrow">→</div>
+                </div>
+
                 <div class="search-bar-sticky">
-                    <input type="text" id="lesson-search" placeholder="Search 1,000+ lessons...">
+                    <input type="text" id="lesson-search" placeholder="Search 200+ lessons...">
                 </div>
                 
                 <div class="tabs-scroll">
@@ -85,8 +95,14 @@
                     </div>
                     
                     <div class="settings-row hidden">
-                        <label>Session Length: <span id="duration-display">2</span>m</label>
-                        <input type="range" id="duration-slider" min="1" max="15" value="2">
+                        <div class="setting-item">
+                            <label>Session: <span id="duration-display">2</span>m</label>
+                            <input type="range" id="duration-slider" min="1" max="30" value="2">
+                        </div>
+                        <div class="setting-item">
+                            <label>Tr. Adrian Starts</label>
+                            <input type="checkbox" id="check-ai-starts" checked>
+                        </div>
                     </div>
                 </div>
             </section>

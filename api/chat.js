@@ -66,11 +66,22 @@ module.exports = async (req, res) => {
             });
             const userText = transcription.text;
 
+            let systemContent = `You are a real human in: ${scenario}. Roleplay as ${aiRole}. 
+                    STRICT: No AI jargon. Speak naturally. Short responses (1-2 sentences).`;
+
+            if (scenario === 'English Teacher') {
+                systemContent = `You are Tr. Adrian, a highly adaptive and proactive English teacher. 
+                1. ANALYZE: Carefully evaluate the student's grammar, vocabulary, and flow.
+                2. ADAPT: Adjust your complexity. If they are basic, use simple words. If advanced, use idioms.
+                3. CORRECT: Polely correct mistakes in a "Teacher Tip" style.
+                4. PROACTIVE: Always end with an engaging question to keep them talking.
+                5. LIMIT: 2-3 sentences. No AI-style preamble. Be human.`;
+            }
+
             const messages = [
                 { 
                     role: "system", 
-                    content: `You are a real human in: ${scenario}. Roleplay as ${aiRole}. 
-                    STRICT: No AI jargon. Speak naturally. Short responses (1-2 sentences).
+                    content: `${systemContent}
                     Return ONLY JSON:
                     {
                         "userText": "${userText}",
