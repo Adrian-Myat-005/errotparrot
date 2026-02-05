@@ -45,7 +45,7 @@
                 <div class="stats-overview">
                     <div class="stat-card">
                         <span class="stat-val" id="stat-completed">0</span>
-                        <span class="stat-label">Lessons</span>
+                        <span class="stat-label">Completed</span>
                     </div>
                     <div class="stat-card">
                         <span class="stat-val" id="stat-xp">0</span>
@@ -59,16 +59,16 @@
 
                 <!-- Teacher Bot Banner -->
                 <div class="teacher-banner" onclick="startTeacherMode()">
-                    <div class="teacher-icon">👨‍🏫</div>
+                    <div class="teacher-icon">👩‍🏫</div>
                     <div class="teacher-info">
-                        <h3>Chat with Tr. Adrian</h3>
-                        <p>Real-time English Conversation</p>
+                        <h3>Tr. Adrian</h3>
+                        <p>Start adaptive AI conversation</p>
                     </div>
                     <div class="teacher-arrow">→</div>
                 </div>
 
                 <div class="search-bar-sticky">
-                    <input type="text" id="lesson-search" placeholder="Search 200+ lessons...">
+                    <input type="text" id="lesson-search" placeholder="Search lessons...">
                 </div>
                 
                 <div class="tabs-scroll">
@@ -78,7 +78,9 @@
                     <button class="tab-btn" data-type="exam">Exams</button>
                 </div>
 
-                <div id="lesson-list" class="lesson-grid"></div>
+                <div id="lesson-list" class="lesson-grid">
+                    <!-- Lessons will appear here -->
+                </div>
             </section>
 
             <!-- Screen: Active Practice -->
@@ -86,26 +88,23 @@
                 <div class="active-header">
                     <button id="btn-back" class="icon-btn">←</button>
                     <div class="active-meta">
-                        <h2 id="active-title">Loading...</h2>
-                        <span id="active-badge" class="badge">Shadowing</span>
+                        <h2 id="active-title">...</h2>
+                        <span id="active-badge" class="badge">Mode</span>
                     </div>
                 </div>
 
-                <!-- Chat Mode View -->
                 <div id="chat-box" class="chat-viewport hidden">
                     <div id="chat-list" class="chat-list"></div>
-                    <div id="ai-typing" class="typing-indicator hidden">AI is typing...</div>
+                    <div id="ai-typing" class="typing-indicator hidden">Thinking...</div>
                 </div>
 
-                <!-- Shadow Mode View -->
                 <div id="shadow-box" class="shadow-viewport hidden">
                     <div class="card-shadow">
-                        <h3 id="active-role">ROLE A</h3>
-                        <p id="shadow-text">...</p>
+                        <h3 id="active-role">...</h3>
+                        <div id="shadow-text">...</div>
                     </div>
                 </div>
 
-                <!-- Grammar/Reading Mode View -->
                 <div id="grammar-box" class="grammar-viewport hidden">
                     <div class="grammar-content">
                         <div id="grammar-notes" class="notes-area"></div>
@@ -113,25 +112,20 @@
                             <h3 id="quiz-question">Question?</h3>
                             <div id="quiz-options" class="options-grid"></div>
                         </div>
-                        <button id="btn-start-quiz" class="btn-secondary">Start Quick Quiz</button>
+                        <button id="btn-start-quiz" class="btn-main">Start Quick Quiz</button>
                     </div>
                 </div>
 
-                <!-- Controls -->
                 <div class="active-controls-wrapper">
                     <div id="active-feedback" class="feedback-toast hidden"></div>
                     
-                    <div class="control-row">
+                    <div class="control-row" id="active-controls">
                         <button id="btn-listen" class="btn-round">🔊</button>
                         <button id="btn-record" class="btn-main">🎤 Tap to Speak</button>
                         <button id="btn-next" class="btn-main hidden">Next →</button>
                     </div>
                     
                     <div class="settings-row hidden">
-                        <div class="setting-item">
-                            <label>Session: <span id="duration-display">2</span>m</label>
-                            <input type="range" id="duration-slider" min="1" max="30" value="2">
-                        </div>
                         <div class="setting-item">
                             <label>Tr. Adrian Starts</label>
                             <input type="checkbox" id="check-ai-starts" checked>
@@ -146,92 +140,97 @@
 
     <!-- Modals -->
     
-    <!-- Premium Modal -->
     <div id="modal-premium" class="modal-overlay hidden">
         <div class="modal-card">
-            <button class="close-modal" onclick="this.parentElement.parentElement.classList.add('hidden')">×</button>
-            <h2>Upgrade Your Learning</h2>
-            <p class="subtitle">Choose the plan that fits you.</p>
+            <button class="close-modal" onclick="closeAllModals()">×</button>
+            <div class="modal-header">
+                <h2>Upgrade Experience</h2>
+                <p>Unlock Tr. Adrian and Ad-Free learning.</p>
+            </div>
 
             <div class="pricing-options">
                 <div class="plan-card">
-                    <div class="badge-plan">POPULAR</div>
+                    <div class="badge-plan">ECONOMY</div>
                     <h3>API License</h3>
-                    <div class="price">1,000 MMK</div>
-                    <p class="desc">Bring your own Groq Key. Unlimited potential.</p>
+                    <div class="price">1,000 MMK / mo</div>
                     <ul class="features">
-                        <li>⚡ Infinite Energy</li>
-                        <li>🔑 Use your own API Key</li>
-                        <li>🔥 Heatmap Feedback</li>
+                        <li>👩‍🏫 Full Access to Tr. Adrian</li>
+                        <li>⚡ Infinite Energy (BYO Key)</li>
+                        <li>⏱️ Shorter 10s Lesson Ads</li>
                     </ul>
-                    <input type="password" id="input-api-key" placeholder="Paste your Groq Key here" class="input-field">
-                    <button class="btn-buy" onclick="window.open('https://t.me/Amyat604')">Get License</button>
+                    <input type="password" id="input-api-key" placeholder="Paste Groq API Key" class="input-field">
+                    <button class="btn-buy" onclick="window.open('https://t.me/Amyat604')">Get Key Unlock</button>
                 </div>
 
                 <div class="plan-card featured">
-                    <div class="badge-plan gold">ULTIMATE</div>
+                    <div class="badge-plan gold">BEST VALUE</div>
                     <h3>Pro Access</h3>
-                    <div class="price">10,000 MMK</div>
-                    <p class="desc">We provide the AI. Zero setup.</p>
+                    <div class="price">10,000 MMK / mo</div>
                     <ul class="features">
-                        <li>⚡ 100 Energy / Day</li>
-                        <li>🚀 System AI Credits</li>
-                        <li>🎓 Priority Support</li>
+                        <li>💎 100% Ad-Free Lessons</li>
+                        <li>👩‍🏫 Full Access to Tr. Adrian</li>
+                        <li>🚀 60 Energy / Day (Included)</li>
                     </ul>
-                    <button class="btn-buy gold" onclick="window.open('https://t.me/Amyat604')">Get Pro</button>
+                    <button class="btn-buy gold" onclick="window.open('https://t.me/Amyat604')">Get Full Access</button>
                 </div>
             </div>
 
             <div class="redeem-section">
-                <input type="text" id="input-redeem-code" placeholder="Enter Code (e.g. EP-1234)">
-                <button id="btn-redeem-submit" class="btn-small">Unlock</button>
+                <input type="text" id="input-redeem-code" placeholder="Enter EP-XXXX Code">
+                <button id="btn-redeem-submit" class="btn-small">Redeem</button>
             </div>
         </div>
     </div>
 
-    <!-- Ad Modal -->
+    <div id="modal-admin" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button class="close-modal" onclick="closeAllModals()">×</button>
+            <div class="modal-header">
+                <h2>Admin Panel</h2>
+                <p>Manage system and generate tokens.</p>
+            </div>
+            <div class="admin-tools">
+                <div class="admin-group">
+                    <label>Ad YouTube ID:</label>
+                    <div class="flex-row">
+                        <input type="text" id="admin-ad-url" class="input-field" placeholder="Video ID">
+                        <button id="btn-admin-save-ad" class="btn-small">Save</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="admin-group">
+                    <label>Generate Premium Code:</label>
+                    <select id="admin-code-type" class="input-field">
+                        <option value="api-license">API License</option>
+                        <option value="pro-access">Pro Access</option>
+                    </select>
+                    <button id="btn-admin-gen" class="btn-main">Generate EP-Token</button>
+                    <div id="admin-result" class="code-display">Code will appear here...</div>
+                </div>
+                <hr>
+                <button id="btn-admin-refill" class="btn-secondary" onclick="state.userEnergy=60; updateHUD(); alert('Energy Refilled');">Refill My Energy</button>
+            </div>
+        </div>
+    </div>
+
     <div id="modal-ad" class="modal-overlay hidden">
         <div class="modal-card center-text">
             <h2>Unlock Lesson</h2>
-            <p>Watch this short video to unlock the lesson.</p>
-            <div id="ad-video-container" class="video-placeholder">
-                <!-- YouTube Embed will go here -->
-                <iframe id="ad-iframe" width="100%" height="200" src="" frameborder="0" allowfullscreen></iframe>
+            <p>Wait for the timer to unlock this lesson.</p>
+            <div class="video-placeholder">
+                <iframe id="ad-iframe" width="100%" height="100%" src="" frameborder="0"></iframe>
             </div>
             <div id="ad-timer" class="ad-countdown">30s</div>
-            <button id="btn-ad-claim" class="btn-main hidden">Start Lesson</button>
+            <button id="btn-ad-claim" class="btn-main hidden">Unlock Now</button>
         </div>
     </div>
 
-    <!-- Admin Modal -->
-    <div id="modal-admin" class="modal-overlay hidden">
-        <div class="modal-card">
-            <button class="close-modal" onclick="this.parentElement.parentElement.classList.add('hidden')">×</button>
-            <h2>Admin Dashboard</h2>
-            <div class="admin-tools">
-                <label>Ad Video ID (YouTube):</label>
-                <input type="text" id="admin-ad-url" class="input-field" placeholder="e.g. dQw4w9WgXcQ">
-                <button id="btn-admin-save-ad" class="btn-secondary">Save Ad Settings</button>
-                <hr>
-                <select id="admin-code-type" class="input-field">
-                    <option value="api-license">API License (1k)</option>
-                    <option value="pro-access">Pro Access (10k)</option>
-                </select>
-                <button id="btn-admin-gen" class="btn-main">Generate Code</button>
-                <div id="admin-result" class="code-display">...</div>
-                <hr>
-                <button id="btn-admin-refill" class="btn-secondary" onclick="state.userEnergy=100; updateHUD(); alert('Refilled');">Refill My Energy</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Level Up Modal -->
     <div id="modal-levelup" class="modal-overlay hidden">
         <div class="modal-card center-text">
-            <div style="font-size:4rem;">🎉</div>
+            <div style="font-size:4rem;">🎊</div>
             <h1>Level Up!</h1>
-            <p>Energy Refilled!</p>
-            <button class="btn-main" onclick="document.getElementById('modal-levelup').classList.add('hidden')">Continue</button>
+            <p>You've reached a new level. Energy refilled!</p>
+            <button class="btn-main" onclick="closeAllModals()">Awesome!</button>
         </div>
     </div>
 
