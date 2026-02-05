@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ErrotParrot 3.0</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <!-- Admin Floating Button (Hidden by default) -->
+    <button id="btn-admin-float" class="admin-fab hidden" onclick="document.getElementById('modal-admin').classList.remove('hidden')">⚙️</button>
+
+    <div class="app-shell">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <span class="logo-icon">🦜</span>
+                <div class="brand-text">
+                    <h1>ErrotParrot</h1>
+                    <div class="hud">
+                        <span class="badge-pill">Lv.<span id="hud-lvl">1</span></span>
+                        <div class="xp-track"><div id="hud-xp-bar"></div></div>
+                        <span class="energy-pill">⚡ <span id="hud-energy">10</span> <small id="hud-energy-timer" style="display:none">00:00</small></span>
+                    </div>
+                </div>
+            </div>
+            <button id="btn-premium-nav" class="btn-premium">Get Premium</button>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="app-body">
+            
+            <!-- Screen: Lesson List -->
+            <section id="screen-lessons" class="screen">
+                <div class="search-bar-sticky">
+                    <input type="text" id="lesson-search" placeholder="Search 1,000+ lessons...">
+                </div>
+                
+                <div class="tabs-scroll">
+                    <button class="tab-btn active" data-type="all">All</button>
+                    <button class="tab-btn" data-type="conversation">Conversation</button>
+                    <button class="tab-btn" data-type="grammar">Grammar</button>
+                    <button class="tab-btn" data-type="exam">Exams</button>
+                </div>
+
+                <div id="lesson-list" class="lesson-grid"></div>
+            </section>
+
+            <!-- Screen: Active Practice -->
+            <section id="screen-active" class="screen hidden">
+                <div class="active-header">
+                    <button id="btn-back" class="icon-btn">←</button>
+                    <div class="active-meta">
+                        <h2 id="active-title">Loading...</h2>
+                        <span id="active-badge" class="badge">Shadowing</span>
+                    </div>
+                </div>
+
+                <!-- Chat Mode View -->
+                <div id="chat-box" class="chat-viewport hidden">
+                    <div id="chat-list" class="chat-list"></div>
+                    <div id="ai-typing" class="typing-indicator hidden">AI is typing...</div>
+                </div>
+
+                <!-- Shadow Mode View -->
+                <div id="shadow-box" class="shadow-viewport">
+                    <div class="card-shadow">
+                        <h3 id="active-role">ROLE A</h3>
+                        <p id="shadow-text">...</p>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="active-controls-wrapper">
+                    <div id="active-feedback" class="feedback-toast hidden"></div>
+                    
+                    <div class="control-row">
+                        <button id="btn-listen" class="btn-round">🔊</button>
+                        <button id="btn-record" class="btn-main">🎤 Tap to Speak</button>
+                        <button id="btn-next" class="btn-main hidden">Next →</button>
+                    </div>
+                    
+                    <div class="settings-row hidden">
+                        <label>Session Length: <span id="duration-display">2</span>m</label>
+                        <input type="range" id="duration-slider" min="1" max="15" value="2">
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Modals -->
+    
+    <!-- Premium Modal -->
+    <div id="modal-premium" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button class="close-modal" onclick="this.parentElement.parentElement.classList.add('hidden')">×</button>
+            <h2>Upgrade Your Learning</h2>
+            <p class="subtitle">Choose the plan that fits you.</p>
+
+            <div class="pricing-options">
+                <div class="plan-card">
+                    <div class="badge-plan">POPULAR</div>
+                    <h3>API License</h3>
+                    <div class="price">1,000 MMK</div>
+                    <p class="desc">Bring your own Groq Key. Unlimited potential.</p>
+                    <ul class="features">
+                        <li>⚡ Infinite Energy</li>
+                        <li>🔑 Use your own API Key</li>
+                        <li>🔥 Heatmap Feedback</li>
+                    </ul>
+                    <input type="password" id="input-api-key" placeholder="Paste your Groq Key here" class="input-field">
+                    <button class="btn-buy" onclick="window.open('https://t.me/Amyat604')">Get License</button>
+                </div>
+
+                <div class="plan-card featured">
+                    <div class="badge-plan gold">ULTIMATE</div>
+                    <h3>Pro Access</h3>
+                    <div class="price">10,000 MMK</div>
+                    <p class="desc">We provide the AI. Zero setup.</p>
+                    <ul class="features">
+                        <li>⚡ 100 Energy / Day</li>
+                        <li>🚀 System AI Credits</li>
+                        <li>🎓 Priority Support</li>
+                    </ul>
+                    <button class="btn-buy gold" onclick="window.open('https://t.me/Amyat604')">Get Pro</button>
+                </div>
+            </div>
+
+            <div class="redeem-section">
+                <input type="text" id="input-redeem-code" placeholder="Enter Code (e.g. EP-1234)">
+                <button id="btn-redeem-submit" class="btn-small">Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="modal-admin" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button class="close-modal" onclick="this.parentElement.parentElement.classList.add('hidden')">×</button>
+            <h2>Admin Dashboard</h2>
+            <div class="admin-tools">
+                <select id="admin-code-type" class="input-field">
+                    <option value="api-license">API License (1k)</option>
+                    <option value="pro-access">Pro Access (10k)</option>
+                </select>
+                <button id="btn-admin-gen" class="btn-main">Generate Code</button>
+                <div id="admin-result" class="code-display">...</div>
+                <hr>
+                <button id="btn-admin-refill" class="btn-secondary" onclick="state.userEnergy=100; updateHUD(); alert('Refilled');">Refill My Energy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Up Modal -->
+    <div id="modal-levelup" class="modal-overlay hidden">
+        <div class="modal-card center-text">
+            <div style="font-size:4rem;">🎉</div>
+            <h1>Level Up!</h1>
+            <p>Energy Refilled!</p>
+            <button class="btn-main" onclick="document.getElementById('modal-levelup').classList.add('hidden')">Continue</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
