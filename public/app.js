@@ -30,12 +30,23 @@ const state = {
 
     settings: {
         adsEnabled: true,
-        adDuration: 5
+        adDuration: 5,
+        adVideoId: 'jNQXAC9IVRw' // Default educational video
     }
 };
 
 let ui = {};
 let mediaRecorder;
+let ytPlayer;
+let ytApiReady = false;
+
+// Load YouTube API
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+const firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+window.onYouTubeIframeAPIReady = () => { ytApiReady = true; };
 
 function closeAllModals() {
     ['modal-energy', 'modal-ad', 'modal-adrian'].forEach(id => {
@@ -45,6 +56,7 @@ function closeAllModals() {
             el.style.display = 'none';
         }
     });
+    if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
 }
 
 function switchScreen(name) {
@@ -133,7 +145,6 @@ async function init() {
     bindEvents();
 
     try {
-        // Fetch System Settings
         const settingsRes = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'getSettings' }) });
         const settingsData = await settingsRes.json();
         if (settingsData) state.settings = { ...state.settings, ...settingsData };
@@ -425,6 +436,10 @@ function startLesson(id) {
         state.pendingLessonId = id;
         const el = document.getElementById('modal-ad');
         if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
+        // Pre-reset UI for ad button
+        ui.btnWatchAd.textContent = "WATCH VIDEO TO UNLOCK";
+        document.getElementById('ad-video-container').style.display = 'none';
+        document.getElementById('btn-close-ad').style.display = 'block';
         return;
     }
 
@@ -447,21 +462,40 @@ function startLesson(id) {
 }
 
 function simulateAd() {
+    if (!ytApiReady) { alert("Ad system loading, try in 2s."); return; }
+    
     ui.btnWatchAd.disabled = true;
-    let count = state.settings.adDuration || 5;
-    const timer = setInterval(() => {
-        ui.btnWatchAd.textContent = `Unlocking... ${count}s`;
-        if (count-- < 0) {
-            clearInterval(timer);
-            if (!state.unlockedLessons.includes(state.pendingLessonId)) state.unlockedLessons.push(state.pendingLessonId);
-            ui.btnWatchAd.disabled = false;
-            ui.btnWatchAd.textContent = "WATCH AD";
-            closeAllModals();
-            startLesson(state.pendingLessonId);
-            renderLessons();
-            saveState();
+    document.getElementById('ad-video-container').style.display = 'block';
+    document.getElementById('btn-close-ad').style.display = 'none'; // Lock close button
+
+    if (ytPlayer) ytPlayer.destroy();
+    
+    ytPlayer = new YT.Player('youtube-player', {
+        height: '100%',
+        width: '100%',
+        videoId: state.settings.adVideoId || 'jNQXAC9IVRw',
+        playerVars: { 'autoplay': 1, 'controls': 0, 'disablekb': 1, 'rel': 0 },
+        events: {
+            'onReady': (event) => {
+                let count = state.settings.adDuration || 5;
+                const timer = setInterval(() => {
+                    ui.btnWatchAd.textContent = `Unlocking in ${count}s...`;
+                    if (count-- <= 0) {
+                        clearInterval(timer);
+                        if (!state.unlockedLessons.includes(state.pendingLessonId)) state.unlockedLessons.push(state.pendingLessonId);
+                        ui.btnWatchAd.disabled = false;
+                        ui.btnWatchAd.textContent = "UNLOCK COMPLETED! ✅";
+                        setTimeout(() => {
+                            closeAllModals();
+                            startLesson(state.pendingLessonId);
+                            renderLessons();
+                            saveState();
+                        }, 1000);
+                    }
+                }, 1000);
+            }
         }
-    }, 1000);
+    });
 }
 
 function renderPhrase() {
@@ -604,6 +638,18 @@ async function handleRecord() {
     } catch (e) { alert("Mic Access Denied"); }
 }
 
+function playSound(type) {
+    const sounds = {
+        pass: 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3',
+        fail: 'https://assets.mixkit.co/sfx/preview/mixkit-negative-tone-interface-947.mp3'
+    };
+    if (sounds[type]) {
+        const audio = new Audio(sounds[type]);
+        audio.volume = 0.4;
+        audio.play().catch(e => {});
+    }
+}
+
 function showPhraseFeedback(data) {
     const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
     const overlay = ui.active.feedback;
@@ -614,6 +660,8 @@ function showPhraseFeedback(data) {
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
     
+    playSound(isPassed ? 'pass' : 'fail');
+
     if (isPassed) { 
         ui.active.btnNextStep.style.display = 'flex'; 
         ui.active.btnRetryStep.style.display = 'none'; 
@@ -634,6 +682,8 @@ function showChallengeFeedback(data) {
     ui.active.correction.innerHTML = `"${data.userText}"`;
     ui.active.tip.textContent = data.feedback;
     
+    playSound(isPassed ? 'pass' : 'fail');
+
     if (isPassed) { 
         ui.active.btnNextStep.style.display = 'flex'; 
         ui.active.btnRetryStep.style.display = 'none'; 
