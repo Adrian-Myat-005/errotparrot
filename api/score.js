@@ -57,26 +57,25 @@ module.exports = async (req, res) => {
             const transcript = transcription.text;
 
             const prompt = `
-            Evaluate speech for a friendly shadowing app. 
+            Evaluate speech for a friendly but professional shadowing app. 
             Target Phrase: "${originalText}"
             User Spoke: "${transcript}"
 
-            HUMANIZED GUIDELINES:
-            1. Be very encouraging. If they got the main idea, they should pass.
-            2. Ignore capitalization, punctuation, and minor Whisper artifacts.
-            3. Do NOT punish for natural speech variations or minor stumbles.
-            4. Focus on the 'flow' and core vocabulary.
-            5. Provide an HTML string for 'corrections':
-               - Correct words: <span class='correct-word'>
-               - Challenging words: <span class='wrong'> (NO underlines allowed)
-            6. A score of 65+ is a PASS for regular lessons.
+            GUIDELINES:
+            1. Be encouraging but ensure learning. If they missed key words or changed the meaning, they must NOT pass.
+            2. Ignore minor technical artifacts (punctuation, capitalization).
+            3. Focus on: Core vocabulary, phonetic similarity, and natural flow.
+            4. If the score is < 70, provide a specific "Teacher Tip" on what to improve.
+            5. Provide HTML string for 'corrections' using:
+               - <span class='correct-word'> for good words
+               - <span class='wrong'> for mistakes (No underlines)
 
             Return ONLY JSON:
             {
                 "score": number (0-100),
-                "feedback": "1 charm and friendly sentence",
+                "feedback": "1 friendly but constructive sentence",
                 "corrections": "HTML string",
-                "passed": boolean
+                "passed": boolean (true if score >= 70)
             }`;
 
             const completion = await groq.chat.completions.create({

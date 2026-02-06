@@ -1,4 +1,3 @@
-
 const state = {
     lessons: [],
     unlockedLessons: [1, 2, 3, 4, 5],
@@ -36,26 +35,30 @@ let mediaRecorder;
 function closeAllModals() {
     ['modal-energy', 'modal-ad', 'modal-adrian'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) { el.classList.add('hidden'); el.style.display = 'none'; }
+        if (el) {
+            el.classList.add('hidden');
+            el.style.display = 'none';
+        }
     });
 }
 
 function switchScreen(name) {
-    // Force hide all screens first
-    const screens = ['screen-lessons', 'screen-active'];
-    screens.forEach(id => {
-        const el = document.getElementById(id);
+    const screens = {
+        'lessons': document.getElementById('screen-lessons'),
+        'active': document.getElementById('screen-active')
+    };
+    
+    Object.values(screens).forEach(el => {
         if (el) {
             el.classList.add('hidden');
             el.style.display = 'none';
         }
     });
 
-    // Force show target screen
-    const target = document.getElementById('screen-' + name);
+    const target = screens[name];
     if (target) {
         target.classList.remove('hidden');
-        target.style.display = 'flex'; // Critical fix
+        target.style.display = 'flex';
     }
     
     const backBtn = document.getElementById('btn-back-main');
@@ -72,7 +75,6 @@ function switchScreen(name) {
 }
 
 async function init() {
-    // 1. Map UI Elements IMMEDIATELY
     ui = {
         progressBar: document.getElementById('progress-bar'),
         hudEnergy: document.getElementById('hud-energy'),
@@ -90,6 +92,9 @@ async function init() {
         active: {
             counter: document.getElementById('current-phrase-num'),
             grammarNote: document.getElementById('grammar-note'),
+            grammarTestArea: document.getElementById('grammar-test-area'),
+            grammarQuestion: document.getElementById('grammar-question'),
+            grammarOptions: document.getElementById('grammar-options'),
             karaoke: document.getElementById('karaoke-text'),
             translation: document.getElementById('translation-text'),
             chatHistory: document.getElementById('chat-history'),
@@ -114,29 +119,22 @@ async function init() {
         btnRedeem: document.getElementById('btn-redeem')
     };
 
-    // 2. Force Visibility
-    if (ui.lessonList) ui.lessonList.innerHTML = '<div style="padding:40px; text-align:center; color:#888;">Loading content...</div>';
-    closeAllModals();
-    switchScreen('lessons');
-
-    // 3. Load Data
     loadState();
     checkDailyRefill();
     updateStreak();
+    closeAllModals();
+    switchScreen('lessons');
+    updateHUD();
+    bindEvents();
 
     try {
         const res = await fetch('lessons.json?v=' + Date.now());
-        if (!res.ok) throw new Error("Fetch failed");
-        state.lessons = await res.json();
+        const data = await res.json();
+        state.lessons = data;
         renderLessons();
         renderDashboard();
-    } catch (e) {
-        console.error("Critical Error", e);
-        if (ui.lessonList) ui.lessonList.innerHTML = `<div style="padding:20px; color:red; text-align:center;">Failed to load. <button onclick="location.reload()">Retry</button></div>`;
-    }
-    
-    updateHUD();
-    bindEvents();
+    } catch (e) {}
+
     setInterval(energyLoop, 60000);
 }
 
@@ -145,7 +143,9 @@ function loadState() {
         const saved = localStorage.getItem('errorparrot_master_v1');
         if (saved) {
             const data = JSON.parse(saved);
-            Object.keys(data).forEach(k => { if (state[k] !== undefined) state[k] = data[k]; });
+            Object.keys(data).forEach(k => {
+                if (data[k] !== null && data[k] !== undefined) state[k] = data[k];
+            });
         }
     } catch(e) {}
     if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = [1, 2, 3, 4, 5];
@@ -180,8 +180,8 @@ function updateStreak() {
     if (state.lastActiveDay !== today) {
         if (state.lastActiveDay) {
             const lastDate = new Date(state.lastActiveDay);
-            const diff = (now - lastDate) / (1000 * 60 * 60 * 24);
-            if (diff > 1.5) state.streak = 0;
+            const diffDays = Math.floor((now - lastDate) / (1000 * 60 * 60 * 24));
+            if (diffDays > 1) state.streak = 0;
         }
         state.streak++;
         state.lastActiveDay = today;
@@ -204,7 +204,12 @@ function updateHUD() {
     if (ui.hudEnergy) ui.hudEnergy.textContent = state.userEnergy;
     if (ui.hudLvl) ui.hudLvl.textContent = state.userLevel;
     if (ui.progressBar) {
-        let p = state.currentLesson ? (state.currentPhraseIndex / 50) * 100 : (state.userExp / (state.userLevel * 200)) * 100;
+        let p = 0;
+        if (state.currentLesson) p = (state.currentPhraseIndex / 50) * 100;
+        else {
+            const threshold = state.userLevel * 200;
+            p = (state.userExp / threshold) * 100;
+        }
         ui.progressBar.style.width = Math.min(100, p) + '%';
     }
 }
@@ -234,12 +239,14 @@ function bindEvents() {
 
     if (ui.lessonSearch) ui.lessonSearch.oninput = () => renderLessons();
     
-    ui.tabs.forEach(t => t.onclick = () => {
-        ui.tabs.forEach(x => x.classList.remove('active'));
-        t.classList.add('active');
-        state.currentType = t.dataset.type;
-        renderLessons();
-    });
+    if (ui.tabs) {
+        ui.tabs.forEach(t => t.onclick = () => {
+            ui.tabs.forEach(x => x.classList.remove('active'));
+            t.classList.add('active');
+            state.currentType = t.dataset.type;
+            renderLessons();
+        });
+    }
 
     if (ui.active.btnRecord) ui.active.btnRecord.onclick = handleRecord;
     if (ui.active.btnListen) ui.active.btnListen.onclick = () => {
@@ -293,13 +300,12 @@ async function handleRedeem() {
         const data = await res.json();
         if (data.success) {
             state.isPremium = true;
-            alert("Unlocked! Enjoy Tr. Adrian Premium.");
-            ui.inputRedeem.value = '';
+            alert("Unlocked!");
             closeAllModals();
             renderLessons();
             saveState();
-        } else alert(data.error || "Invalid Code");
-    } catch(e) { alert("Service error"); }
+        }
+    } catch(e) {}
 }
 
 function renderLessons() {
@@ -323,7 +329,7 @@ function renderLessons() {
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
         const progress = state.lessonProgress[l.id] || 0;
-        let status = progress > 0 ? `Resume at Step ${progress+1}` : '50 Shadowing Phrases';
+        let status = progress > 0 ? `Resume at Step ${progress+1}` : '50 Practice Phrases';
         if (isAdrian && !state.isPremium) status = 'Premium Required ⭐';
         else if (isLocked) status = 'Unlock with 5s Ad 📺';
         else if (isCompleted) status = 'Mastered ✅';
@@ -332,14 +338,14 @@ function renderLessons() {
             <div class="topic-card ${isAdrian ? 'premium-teacher' : ''} ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
                 <div class="topic-icon">${isAdrian ? '👨‍🏫' : (isCompleted ? '✅' : l.icon)}</div>
                 <div class="topic-info">
-                    <div class="topic-type-tag ${l.type}">${l.type} ${isAdrian ? 'PREMIUM' : ''}</div>
+                    <div class="topic-type-tag ${l.type}">${l.type}</div>
                     <h4>${l.topic}</h4>
                     <p>${status}</p>
                 </div>
             </div>
         `;
     });
-    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No lessons found.</div>';
+    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No content found.</div>';
 }
 
 function renderMemoryBank() {
@@ -391,16 +397,13 @@ function startLesson(id) {
 }
 
 function simulateAd() {
-    if (!ui.btnWatchAd) return;
     ui.btnWatchAd.disabled = true;
     let count = 5;
     const timer = setInterval(() => {
-        ui.btnWatchAd.textContent = `Unlocking in ${count}s...`;
+        ui.btnWatchAd.textContent = `Unlocking... ${count}s`;
         if (count-- < 0) {
             clearInterval(timer);
-            if (!state.unlockedLessons.includes(state.pendingLessonId)) {
-                state.unlockedLessons.push(state.pendingLessonId);
-            }
+            if (!state.unlockedLessons.includes(state.pendingLessonId)) state.unlockedLessons.push(state.pendingLessonId);
             ui.btnWatchAd.disabled = false;
             ui.btnWatchAd.textContent = "Watch Ad (5s)";
             closeAllModals();
@@ -417,19 +420,26 @@ function renderPhrase() {
     if (ui.active.counter) ui.active.counter.textContent = state.currentPhraseIndex + 1;
     
     ui.active.grammarNote.classList.add('hidden');
+    ui.active.grammarTestArea.classList.add('hidden');
     ui.active.translation.classList.remove('hidden');
     ui.active.chatHistory.classList.add('hidden');
+    ui.active.btnListen.classList.remove('hidden');
+    ui.active.btnRecord.classList.remove('hidden');
+    ui.active.karaoke.classList.remove('hidden');
     
     if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
-        ui.active.grammarNote.innerHTML = `<strong>Grammar Tip:</strong> ${state.currentLesson.explanation || 'Focus on correct structure.'}`;
-    }
-    
-    if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br>Listen and repeat.</div>`;
+        ui.active.grammarNote.innerHTML = `<strong>Grammar Focus:</strong> ${state.currentLesson.explanation || 'Learn this structure.'}`;
+        ui.active.btnListen.classList.add('hidden');
+        ui.active.btnRecord.classList.add('hidden');
+        ui.active.karaoke.classList.add('hidden');
+        ui.active.translation.classList.add('hidden');
+        renderGrammarTest(p);
+    } else if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
+        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br>Repeat after hearing.</div>`;
         ui.active.translation.classList.add('hidden');
     } else if (state.currentLesson.type === 'challenge') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box">${p.mission}</div>`;
+        ui.active.karaoke.innerHTML = `<div class="mission-box">${p.mission}<br><span style="font-size:0.8rem; font-weight:600; opacity:0.7;">Pass Criteria: natural flow, score > 60.</span></div>`;
         ui.active.translation.textContent = p.context;
         if (state.currentLesson.topic.toLowerCase().includes("adrian")) {
             ui.active.chatHistory.classList.remove('hidden');
@@ -444,14 +454,49 @@ function renderPhrase() {
     ui.active.feedback.classList.add('hidden');
     ui.active.btnNextStep.classList.add('hidden');
     ui.active.btnRetryStep.classList.add('hidden');
-    ui.active.btnRecord.classList.remove('hidden');
     updateHUD();
 }
+
+function renderGrammarTest(p) {
+    ui.active.grammarTestArea.classList.remove('hidden');
+    // Simple fill-in-the-blank or multiple choice logic
+    // We will scramble the words of the phrase
+    const words = p.en.split(/\s+/);
+    const correct = p.en;
+    
+    ui.active.grammarQuestion.textContent = "Which is the correct translation for: " + (p.my || "this sentence") + "?";
+    
+    // Create 3 options: 1 correct, 2 fake
+    const options = [correct];
+    options.push(words.slice().reverse().join(' ')); // Scrambled
+    options.push(words.slice(1).join(' ') + ' ' + words[0]); // Rotated
+    
+    // Shuffle options
+    options.sort(() => Math.random() - 0.5);
+    
+    ui.active.grammarOptions.innerHTML = options.map(opt => `
+        <button class="grammar-option" onclick="handleGrammarAnswer(this, '${opt.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">
+            ${opt}
+        </button>
+    `).join('');
+}
+
+window.handleGrammarAnswer = (btn, selected, correct) => {
+    const isCorrect = selected === correct;
+    btn.classList.add(isCorrect ? 'correct' : 'wrong');
+    
+    if (isCorrect) {
+        ui.active.btnNextStep.classList.remove('hidden');
+        gainExp(10);
+    } else {
+        alert("Try again! Look at the grammar structure.");
+    }
+};
 
 function renderChatHistory() {
     if (!ui.active.chatHistory) return;
     if (state.chatHistory.length === 0) {
-        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:10px;">Start speaking to begin the conversation...</div>';
+        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:10px;">Say something to start...</div>';
         return;
     }
     let html = '';
@@ -510,7 +555,7 @@ async function handleRecord() {
 }
 
 function showPhraseFeedback(data) {
-    const isPassed = data.score > (state.currentLesson.type === 'exam' ? 80 : 65);
+    const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span class="score-badge">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Not Enough";
@@ -571,6 +616,8 @@ function gainExp(amt) {
 
 async function playTTS(text) {
     try {
+        const listenBtn = ui.active.btnListen;
+        if (listenBtn) listenBtn.classList.add('playing');
         const res = await fetch('/api/tts', { method: 'POST', body: JSON.stringify({ text, speed: state.ttsSpeed, voice: state.voice }) });
         const data = await res.json();
         const audio = new Audio("data:audio/mp3;base64," + data.audio);
@@ -589,10 +636,12 @@ async function playTTS(text) {
                     lastIdx = activeIdx;
                 }
             };
-            audio.onended = () => { words.forEach(w => { w.classList.remove('active'); w.classList.remove('played'); }); };
+            audio.onended = () => { words.forEach(w => { w.classList.remove('active'); w.classList.remove('played'); }); if (listenBtn) listenBtn.classList.remove('playing'); };
+        } else {
+            audio.onended = () => { if (listenBtn) listenBtn.classList.remove('playing'); };
         }
         audio.play();
-    } catch (e) {}
+    } catch (e) { if (ui.active.btnListen) ui.active.btnListen.classList.remove('playing'); }
 }
 
 window.closeAllModals = closeAllModals;
