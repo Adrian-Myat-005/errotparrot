@@ -1,28 +1,29 @@
-
 const state = {
     lessons: [],
     unlockedLessons: [1, 2, 3, 4, 5],
     completedLessons: [],
+    savedPhrases: [],
     currentLesson: null,
     currentPhraseIndex: 0,
     isRecording: false,
     audioBlob: null,
+    audioUrl: null,
     isPremium: false,
     
-    // User Stats
+    // Stats
     userLevel: 1,
     userExp: 0,
     userEnergy: 5,
     lastEnergyUpdate: Date.now(),
     totalXp: 0,
+    streak: 0,
+    lastActiveDay: null,
     
     // Settings
     ttsSpeed: '1.0',
     voice: 'male',
     leaderMode: 'ai',
     currentType: 'all',
-
-    // Runtime
     startTime: Date.now()
 };
 
@@ -32,16 +33,12 @@ let mediaRecorder;
 function closeAllModals() {
     ['modal-energy', 'modal-ad', 'modal-adrian'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-            el.classList.add('hidden');
-            el.style.display = 'none';
-        }
+        if (el) { el.classList.add('hidden'); el.style.display = 'none'; }
     });
 }
 
 function switchScreen(name) {
-    const screens = ['screen-lessons', 'screen-active'];
-    screens.forEach(id => {
+    ['screen-lessons', 'screen-active'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
     });
@@ -53,12 +50,14 @@ function switchScreen(name) {
         if (name === 'lessons') backBtn.classList.add('hidden');
         else backBtn.classList.remove('hidden');
     }
+    if (name === 'lessons') {
+        state.currentLesson = null;
+        renderDashboard();
+        renderLessons();
+    }
 }
 
-async function init() {
-    loadState();
-    
-    // Initialize UI references
+document.addEventListener('DOMContentLoaded', () => {
     ui = {
         progressBar: document.getElementById('progress-bar'),
         hudEnergy: document.getElementById('hud-energy'),
@@ -66,8 +65,16 @@ async function init() {
         lessonList: document.getElementById('lesson-list'),
         lessonSearch: document.getElementById('lesson-search'),
         tabs: document.querySelectorAll('.tab-btn'),
+        dashboard: {
+            streak: document.getElementById('stat-streak'),
+            xp: document.getElementById('stat-xp'),
+            done: document.getElementById('stat-done'),
+            btnResume: document.getElementById('btn-resume'),
+            btnShowActivation: document.getElementById('btn-show-activation')
+        },
         active: {
             counter: document.getElementById('current-phrase-num'),
+            grammarNote: document.getElementById('grammar-note'),
             karaoke: document.getElementById('karaoke-text'),
             translation: document.getElementById('translation-text'),
             feedback: document.getElementById('feedback-overlay'),
@@ -75,9 +82,12 @@ async function init() {
             feedbackLabel: document.getElementById('feedback-label'),
             correction: document.getElementById('correction-display'),
             tip: document.getElementById('feedback-tip'),
+            btnRelisten: document.getElementById('btn-relisten'),
             btnNextStep: document.getElementById('btn-next-step'),
+            btnRetryStep: document.getElementById('btn-retry-step'),
             btnRecord: document.getElementById('btn-record'),
             btnListen: document.getElementById('btn-listen'),
+            btnSavePhrase: document.getElementById('btn-save-phrase'),
             selectSpeed: document.getElementById('select-speed'),
             selectVoice: document.getElementById('select-voice'),
             selectLeader: document.getElementById('select-leader')
@@ -86,20 +96,27 @@ async function init() {
         inputRedeem: document.getElementById('input-redeem'),
         btnRedeem: document.getElementById('btn-redeem')
     };
+    init();
+});
 
-    bindEvents();
-    updateHUD();
-
+async function init() {
+    loadState();
+    updateStreak();
+    closeAllModals();
+    switchScreen('lessons');
+    
     try {
         const res = await fetch('lessons.json');
-        if (!res.ok) throw new Error("Fetch failed");
+        if (!res.ok) throw new Error("Net Error");
         state.lessons = await res.json();
         renderLessons();
+        renderDashboard();
     } catch (e) {
-        console.error("Lessons Load Error", e);
-        if (ui.lessonList) ui.lessonList.innerHTML = '<div style="padding:20px; color:red;">Error loading lessons. Please refresh.</div>';
+        console.error("Lessons failed", e);
     }
     
+    updateHUD();
+    bindEvents();
     setInterval(energyLoop, 60000);
 }
 
@@ -108,14 +125,12 @@ function loadState() {
     if (saved) {
         try {
             const data = JSON.parse(saved);
-            const persistentKeys = ['unlockedLessons', 'completedLessons', 'isPremium', 'userLevel', 'userExp', 'userEnergy', 'lastEnergyUpdate', 'totalXp', 'ttsSpeed', 'voice', 'leaderMode'];
-            persistentKeys.forEach(key => {
-                if (data[key] !== undefined) state[key] = data[key];
-            });
+            Object.assign(state, data);
         } catch(e) {}
     }
     if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = [1, 2, 3, 4, 5];
     if (typeof state.isPremium !== 'boolean') state.isPremium = false;
+    if (!state.savedPhrases) state.savedPhrases = [];
 }
 
 function saveState() {
@@ -124,22 +139,44 @@ function saveState() {
     delete toSave.currentLesson;
     delete toSave.isRecording;
     delete toSave.audioBlob;
+    delete toSave.audioUrl;
     localStorage.setItem('errorparrot_master_v1', JSON.stringify(toSave));
+}
+
+function updateStreak() {
+    const now = new Date();
+    const today = now.toDateString();
+    if (state.lastActiveDay !== today) {
+        if (state.lastActiveDay) {
+            const lastDate = new Date(state.lastActiveDay);
+            const diffDays = Math.floor((now - lastDate) / (1000 * 60 * 60 * 24));
+            if (diffDays > 1) state.streak = 0;
+        }
+        state.streak++;
+        state.lastActiveDay = today;
+        saveState();
+    }
+}
+
+function renderDashboard() {
+    if (ui.dashboard.streak) ui.dashboard.streak.textContent = state.streak;
+    if (ui.dashboard.xp) ui.dashboard.xp.textContent = formatNum(state.totalXp);
+    if (ui.dashboard.done) ui.dashboard.done.textContent = state.completedLessons.length;
+}
+
+function formatNum(n) {
+    if (n >= 1000) return (n/1000).toFixed(1) + 'k';
+    return n;
 }
 
 function updateHUD() {
     if (ui.hudEnergy) ui.hudEnergy.textContent = state.userEnergy;
     if (ui.hudLvl) ui.hudLvl.textContent = state.userLevel;
-    
     if (ui.progressBar) {
-        if (state.currentLesson) {
-            const progress = (state.currentPhraseIndex / 50) * 100;
-            ui.progressBar.style.width = `${progress}%`;
-        } else {
-            const threshold = state.userLevel * 200;
-            const xpProgress = (state.userExp / threshold) * 100;
-            ui.progressBar.style.width = `${xpProgress}%`;
-        }
+        let p = 0;
+        if (state.currentLesson) p = (state.currentPhraseIndex / 50) * 100;
+        else p = (state.userExp / (state.userLevel * 200)) * 100;
+        ui.progressBar.style.width = Math.min(100, p) + '%';
     }
 }
 
@@ -160,38 +197,64 @@ function energyLoop() {
 function bindEvents() {
     const backBtn = document.getElementById('btn-back-main');
     if (backBtn) backBtn.onclick = () => switchScreen('lessons');
-    
+    if (ui.dashboard.btnResume) ui.dashboard.btnResume.onclick = resumeLearning;
+    if (ui.dashboard.btnShowActivation) ui.dashboard.btnShowActivation.onclick = () => {
+        const el = document.getElementById('modal-adrian');
+        el.classList.remove('hidden'); el.style.display = 'flex';
+    };
+
     if (ui.lessonSearch) ui.lessonSearch.oninput = () => renderLessons();
     
-    if (ui.tabs) ui.tabs.forEach(tab => {
-        tab.onclick = () => {
-            ui.tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            state.currentType = tab.dataset.type;
-            renderLessons();
-        };
+    ui.tabs.forEach(t => t.onclick = () => {
+        ui.tabs.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        state.currentType = t.dataset.type;
+        renderLessons();
     });
 
-    if (ui.active.btnRecord) ui.active.btnRecord.onclick = handleRecord;
-    if (ui.active.btnListen) ui.active.btnListen.onclick = () => {
-        const phrase = state.currentLesson?.phrases[state.currentPhraseIndex];
-        if (phrase?.en) playTTS(phrase.en);
+    ui.active.btnRecord.onclick = handleRecord;
+    ui.active.btnListen.onclick = () => {
+        const p = state.currentLesson?.phrases[state.currentPhraseIndex];
+        if (p?.en) playTTS(p.en);
     };
-    if (ui.active.btnNextStep) ui.active.btnNextStep.onclick = nextPhrase;
-
-    if (ui.active.selectSpeed) ui.active.selectSpeed.onchange = (e) => state.ttsSpeed = e.target.value;
-    if (ui.active.selectVoice) ui.active.selectVoice.onchange = (e) => state.voice = e.target.value;
-    if (ui.active.selectLeader) ui.active.selectLeader.onchange = (e) => state.leaderMode = e.target.value;
-
+    ui.active.btnNextStep.onclick = nextPhrase;
+    ui.active.btnRetryStep.onclick = () => {
+        ui.active.feedback.classList.add('hidden');
+        renderPhrase();
+    };
+    ui.active.btnRelisten.onclick = () => {
+        if (state.audioUrl) {
+            const audio = new Audio(state.audioUrl);
+            audio.play();
+        }
+    };
+    ui.active.btnSavePhrase.onclick = toggleSavePhrase;
     if (ui.btnWatchAd) ui.btnWatchAd.onclick = simulateAd;
     if (ui.btnRedeem) ui.btnRedeem.onclick = handleRedeem;
 }
 
+function toggleSavePhrase() {
+    const p = state.currentLesson.phrases[state.currentPhraseIndex];
+    const idx = state.savedPhrases.findIndex(x => x.en === p.en);
+    if (idx > -1) {
+        state.savedPhrases.splice(idx, 1);
+        ui.active.btnSavePhrase.textContent = '☆';
+    } else {
+        state.savedPhrases.push({...p});
+        ui.active.btnSavePhrase.textContent = '⭐';
+    }
+    saveState();
+}
+
+function resumeLearning() {
+    const next = state.lessons.find(l => !state.completedLessons.includes(l.id));
+    if (next) startLesson(next.id);
+    else alert("Congrats! Everything is mastered.");
+}
+
 async function handleRedeem() {
-    if (!ui.inputRedeem) return;
     const code = ui.inputRedeem.value.trim();
     if (!code) return;
-    
     try {
         const res = await fetch('/api/admin', {
             method: 'POST',
@@ -201,81 +264,100 @@ async function handleRedeem() {
         const data = await res.json();
         if (data.success) {
             state.isPremium = true;
-            alert("Premium features successfully activated!");
+            alert("Unlocked! Enjoy Tr. Adrian Premium.");
             ui.inputRedeem.value = '';
             closeAllModals();
             renderLessons();
             saveState();
-        } else {
-            alert(data.error || "Invalid code");
-        }
-    } catch (e) { alert("Service unavailable"); }
+        } else alert(data.error || "Invalid Code");
+    } catch(e) { alert("Service error"); }
 }
 
 function renderLessons() {
     if (!ui.lessonList) return;
-    
+    if (state.currentType === 'memory') { renderMemoryBank(); return; }
+
     let filtered = state.lessons || [];
-    if (state.currentType !== 'all') {
-        filtered = filtered.filter(l => l.type === state.currentType);
-    }
-    
-    if (ui.lessonSearch) {
-        const query = ui.lessonSearch.value.toLowerCase();
-        if (query) {
-            filtered = filtered.filter(l => l.topic.toLowerCase().includes(query));
-        }
-    }
+    if (state.currentType !== 'all') filtered = filtered.filter(l => l.type === state.currentType);
+    const query = ui.lessonSearch?.value.toLowerCase();
+    if (query) filtered = filtered.filter(l => l.topic.toLowerCase().includes(query));
 
-    if (filtered.length === 0) {
-        ui.lessonList.innerHTML = '<div style="padding:20px; color:#afafaf;">No lessons found.</div>';
-        return;
-    }
-
-    ui.lessonList.innerHTML = filtered.map(l => {
+    let html = '';
+    filtered.forEach((l, index) => {
+        if (index % 10 === 0) html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
+        
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
         
-        let statusText = '50 Mastery Phrases';
-        if (isAdrian && !state.isPremium) statusText = 'Premium Activation Required ⭐';
-        else if (isLocked) statusText = 'Unlock with 5s Ad';
+        let status = '50 Shadowing Phrases';
+        if (isAdrian && !state.isPremium) status = 'Premium Activation Required ⭐';
+        else if (isLocked) status = 'Watch 5s Ad to Unlock 📺';
+        else if (isCompleted) status = 'Mastered - Keep it up! ✅';
 
-        return `
+        html += `
             <div class="topic-card ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
                 <div class="topic-icon">${isCompleted ? '✅' : l.icon}</div>
                 <div class="topic-info">
-                    <div class="topic-type-tag">${l.type} ${isAdrian ? '⭐' : ''}</div>
+                    <div class="topic-type-tag ${l.type}">${l.type}</div>
                     <h4>${l.topic}</h4>
-                    <p>${statusText}</p>
+                    <p>${status}</p>
                 </div>
             </div>
         `;
-    }).join('');
+    });
+    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No lessons found in this section.</div>';
 }
+
+function renderMemoryBank() {
+    if (state.savedPhrases.length === 0) {
+        ui.lessonList.innerHTML = `
+            <div style="padding:80px 40px; text-align:center;">
+                <div style="font-size:4rem; margin-bottom:20px;">⭐</div>
+                <h3 style="color:#4b4b4b; margin-bottom:10px;">Memory Bank is Empty</h3>
+                <p style="color:#aaa; font-weight:600; line-height:1.5;">Difficult phrases you save during practice will appear here for review.</p>
+            </div>`;
+        return;
+    }
+    
+    let html = '<div class="unit-header">YOUR SAVED PHRASES</div>';
+    state.savedPhrases.forEach((p, i) => {
+        html += `
+            <div class="memory-item">
+                <div class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="cursor:pointer; background:var(--secondary); color:white; border:none; width:50px; height:50px; font-size:1.4rem;">🔊</div>
+                <div class="topic-info">
+                    <h4 style="font-size:1.1rem; color:#4b4b4b;">${p.en}</h4>
+                    <p style="color:#777; font-weight:600; margin-top:4px;">${p.my || p.mission || ''}</p>
+                </div>
+                <div onclick="removeSavedPhrase(${i})" style="cursor:pointer; font-size:1.4rem; color:#ff4b4b; padding:5px;">✕</div>
+            </div>
+        `;
+    });
+    ui.lessonList.innerHTML = html;
+}
+
+window.removeSavedPhrase = (i) => {
+    state.savedPhrases.splice(i, 1);
+    saveState();
+    renderMemoryBank();
+};
 
 function startLesson(id) {
     const lesson = state.lessons.find(l => l.id === id);
     if (!lesson) return;
-
     const isAdrian = lesson.topic.toLowerCase().includes("adrian") || lesson.topic.toLowerCase().includes("teacher");
 
     if (isAdrian && !state.isPremium) {
-        const el = document.getElementById('modal-adrian');
-        if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
+        const el = document.getElementById('modal-adrian'); el.classList.remove('hidden'); el.style.display = 'flex';
         return;
     }
-
     if (id > 5 && !state.unlockedLessons.includes(id) && !state.isPremium) {
         state.pendingLessonId = id;
-        const el = document.getElementById('modal-ad');
-        if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
+        const el = document.getElementById('modal-ad'); el.classList.remove('hidden'); el.style.display = 'flex';
         return;
     }
-    
     if (state.userEnergy < 1) {
-        const el = document.getElementById('modal-energy');
-        if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
+        const el = document.getElementById('modal-energy'); el.classList.remove('hidden'); el.style.display = 'flex';
         return;
     }
 
@@ -284,24 +366,19 @@ function startLesson(id) {
     state.startTime = Date.now();
     state.userEnergy--;
     state.lastEnergyUpdate = Date.now();
-    
     switchScreen('active');
     renderPhrase();
     updateHUD();
 }
 
 function simulateAd() {
-    if (!ui.btnWatchAd) return;
     ui.btnWatchAd.disabled = true;
     let count = 5;
     const timer = setInterval(() => {
-        ui.btnWatchAd.textContent = `Unlocking in ${count}s...`;
-        count--;
-        if (count < 0) {
+        ui.btnWatchAd.textContent = `Unlocking... ${count}s`;
+        if (count-- < 0) {
             clearInterval(timer);
-            if (!state.unlockedLessons.includes(state.pendingLessonId)) {
-                state.unlockedLessons.push(state.pendingLessonId);
-            }
+            if (!state.unlockedLessons.includes(state.pendingLessonId)) state.unlockedLessons.push(state.pendingLessonId);
             ui.btnWatchAd.disabled = false;
             ui.btnWatchAd.textContent = "Watch Ad (5s)";
             closeAllModals();
@@ -314,19 +391,35 @@ function simulateAd() {
 
 function renderPhrase() {
     const p = state.currentLesson.phrases[state.currentPhraseIndex];
-    if (ui.active.counter) ui.active.counter.textContent = state.currentPhraseIndex + 1;
+    ui.active.counter.textContent = state.currentPhraseIndex + 1;
     
-    if (state.currentLesson.type === 'challenge') {
+    const isSaved = state.savedPhrases.some(x => x.en === p.en);
+    ui.active.btnSavePhrase.textContent = isSaved ? '⭐' : '☆';
+
+    ui.active.grammarNote.classList.add('hidden');
+    ui.active.translation.classList.remove('hidden');
+    ui.active.btnListen.classList.remove('hidden');
+    
+    if (state.currentLesson.type === 'grammar') {
+        ui.active.grammarNote.classList.remove('hidden');
+        ui.active.grammarNote.innerHTML = `<strong>Curriculum Note:</strong> ${state.currentLesson.explanation || 'Master the structure below.'}`;
+    }
+    
+    if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
+        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br><span style="font-size:0.9rem; opacity:0.8;">Listen carefully and repeat perfectly.</span></div>`;
+        ui.active.translation.classList.add('hidden');
+    } else if (state.currentLesson.type === 'challenge') {
         ui.active.karaoke.innerHTML = `<div class="mission-box">${p.mission}</div>`;
         ui.active.translation.textContent = p.context;
     } else {
-        ui.active.karaoke.innerHTML = p.en.split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
+        ui.active.karaoke.innerHTML = p.en.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
         ui.active.translation.textContent = p.my;
         playTTS(p.en);
     }
-
+    
     ui.active.feedback.classList.add('hidden');
     ui.active.btnNextStep.classList.add('hidden');
+    ui.active.btnRetryStep.classList.add('hidden');
     ui.active.btnRecord.classList.remove('hidden');
     updateHUD();
 }
@@ -339,25 +432,24 @@ async function handleRecord() {
         const chunks = [];
         state.isRecording = true;
         ui.active.btnRecord.classList.add('recording');
-        ui.active.btnRecord.textContent = "Stop";
+        ui.active.btnRecord.textContent = "Recording...";
         mediaRecorder.ondataavailable = e => chunks.push(e.data);
         mediaRecorder.onstop = async () => {
             state.isRecording = false;
             ui.active.btnRecord.classList.remove('recording');
             ui.active.btnRecord.textContent = "Analyzing...";
-            const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            if (state.audioUrl) URL.revokeObjectURL(state.audioUrl);
+            state.audioUrl = URL.createObjectURL(blob);
             const formData = new FormData();
-            formData.append('audio', audioBlob);
+            formData.append('audio', blob);
             const phrase = state.currentLesson.phrases[state.currentPhraseIndex];
             try {
                 if (state.currentLesson.type === 'challenge') {
                     formData.append('scenario', phrase.mission);
-                    formData.append('history', JSON.stringify([]));
+                    formData.append('history', '[]');
                     formData.append('userRole', 'Student');
                     formData.append('aiRole', 'Teacher Adrian');
-                    formData.append('leaderMode', state.leaderMode);
-                    formData.append('startTime', state.startTime);
-                    formData.append('duration', "30");
                     const res = await fetch('/api/chat', { method: 'POST', body: formData });
                     showChallengeFeedback(await res.json());
                 } else {
@@ -365,34 +457,56 @@ async function handleRecord() {
                     const res = await fetch('/api/score', { method: 'POST', body: formData });
                     showPhraseFeedback(await res.json());
                 }
-            } catch (e) { alert("Connection error."); ui.active.btnRecord.textContent = "🎤 Record"; }
+            } catch (e) { alert("Net Error"); ui.active.btnRecord.textContent = "🎤 Record"; }
         };
         mediaRecorder.start();
-    } catch (e) { alert("Microphone access denied."); }
+    } catch (e) { alert("Mic Access Denied"); }
 }
 
 function showPhraseFeedback(data) {
-    const isPassed = data.passed || data.score > 70;
+    const isPassed = data.score > (state.currentLesson.type === 'exam' ? 85 : 70);
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "✅" : "❌";
-    ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Try Again";
+    ui.active.feedbackLabel.textContent = isPassed ? "Pass!" : "Keep Trying";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
-    if (isPassed) { ui.active.btnNextStep.classList.remove('hidden'); ui.active.btnRecord.classList.add('hidden'); }
+    
+    if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
+        const p = state.currentLesson.phrases[state.currentPhraseIndex];
+        ui.active.karaoke.innerHTML = p.en.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
+        ui.active.translation.textContent = p.my;
+        ui.active.translation.classList.remove('hidden');
+    }
+
+    if (isPassed) { 
+        ui.active.btnNextStep.classList.remove('hidden'); 
+        ui.active.btnRetryStep.classList.add('hidden');
+        ui.active.btnRecord.classList.add('hidden'); 
+    } else {
+        ui.active.btnNextStep.classList.add('hidden');
+        ui.active.btnRetryStep.classList.remove('hidden');
+    }
 }
 
 function showChallengeFeedback(data) {
     const isPassed = data.score > 60;
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "🎯" : "⚠️";
-    ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Keep Talking";
+    ui.active.feedbackLabel.textContent = isPassed ? "Good!" : "Not Quite";
     ui.active.correction.innerHTML = `"${data.userText}"`;
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
-    if (isPassed) { ui.active.btnNextStep.classList.remove('hidden'); ui.active.btnRecord.classList.add('hidden'); }
+    if (isPassed) { 
+        ui.active.btnNextStep.classList.remove('hidden'); 
+        ui.active.btnRetryStep.classList.add('hidden');
+        ui.active.btnRecord.classList.add('hidden'); 
+    } else {
+        ui.active.btnNextStep.classList.add('hidden');
+        ui.active.btnRetryStep.classList.remove('hidden');
+    }
 }
 
 function nextPhrase() {
@@ -407,7 +521,6 @@ function completeLesson() {
     if (!state.completedLessons.includes(state.currentLesson.id)) state.completedLessons.push(state.currentLesson.id);
     gainExp(100);
     switchScreen('lessons');
-    renderLessons();
     saveState();
 }
 
@@ -427,19 +540,24 @@ async function playTTS(text) {
         const audio = new Audio("data:audio/mp3;base64," + data.audio);
         if (data.alignment && state.currentLesson?.type !== 'challenge') {
             const words = ui.active.karaoke.querySelectorAll('.word');
+            let lastIdx = -1;
             audio.ontimeupdate = () => {
                 const cur = audio.currentTime;
-                data.alignment.forEach((align, i) => {
-                    if (cur >= align.start && cur <= align.end) {
-                        words.forEach(w => w.classList.remove('active'));
-                        if (words[i]) words[i].classList.add('active');
-                    }
-                });
+                const activeIdx = data.alignment.findIndex(align => cur >= align.start && cur <= align.end);
+                if (activeIdx !== lastIdx && activeIdx !== -1) {
+                    words.forEach((w, i) => {
+                        w.classList.remove('active');
+                        if (i < activeIdx) w.classList.add('played');
+                    });
+                    if (words[activeIdx]) words[activeIdx].classList.add('active');
+                    lastIdx = activeIdx;
+                }
             };
+            audio.onended = () => { words.forEach(w => { w.classList.remove('active'); w.classList.remove('played'); }); };
         }
         audio.play();
     } catch (e) {}
 }
 
 window.closeAllModals = closeAllModals;
-window.onload = init;
+window.onload = () => init();
