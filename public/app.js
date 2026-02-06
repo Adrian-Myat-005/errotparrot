@@ -1,4 +1,3 @@
-
 const state = {
     lessons: [],
     unlockedLessons: [1, 2, 3, 4, 5],
@@ -14,16 +13,14 @@ const state = {
     lastLessonId: null,
     chatHistory: [],
     
-    // Daily Quota System
     userLevel: 1,
     userExp: 0,
     userEnergy: 50,
-    lastRefillDate: null, // Track the date of last energy reset
+    lastRefillDate: null,
     totalXp: 0,
     streak: 0,
     lastActiveDay: null,
     
-    // Settings
     ttsSpeed: '1.0',
     voice: 'male',
     leaderMode: 'ai',
@@ -45,10 +42,16 @@ function closeAllModals() {
 function switchScreen(name) {
     ['screen-lessons', 'screen-active'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
+        if (el) {
+            el.classList.add('hidden');
+            el.style.display = 'none';
+        }
     });
     const target = document.getElementById('screen-' + name);
-    if (target) target.classList.remove('hidden');
+    if (target) {
+        target.classList.remove('hidden');
+        target.style.display = 'flex';
+    }
     
     const backBtn = document.getElementById('btn-back-main');
     if (backBtn) {
@@ -62,7 +65,8 @@ function switchScreen(name) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+async function init() {
+    // 1. Initialize UI references
     ui = {
         progressBar: document.getElementById('progress-bar'),
         hudEnergy: document.getElementById('hud-energy'),
@@ -103,42 +107,50 @@ document.addEventListener('DOMContentLoaded', () => {
         inputRedeem: document.getElementById('input-redeem'),
         btnRedeem: document.getElementById('btn-redeem')
     };
-    init();
-});
 
-async function init() {
+    // 2. Load and Refill
     loadState();
-    checkDailyRefill(); // Handle 50 energy per day quota
+    checkDailyRefill();
     updateStreak();
+    
+    // 3. Force UI state
     closeAllModals();
     switchScreen('lessons');
     
+    // 4. Load Data with Cache Busting
     try {
-        const res = await fetch('lessons.json');
-        if (!res.ok) throw new Error("Net Error");
+        const res = await fetch('lessons.json?v=' + Date.now());
+        if (!res.ok) throw new Error("Network Response Not OK");
         state.lessons = await res.json();
         renderLessons();
         renderDashboard();
     } catch (e) {
-        console.error("Lessons failed", e);
+        console.error("Critical Load Error:", e);
+        if (ui.lessonList) ui.lessonList.innerHTML = `<div style="padding:40px; color:red; text-align:center;"><h3>Unable to load lessons</h3><p>${e.message}</p><button onclick="location.reload()" class="btn-main">Tap to Retry</button></div>`;
     }
     
+    // 5. Setup loop and events
     updateHUD();
     bindEvents();
+    setInterval(energyLoop, 60000);
 }
 
 function loadState() {
-    const saved = localStorage.getItem('errorparrot_master_v1');
-    if (saved) {
-        try {
+    try {
+        const saved = localStorage.getItem('errorparrot_master_v1');
+        if (saved) {
             const data = JSON.parse(saved);
-            Object.assign(state, data);
-        } catch(e) {}
-    }
+            Object.keys(data).forEach(key => {
+                if (state[key] !== undefined) state[key] = data[key];
+            });
+        }
+    } catch(e) {}
+    
+    // Safety Fallbacks
     if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = [1, 2, 3, 4, 5];
     if (typeof state.isPremium !== 'boolean') state.isPremium = false;
-    if (!state.savedPhrases) state.savedPhrases = [];
     if (!state.lessonProgress) state.lessonProgress = {};
+    if (!state.savedPhrases) state.savedPhrases = [];
 }
 
 function saveState() {
@@ -155,7 +167,7 @@ function saveState() {
 function checkDailyRefill() {
     const today = new Date().toDateString();
     if (state.lastRefillDate !== today) {
-        state.userEnergy = 50; // Daily quota refill
+        state.userEnergy = 50;
         state.lastRefillDate = today;
         saveState();
     }
@@ -191,10 +203,22 @@ function updateHUD() {
     if (ui.hudEnergy) ui.hudEnergy.textContent = state.userEnergy;
     if (ui.hudLvl) ui.hudLvl.textContent = state.userLevel;
     if (ui.progressBar) {
-        let p = 0;
-        if (state.currentLesson) p = (state.currentPhraseIndex / 50) * 100;
-        else p = (state.userExp / (state.userLevel * 200)) * 100;
+        let p = state.currentLesson ? (state.currentPhraseIndex / 50) * 100 : (state.userExp / (state.userLevel * 200)) * 100;
         ui.progressBar.style.width = Math.min(100, p) + '%';
+    }
+}
+
+function energyLoop() {
+    if (state.userEnergy < 50) {
+        const now = Date.now();
+        const elapsed = now - state.lastEnergyUpdate;
+        const gain = Math.floor(elapsed / 600000);
+        if (gain > 0) {
+            state.userEnergy = Math.min(50, state.userEnergy + gain);
+            state.lastEnergyUpdate = now;
+            updateHUD();
+            saveState();
+        }
     }
 }
 
@@ -204,7 +228,7 @@ function bindEvents() {
     if (ui.dashboard.btnResume) ui.dashboard.btnResume.onclick = resumeLearning;
     if (ui.dashboard.btnShowActivation) ui.dashboard.btnShowActivation.onclick = () => {
         const el = document.getElementById('modal-adrian');
-        el.classList.remove('hidden'); el.style.display = 'flex';
+        if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
     };
 
     if (ui.lessonSearch) ui.lessonSearch.oninput = () => renderLessons();
@@ -232,7 +256,6 @@ function bindEvents() {
     ui.active.btnSavePhrase.onclick = toggleSavePhrase;
     if (ui.btnWatchAd) ui.btnWatchAd.onclick = simulateAd;
     if (ui.btnRedeem) ui.btnRedeem.onclick = handleRedeem;
-    if (ui.active.selectDuration) ui.active.selectDuration.onchange = (e) => state.sessionDuration = e.target.value;
 }
 
 function toggleSavePhrase() {
@@ -272,13 +295,12 @@ async function handleRedeem() {
         const data = await res.json();
         if (data.success) {
             state.isPremium = true;
-            alert("Unlocked! Enjoy Tr. Adrian Premium.");
-            ui.inputRedeem.value = '';
+            alert("Success! Tr. Adrian Unlocked.");
             closeAllModals();
             renderLessons();
             saveState();
         } else alert(data.error || "Invalid Code");
-    } catch(e) { alert("Service error"); }
+    } catch(e) { alert("Network error"); }
 }
 
 function renderLessons() {
@@ -297,67 +319,45 @@ function renderLessons() {
 
     let html = '';
     filtered.forEach((l, index) => {
-        // Only show Unit Header in "All Path" or when not filtering by specific type
-        if (state.currentType === 'all' && index % 10 === 0) {
-            html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
-        }
+        if (state.currentType === 'all' && index % 10 === 0) html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
         
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
         const progress = state.lessonProgress[l.id] || 0;
         
-        let status = progress > 0 ? `Resume at ${progress+1}/50` : '50 Shadowing Phrases';
+        let status = progress > 0 ? `Resume at Step ${progress+1}` : '50 Practice Phrases';
         if (isAdrian && !state.isPremium) status = 'Premium Activation Required ⭐';
-        else if (isLocked) status = 'Watch 5s Ad to Unlock 📺';
-        else if (isCompleted) status = 'Mastered - Keep it up! ✅';
+        else if (isLocked) status = 'Watch Ad to Unlock 📺';
+        else if (isCompleted) status = 'Mastered ✅';
 
         html += `
             <div class="topic-card ${isAdrian ? 'premium-teacher' : ''} ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
                 <div class="topic-icon">${isAdrian ? '👨‍🏫' : (isCompleted ? '✅' : l.icon)}</div>
                 <div class="topic-info">
-                    <div class="topic-type-tag ${l.type}">${l.type} ${isAdrian ? 'PREMIUM' : ''}</div>
+                    <div class="topic-type-tag ${l.type}">${l.type}</div>
                     <h4>${l.topic}</h4>
                     <p>${status}</p>
                 </div>
             </div>
         `;
     });
-    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No lessons found.</div>';
+    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No content found.</div>';
 }
 
 function renderMemoryBank() {
     if (state.savedPhrases.length === 0) {
-        ui.lessonList.innerHTML = `
-            <div style="padding:80px 40px; text-align:center;">
-                <div style="font-size:4rem; margin-bottom:20px;">⭐</div>
-                <h3 style="color:#4b4b4b; margin-bottom:10px;">Memory Bank is Empty</h3>
-                <p style="color:#aaa; font-weight:600; line-height:1.5;">Difficult phrases you save during practice will appear here.</p>
-            </div>`;
+        ui.lessonList.innerHTML = `<div style="padding:80px 40px; text-align:center;"><div style="font-size:4rem; margin-bottom:20px;">⭐</div><h3 style="color:#4b4b4b;">Memory Bank is Empty</h3></div>`;
         return;
     }
-    
-    let html = '<div class="unit-header">YOUR SAVED PHRASES</div>';
+    let html = '<div class="unit-header">SAVED FOR REVIEW</div>';
     state.savedPhrases.forEach((p, i) => {
-        html += `
-            <div class="memory-item">
-                <div class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="cursor:pointer; background:var(--secondary); color:white; border:none; width:50px; height:50px; font-size:1.4rem;">🔊</div>
-                <div class="topic-info">
-                    <h4 style="font-size:1.1rem; color:#4b4b4b;">${p.en}</h4>
-                    <p style="color:#777; font-weight:600; margin-top:4px;">${p.my || p.mission || ''}</p>
-                </div>
-                <div onclick="removeSavedPhrase(${i})" style="cursor:pointer; font-size:1.4rem; color:#ff4b4b; padding:5px;">✕</div>
-            </div>
-        `;
+        html += `<div class="memory-item"><div class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--secondary); color:white; border:none; width:50px; height:50px; font-size:1.4rem;">🔊</div><div class="topic-info"><h4>${p.en}</h4><p>${p.my || ''}</p></div><div onclick="removeSavedPhrase(${i})" style="color:#ff4b4b; padding:10px;">✕</div></div>`;
     });
     ui.lessonList.innerHTML = html;
 }
 
-window.removeSavedPhrase = (i) => {
-    state.savedPhrases.splice(i, 1);
-    saveState();
-    renderMemoryBank();
-};
+window.removeSavedPhrase = (i) => { state.savedPhrases.splice(i, 1); saveState(); renderMemoryBank(); };
 
 function startLesson(id) {
     const lesson = state.lessons.find(l => l.id === id);
@@ -365,30 +365,32 @@ function startLesson(id) {
     const isAdrian = lesson.topic.toLowerCase().includes("adrian") || lesson.topic.toLowerCase().includes("teacher");
 
     if (isAdrian && !state.isPremium) {
-        const el = document.getElementById('modal-adrian'); el.classList.remove('hidden'); el.style.display = 'flex';
+        const el = document.getElementById('modal-adrian');
+        if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
         return;
     }
     if (id > 5 && !state.unlockedLessons.includes(id) && !state.isPremium) {
         state.pendingLessonId = id;
-        const el = document.getElementById('modal-ad'); el.classList.remove('hidden'); el.style.display = 'flex';
+        const el = document.getElementById('modal-ad');
+        if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
         return;
     }
     if (state.userEnergy < 1) {
-        const el = document.getElementById('modal-energy'); el.classList.remove('hidden'); el.style.display = 'flex';
+        const el = document.getElementById('modal-energy');
+        if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
         return;
     }
 
     state.currentLesson = lesson;
     state.lastLessonId = id;
     state.currentPhraseIndex = state.lessonProgress[id] || 0;
-    state.chatHistory = []; // Reset history for new session
+    state.chatHistory = [];
     state.startTime = Date.now();
     state.userEnergy--;
     state.lastEnergyUpdate = Date.now();
     switchScreen('active');
     renderPhrase();
     updateHUD();
-    saveState();
 }
 
 function simulateAd() {
@@ -410,33 +412,27 @@ function simulateAd() {
 }
 
 function renderPhrase() {
+    if (!state.currentLesson) return;
     const p = state.currentLesson.phrases[state.currentPhraseIndex];
-    ui.active.counter.textContent = state.currentPhraseIndex + 1;
+    if (ui.active.counter) ui.active.counter.textContent = state.currentPhraseIndex + 1;
     
-    const isSaved = state.savedPhrases.some(x => x.en === p.en);
-    ui.active.btnSavePhrase.textContent = isSaved ? '⭐' : '☆';
-
     ui.active.grammarNote.classList.add('hidden');
     ui.active.translation.classList.remove('hidden');
     ui.active.chatHistory.classList.add('hidden');
-    ui.active.btnListen.classList.remove('hidden');
     
-    const isAdrian = state.currentLesson.topic.toLowerCase().includes("adrian");
-
     if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
-        ui.active.grammarNote.innerHTML = `<strong>Curriculum Note:</strong> ${state.currentLesson.explanation || 'Master the structure.'}`;
+        ui.active.grammarNote.innerHTML = `<strong>Grammar Tip:</strong> ${state.currentLesson.explanation || 'Study the structure below.'}`;
     }
     
     if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br><span style="font-size:0.9rem; opacity:0.8;">Listen and repeat perfectly.</span></div>`;
+        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br>Repeat after hearing.</div>`;
         ui.active.translation.classList.add('hidden');
     } else if (state.currentLesson.type === 'challenge') {
         ui.active.karaoke.innerHTML = `<div class="mission-box">${p.mission}</div>`;
         ui.active.translation.textContent = p.context;
-        if (isAdrian) {
+        if (state.currentLesson.topic.toLowerCase().includes("adrian")) {
             ui.active.chatHistory.classList.remove('hidden');
-            if (!Array.isArray(state.chatHistory)) state.chatHistory = [];
             renderChatHistory();
         }
     } else {
@@ -453,6 +449,7 @@ function renderPhrase() {
 }
 
 function renderChatHistory() {
+    if (!ui.active.chatHistory) return;
     if (state.chatHistory.length === 0) {
         ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:10px;">Start speaking to begin the conversation...</div>';
         return;
@@ -475,12 +472,12 @@ async function handleRecord() {
         const chunks = [];
         state.isRecording = true;
         ui.active.btnRecord.classList.add('recording');
-        ui.active.btnRecord.textContent = "Stop";
+        ui.active.btnRecord.textContent = "STOP";
         mediaRecorder.ondataavailable = e => chunks.push(e.data);
         mediaRecorder.onstop = async () => {
             state.isRecording = false;
             ui.active.btnRecord.classList.remove('recording');
-            ui.active.btnRecord.textContent = "Analyzing...";
+            ui.active.btnRecord.textContent = "RECORD";
             const blob = new Blob(chunks, { type: 'audio/webm' });
             if (state.audioUrl) URL.revokeObjectURL(state.audioUrl);
             state.audioUrl = URL.createObjectURL(blob);
@@ -491,16 +488,11 @@ async function handleRecord() {
 
             try {
                 if (state.currentLesson.type === 'challenge') {
-                    formData.append('scenario', isAdrian ? "Conversation with Teacher Adrian about: " + phrase.mission : phrase.mission);
+                    formData.append('scenario', phrase.mission);
                     formData.append('history', JSON.stringify(state.chatHistory));
-                    formData.append('userRole', 'Student');
-                    formData.append('aiRole', isAdrian ? 'Teacher Adrian' : 'Partner');
                     formData.append('duration', state.sessionDuration);
-                    formData.append('startTime', state.startTime);
-                    
                     const res = await fetch('/api/chat', { method: 'POST', body: formData });
                     const data = await res.json();
-                    
                     state.chatHistory.push({ role: 'user', content: data.userText });
                     state.chatHistory.push({ role: 'assistant', content: data.aiResponse });
                     renderChatHistory();
@@ -511,21 +503,20 @@ async function handleRecord() {
                     const res = await fetch('/api/score', { method: 'POST', body: formData });
                     showPhraseFeedback(await res.json());
                 }
-            } catch (e) { alert("Net Error"); ui.active.btnRecord.textContent = "🎤 Record"; }
+            } catch (e) { alert("Mic error or Network error"); }
         };
         mediaRecorder.start();
-    } catch (e) { alert("Mic Denied"); }
+    } catch (e) { alert("Mic Access Denied"); }
 }
 
 function showPhraseFeedback(data) {
     const isPassed = data.score > (state.currentLesson.type === 'exam' ? 85 : 70);
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "✅" : "❌";
-    ui.active.feedbackLabel.textContent = isPassed ? "Pass!" : "Keep Trying";
+    ui.active.feedbackLabel.textContent = isPassed ? "Well Done!" : "Keep Practicing";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
-    ui.active.btnRecord.textContent = "🎤 Record";
     if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
         const p = state.currentLesson.phrases[state.currentPhraseIndex];
         ui.active.karaoke.innerHTML = p.en.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
@@ -540,11 +531,10 @@ function showChallengeFeedback(data) {
     const isPassed = data.score > 60;
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "🎯" : "⚠️";
-    ui.active.feedbackLabel.textContent = isPassed ? "Good!" : "Not Quite";
+    ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Not Quite";
     ui.active.correction.innerHTML = `"${data.userText}"`;
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
-    ui.active.btnRecord.textContent = "🎤 Record";
     if (isPassed) { ui.active.btnNextStep.classList.remove('hidden'); ui.active.btnRetryStep.classList.add('hidden'); ui.active.btnRecord.classList.add('hidden'); }
     else { ui.active.btnNextStep.classList.add('hidden'); ui.active.btnRetryStep.classList.remove('hidden'); }
 }
@@ -563,7 +553,7 @@ function nextPhrase() {
 }
 
 function completeLesson() {
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     if (!state.completedLessons.includes(state.currentLesson.id)) state.completedLessons.push(state.currentLesson.id);
     gainExp(100);
     switchScreen('lessons');
@@ -606,4 +596,4 @@ async function playTTS(text) {
 }
 
 window.closeAllModals = closeAllModals;
-window.onload = () => init();
+document.addEventListener('DOMContentLoaded', init);
