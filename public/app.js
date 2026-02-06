@@ -2,6 +2,7 @@ const state = {
     lessons: [],
     unlockedLessons: [1, 2, 3, 4, 5],
     completedLessons: [],
+    lessonProgress: {},
     savedPhrases: [],
     currentLesson: null,
     currentPhraseIndex: 0,
@@ -9,6 +10,8 @@ const state = {
     audioBlob: null,
     audioUrl: null,
     isPremium: false,
+    lastLessonId: null,
+    chatHistory: [], // MEMORY for Tr. Adrian sessions
     
     // Stats
     userLevel: 1,
@@ -51,7 +54,6 @@ function switchScreen(name) {
         else backBtn.classList.remove('hidden');
     }
     if (name === 'lessons') {
-        state.currentLesson = null;
         renderDashboard();
         renderLessons();
     }
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             grammarNote: document.getElementById('grammar-note'),
             karaoke: document.getElementById('karaoke-text'),
             translation: document.getElementById('translation-text'),
+            chatHistory: document.getElementById('chat-history'),
             feedback: document.getElementById('feedback-overlay'),
             feedbackIcon: document.getElementById('feedback-icon'),
             feedbackLabel: document.getElementById('feedback-label'),
@@ -107,13 +110,10 @@ async function init() {
     
     try {
         const res = await fetch('lessons.json');
-        if (!res.ok) throw new Error("Net Error");
         state.lessons = await res.json();
         renderLessons();
         renderDashboard();
-    } catch (e) {
-        console.error("Lessons failed", e);
-    }
+    } catch (e) {}
     
     updateHUD();
     bindEvents();
@@ -131,6 +131,7 @@ function loadState() {
     if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = [1, 2, 3, 4, 5];
     if (typeof state.isPremium !== 'boolean') state.isPremium = false;
     if (!state.savedPhrases) state.savedPhrases = [];
+    if (!state.lessonProgress) state.lessonProgress = {};
 }
 
 function saveState() {
@@ -140,6 +141,7 @@ function saveState() {
     delete toSave.isRecording;
     delete toSave.audioBlob;
     delete toSave.audioUrl;
+    delete toSave.chatHistory; // Don't persist current chat history
     localStorage.setItem('errorparrot_master_v1', JSON.stringify(toSave));
 }
 
@@ -195,8 +197,7 @@ function energyLoop() {
 }
 
 function bindEvents() {
-    const backBtn = document.getElementById('btn-back-main');
-    if (backBtn) backBtn.onclick = () => switchScreen('lessons');
+    document.getElementById('btn-back-main').onclick = () => switchScreen('lessons');
     if (ui.dashboard.btnResume) ui.dashboard.btnResume.onclick = resumeLearning;
     if (ui.dashboard.btnShowActivation) ui.dashboard.btnShowActivation.onclick = () => {
         const el = document.getElementById('modal-adrian');
@@ -223,10 +224,7 @@ function bindEvents() {
         renderPhrase();
     };
     ui.active.btnRelisten.onclick = () => {
-        if (state.audioUrl) {
-            const audio = new Audio(state.audioUrl);
-            audio.play();
-        }
+        if (state.audioUrl) (new Audio(state.audioUrl)).play();
     };
     ui.active.btnSavePhrase.onclick = toggleSavePhrase;
     if (ui.btnWatchAd) ui.btnWatchAd.onclick = simulateAd;
@@ -247,9 +245,15 @@ function toggleSavePhrase() {
 }
 
 function resumeLearning() {
+    if (state.lastLessonId) {
+        const last = state.lessons.find(l => l.id === state.lastLessonId);
+        if (last && !state.completedLessons.includes(last.id)) {
+            startLesson(last.id);
+            return;
+        }
+    }
     const next = state.lessons.find(l => !state.completedLessons.includes(l.id));
     if (next) startLesson(next.id);
-    else alert("Congrats! Everything is mastered.");
 }
 
 async function handleRedeem() {
@@ -289,24 +293,25 @@ function renderLessons() {
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
+        const progress = state.lessonProgress[l.id] || 0;
         
-        let status = '50 Shadowing Phrases';
+        let status = progress > 0 ? `Resume at ${progress+1}/50` : '50 Shadowing Phrases';
         if (isAdrian && !state.isPremium) status = 'Premium Activation Required ⭐';
         else if (isLocked) status = 'Watch 5s Ad to Unlock 📺';
         else if (isCompleted) status = 'Mastered - Keep it up! ✅';
 
         html += `
-            <div class="topic-card ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
-                <div class="topic-icon">${isCompleted ? '✅' : l.icon}</div>
+            <div class="topic-card ${isAdrian ? 'premium-teacher' : ''} ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
+                <div class="topic-icon">${isAdrian ? '👨‍🏫' : (isCompleted ? '✅' : l.icon)}</div>
                 <div class="topic-info">
-                    <div class="topic-type-tag ${l.type}">${l.type}</div>
+                    <div class="topic-type-tag ${l.type}">${l.type} ${isAdrian ? 'PREMIUM' : ''}</div>
                     <h4>${l.topic}</h4>
                     <p>${status}</p>
                 </div>
             </div>
         `;
     });
-    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No lessons found in this section.</div>';
+    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No lessons found.</div>';
 }
 
 function renderMemoryBank() {
@@ -315,7 +320,7 @@ function renderMemoryBank() {
             <div style="padding:80px 40px; text-align:center;">
                 <div style="font-size:4rem; margin-bottom:20px;">⭐</div>
                 <h3 style="color:#4b4b4b; margin-bottom:10px;">Memory Bank is Empty</h3>
-                <p style="color:#aaa; font-weight:600; line-height:1.5;">Difficult phrases you save during practice will appear here for review.</p>
+                <p style="color:#aaa; font-weight:600; line-height:1.5;">Difficult phrases you save during practice will appear here.</p>
             </div>`;
         return;
     }
@@ -362,13 +367,16 @@ function startLesson(id) {
     }
 
     state.currentLesson = lesson;
-    state.currentPhraseIndex = 0;
+    state.lastLessonId = id;
+    state.currentPhraseIndex = state.lessonProgress[id] || 0;
+    state.chatHistory = []; // Reset history for new session
     state.startTime = Date.now();
     state.userEnergy--;
     state.lastEnergyUpdate = Date.now();
     switchScreen('active');
     renderPhrase();
     updateHUD();
+    saveState();
 }
 
 function simulateAd() {
@@ -398,19 +406,26 @@ function renderPhrase() {
 
     ui.active.grammarNote.classList.add('hidden');
     ui.active.translation.classList.remove('hidden');
+    ui.active.chatHistory.classList.add('hidden');
     ui.active.btnListen.classList.remove('hidden');
     
+    const isAdrian = state.currentLesson.topic.toLowerCase().includes("adrian");
+
     if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
-        ui.active.grammarNote.innerHTML = `<strong>Curriculum Note:</strong> ${state.currentLesson.explanation || 'Master the structure below.'}`;
+        ui.active.grammarNote.innerHTML = `<strong>Curriculum Note:</strong> ${state.currentLesson.explanation || 'Master the structure.'}`;
     }
     
     if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br><span style="font-size:0.9rem; opacity:0.8;">Listen carefully and repeat perfectly.</span></div>`;
+        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br><span style="font-size:0.9rem; opacity:0.8;">Listen and repeat perfectly.</span></div>`;
         ui.active.translation.classList.add('hidden');
     } else if (state.currentLesson.type === 'challenge') {
         ui.active.karaoke.innerHTML = `<div class="mission-box">${p.mission}</div>`;
         ui.active.translation.textContent = p.context;
+        if (isAdrian) {
+            ui.active.chatHistory.classList.remove('hidden');
+            renderChatHistory();
+        }
     } else {
         ui.active.karaoke.innerHTML = p.en.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
         ui.active.translation.textContent = p.my;
@@ -424,6 +439,19 @@ function renderPhrase() {
     updateHUD();
 }
 
+function renderChatHistory() {
+    if (state.chatHistory.length === 0) {
+        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic;">Start speaking to begin the conversation...</div>';
+        return;
+    }
+    // Show last AI message only for focus
+    const lastAI = [...state.chatHistory].reverse().find(m => m.role === 'assistant');
+    if (lastAI) {
+        ui.active.chatHistory.innerHTML = `<div class="ai-message-bubble">${lastAI.content}</div>`;
+        playTTS(lastAI.content);
+    }
+}
+
 async function handleRecord() {
     if (state.isRecording) { if (mediaRecorder) mediaRecorder.stop(); return; }
     try {
@@ -432,7 +460,7 @@ async function handleRecord() {
         const chunks = [];
         state.isRecording = true;
         ui.active.btnRecord.classList.add('recording');
-        ui.active.btnRecord.textContent = "Recording...";
+        ui.active.btnRecord.textContent = "Stop";
         mediaRecorder.ondataavailable = e => chunks.push(e.data);
         mediaRecorder.onstop = async () => {
             state.isRecording = false;
@@ -444,14 +472,22 @@ async function handleRecord() {
             const formData = new FormData();
             formData.append('audio', blob);
             const phrase = state.currentLesson.phrases[state.currentPhraseIndex];
+            const isAdrian = state.currentLesson.topic.toLowerCase().includes("adrian");
+
             try {
                 if (state.currentLesson.type === 'challenge') {
-                    formData.append('scenario', phrase.mission);
-                    formData.append('history', '[]');
+                    formData.append('scenario', isAdrian ? "Conversation with Teacher Adrian about: " + phrase.mission : phrase.mission);
+                    formData.append('history', JSON.stringify(state.chatHistory));
                     formData.append('userRole', 'Student');
-                    formData.append('aiRole', 'Teacher Adrian');
+                    formData.append('aiRole', isAdrian ? 'Teacher Adrian' : 'Partner');
                     const res = await fetch('/api/chat', { method: 'POST', body: formData });
-                    showChallengeFeedback(await res.json());
+                    const data = await res.json();
+                    
+                    // Update Chat History
+                    state.chatHistory.push({ role: 'user', content: data.userText });
+                    state.chatHistory.push({ role: 'assistant', content: data.aiResponse });
+                    
+                    showChallengeFeedback(data);
                 } else {
                     formData.append('originalText', phrase.en);
                     const res = await fetch('/api/score', { method: 'POST', body: formData });
@@ -460,14 +496,14 @@ async function handleRecord() {
             } catch (e) { alert("Net Error"); ui.active.btnRecord.textContent = "🎤 Record"; }
         };
         mediaRecorder.start();
-    } catch (e) { alert("Mic Access Denied"); }
+    } catch (e) { alert("Mic Denied"); }
 }
 
 function showPhraseFeedback(data) {
     const isPassed = data.score > (state.currentLesson.type === 'exam' ? 85 : 70);
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "✅" : "❌";
-    ui.active.feedbackLabel.textContent = isPassed ? "Pass!" : "Keep Trying";
+    ui.active.feedbackLabel.textContent = isPassed ? "Pass!" : "Not Enough";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
@@ -499,6 +535,11 @@ function showChallengeFeedback(data) {
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
+    
+    if (state.currentLesson.type === 'challenge' && state.currentLesson.topic.toLowerCase().includes("adrian")) {
+        renderChatHistory();
+    }
+
     if (isPassed) { 
         ui.active.btnNextStep.classList.remove('hidden'); 
         ui.active.btnRetryStep.classList.add('hidden');
@@ -512,8 +553,14 @@ function showChallengeFeedback(data) {
 function nextPhrase() {
     gainExp(15);
     state.currentPhraseIndex++;
-    if (state.currentPhraseIndex >= 50) completeLesson();
-    else renderPhrase();
+    state.lessonProgress[state.currentLesson.id] = state.currentPhraseIndex;
+    if (state.currentPhraseIndex >= 50) {
+        state.lessonProgress[state.currentLesson.id] = 0;
+        completeLesson();
+    } else {
+        renderPhrase();
+        saveState();
+    }
 }
 
 function completeLesson() {
