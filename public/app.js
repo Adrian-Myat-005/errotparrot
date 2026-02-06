@@ -355,17 +355,25 @@ function renderLessons() {
             </div>
         `;
     });
-    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:#aaa; font-weight:700;">No content found.</div>';
+    ui.lessonList.innerHTML = html || '<div style="padding:60px; text-align:center; color:var(--text-muted); font-weight:700;">No content found.</div>';
 }
 
 function renderMemoryBank() {
     if (state.savedPhrases.length === 0) {
-        ui.lessonList.innerHTML = `<div style="padding:80px 40px; text-align:center;"><div style="font-size:4rem; margin-bottom:20px;">⭐</div><h3 style="color:#4b4b4b;">Memory Bank is Empty</h3></div>`;
+        ui.lessonList.innerHTML = `<div style="padding:80px 40px; text-align:center;"><div style="font-size:4rem; margin-bottom:20px;">⭐</div><h3 style="color:var(--text-muted);">Memory Bank is Empty</h3></div>`;
         return;
     }
     let html = '<div class="unit-header">SAVED FOR REVIEW</div>';
     state.savedPhrases.forEach((p, i) => {
-        html += `<div class="memory-item"><div class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--secondary); color:white; border:none; width:50px; height:50px; font-size:1.4rem;">🔊</div><div class="topic-info"><h4>${p.en}</h4><p>${p.my || ''}</p></div><div onclick="removeSavedPhrase(${i})" style="color:#ff4b4b; padding:10px; cursor:pointer;">✕</div></div>`;
+        html += `
+            <div class="topic-card" style="margin-bottom: 12px;">
+                <button class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--secondary); color:white; border:none; cursor:pointer;">🔊</button>
+                <div class="topic-info" style="flex:1;">
+                    <h4 style="margin-bottom:4px;">${p.en}</h4>
+                    <p>${p.my || ''}</p>
+                </div>
+                <button onclick="removeSavedPhrase(${i})" class="icon-btn" style="color:var(--danger); background: var(--danger-light); width: 40px; height: 40px;">✕</button>
+            </div>`;
     });
     ui.lessonList.innerHTML = html;
 }

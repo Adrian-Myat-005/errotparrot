@@ -24,7 +24,7 @@
                 <div class="hud-stats">
                     <span class="hud-energy">⚡ <span id="hud-energy">50</span></span>
                     <span class="hud-lvl">Lv.<span id="hud-lvl">1</span></span>
-                    <button id="btn-show-activation" class="icon-btn" style="margin-left: 5px; color: var(--secondary);">🔑</button>
+                    <button id="btn-show-activation" class="icon-btn" style="margin-left: 8px; color: var(--secondary);">🔑</button>
                 </div>
             </header>
         </div>
@@ -62,10 +62,10 @@
                     <div class="sticky-nav">
                         <div class="tabs-scroll">
                             <button class="tab-btn active" data-type="all">All Path</button>
-                            <button class="tab-btn" data-type="teacher" style="color: var(--purple); border-color: var(--purple-light);">👨‍🏫 Teacher</button>
+                            <button class="tab-btn" data-type="teacher" style="color: var(--accent);">👨‍🏫 Teacher</button>
                             <button class="tab-btn" data-type="grammar">Grammar</button>
                             <button class="tab-btn" data-type="test">Tests</button>
-                            <button class="tab-btn" data-type="memory" style="color: #ff9600;">⭐ Memory</button>
+                            <button class="tab-btn" data-type="memory" style="color: #eab308;">⭐ Memory</button>
                         </div>
 
                         <div class="search-wrap">
@@ -74,25 +74,25 @@
                     </div>
 
                     <div id="lesson-list" class="topic-grid">
-                        <div style="padding: 40px; text-align: center; color: #aaa; font-weight: 700;">Loading...</div>
+                        <div style="padding: 40px; text-align: center; color: var(--text-muted); font-weight: 700;">Loading...</div>
                     </div>
             </section>
 
             <!-- Screen: Practice -->
             <section id="screen-active" class="screen hidden">
                 <div class="practice-top">
-                    <button id="btn-restart-lesson" class="icon-btn" style="color: var(--danger); font-size: 1.2rem;">🔄</button>
+                    <button id="btn-restart-lesson" class="icon-btn" style="color: var(--danger);">🔄</button>
                     <div class="phrase-counter"><span id="current-phrase-num">1</span> / 50</div>
                     <div style="width: 40px;"></div>
                 </div>
 
                 <div class="practice-main">
-                    <button id="btn-save-phrase" class="icon-btn" style="position: absolute; top: 15px; right: 20px; font-size: 1.8rem; color: #ffcc00; z-index: 10;">☆</button>
+                    <button id="btn-save-phrase" class="icon-btn" style="position: absolute; top: 16px; right: 20px; font-size: 1.5rem; color: #eab308; z-index: 10;">☆</button>
                     <div class="phrase-card">
                         <div id="grammar-note" class="grammar-box hidden"></div>
                         <div id="grammar-test-area" class="hidden" style="margin-top: 20px;">
-                            <div id="grammar-question" style="font-weight: 800; margin-bottom: 15px; font-size: 1.1rem; color: #4b4b4b;"></div>
-                            <div id="grammar-options" style="display: grid; gap: 10px;"></div>
+                            <div id="grammar-question" style="font-weight: 700; margin-bottom: 16px; font-size: 1.1rem; color: var(--text-main);"></div>
+                            <div id="grammar-options" style="display: grid; gap: 8px;"></div>
                         </div>
                         <div id="karaoke-text" class="karaoke-text">Loading...</div>
                         <div id="translation-text" class="translation-text">...</div>
@@ -110,7 +110,7 @@
                     <div class="feedback-actions">
                         <button id="btn-relisten" class="btn-relisten-master">👂 Listen to Me</button>
                         <button id="btn-next-step" class="btn-next-master hidden" style="flex: 2; margin-top: 0;">Continue</button>
-                        <button id="btn-retry-step" class="btn-next-master hidden" style="flex: 2; margin-top: 0; background: var(--secondary); border-color: var(--secondary-dark);">Try Again</button>
+                        <button id="btn-retry-step" class="btn-next-master hidden" style="flex: 2; margin-top: 0; background: var(--secondary); color: white;">Try Again</button>
                     </div>
                 </div>
 
@@ -186,8 +186,8 @@
             <h2>Premium Feature</h2>
             <p>Tr. Adrian is our advanced AI tutor. Unlock premium to get personalized coaching, leadership modes, and unlimited practice.</p>
             <div class="redeem-wrap" style="margin-bottom: 20px;">
-                <input type="text" id="input-redeem" placeholder="Enter Activation Code" style="width: 100%; padding: 14px; border-radius: 16px; border: 2px solid #e5e5e5; text-align: center; margin-bottom: 12px; font-weight: 700; outline: none; font-size: 1rem;">
-                <button id="btn-redeem" class="btn-main" style="background: var(--secondary); border-color: var(--secondary-dark); margin-top: 0;">Activate Premium</button>
+                <input type="text" id="input-redeem" placeholder="Enter Activation Code" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); text-align: center; margin-bottom: 12px; font-weight: 700; outline: none; font-size: 1rem;">
+                <button id="btn-redeem" class="btn-main" style="background: var(--secondary); margin-top: 0;">Activate Premium</button>
             </div>
             <button class="btn-main" onclick="window.open('https://t.me/Amyat604')">Get Code via Telegram</button>
             <button class="btn-link" onclick="closeAllModals()">Not Now</button>
