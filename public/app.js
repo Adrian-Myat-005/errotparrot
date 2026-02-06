@@ -25,46 +25,57 @@ const state = {
     startTime: Date.now()
 };
 
-const ui = {
-    btnBack: document.getElementById('btn-back-main'),
-    progressBar: document.getElementById('progress-bar'),
-    hudEnergy: document.getElementById('hud-energy'),
-    hudLvl: document.getElementById('hud-lvl'),
-    lessonList: document.getElementById('lesson-list'),
-    lessonSearch: document.getElementById('lesson-search'),
-    tabs: document.querySelectorAll('.tab-btn'),
-    screens: {
-        lessons: document.getElementById('screen-lessons'),
-        active: document.getElementById('screen-active'),
-        energy: document.getElementById('modal-energy'),
-        ad: document.getElementById('modal-ad'),
-        adrian: document.getElementById('modal-adrian')
-    },
-    active: {
-        counter: document.getElementById('current-phrase-num'),
-        karaoke: document.getElementById('karaoke-text'),
-        translation: document.getElementById('translation-text'),
-        feedback: document.getElementById('feedback-overlay'),
-        feedbackIcon: document.getElementById('feedback-icon'),
-        feedbackLabel: document.getElementById('feedback-label'),
-        correction: document.getElementById('correction-display'),
-        tip: document.getElementById('feedback-tip'),
-        btnNextStep: document.getElementById('btn-next-step'),
-        btnRecord: document.getElementById('btn-record'),
-        btnListen: document.getElementById('btn-listen'),
-        selectSpeed: document.getElementById('select-speed'),
-        selectVoice: document.getElementById('select-voice'),
-        selectLeader: document.getElementById('select-leader')
-    },
-    btnWatchAd: document.getElementById('btn-watch-ad'),
-    inputRedeem: document.getElementById('input-redeem'),
-    btnRedeem: document.getElementById('btn-redeem')
-};
-
+let ui = {};
 let mediaRecorder;
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize UI references safely
+    ui = {
+        btnBack: document.getElementById('btn-back-main'),
+        progressBar: document.getElementById('progress-bar'),
+        hudEnergy: document.getElementById('hud-energy'),
+        hudLvl: document.getElementById('hud-lvl'),
+        lessonList: document.getElementById('lesson-list'),
+        lessonSearch: document.getElementById('lesson-search'),
+        tabs: document.querySelectorAll('.tab-btn'),
+        screens: {
+            lessons: document.getElementById('screen-lessons'),
+            active: document.getElementById('screen-active'),
+            energy: document.getElementById('modal-energy'),
+            ad: document.getElementById('modal-ad'),
+            adrian: document.getElementById('modal-adrian')
+        },
+        active: {
+            counter: document.getElementById('current-phrase-num'),
+            karaoke: document.getElementById('karaoke-text'),
+            translation: document.getElementById('translation-text'),
+            feedback: document.getElementById('feedback-overlay'),
+            feedbackIcon: document.getElementById('feedback-icon'),
+            feedbackLabel: document.getElementById('feedback-label'),
+            correction: document.getElementById('correction-display'),
+            tip: document.getElementById('feedback-tip'),
+            btnNextStep: document.getElementById('btn-next-step'),
+            btnRecord: document.getElementById('btn-record'),
+            btnListen: document.getElementById('btn-listen'),
+            selectSpeed: document.getElementById('select-speed'),
+            selectVoice: document.getElementById('select-voice'),
+            selectLeader: document.getElementById('select-leader')
+        },
+        btnWatchAd: document.getElementById('btn-watch-ad'),
+        inputRedeem: document.getElementById('input-redeem'),
+        btnRedeem: document.getElementById('btn-redeem')
+    };
+
+    // Ensure everything is hidden initially
+    closeAllModals();
+    switchScreen('lessons');
+    
+    init();
+});
 
 async function init() {
     loadState();
+    
     try {
         const res = await fetch('lessons.json');
         state.lessons = await res.json();
@@ -81,32 +92,45 @@ async function init() {
 function loadState() {
     const saved = localStorage.getItem('errorparrot_master_v1');
     if (saved) {
-        const data = JSON.parse(saved);
-        Object.assign(state, data);
-    } else {
-        // First time users: ensure only first 5 are unlocked, no popups.
-        state.unlockedLessons = [1, 2, 3, 4, 5];
-        state.isPremium = false;
-        saveState();
+        try {
+            const data = JSON.parse(saved);
+            const persistentKeys = ['unlockedLessons', 'completedLessons', 'isPremium', 'userLevel', 'userExp', 'userEnergy', 'lastEnergyUpdate', 'totalXp', 'ttsSpeed', 'voice', 'leaderMode'];
+            persistentKeys.forEach(key => {
+                if (data[key] !== undefined) state[key] = data[key];
+            });
+        } catch(e) { console.error("Load state failed", e); }
     }
+    // Enforce defaults if missing/corrupt
+    if (!state.unlockedLessons || state.unlockedLessons.length === 0) {
+        state.unlockedLessons = [1, 2, 3, 4, 5];
+    }
+    if (typeof state.isPremium !== 'boolean') state.isPremium = false;
+    
+    saveState();
 }
 
 function saveState() {
     const toSave = { ...state };
     delete toSave.lessons;
+    delete toSave.currentLesson;
+    delete toSave.isRecording;
+    delete toSave.audioBlob;
     localStorage.setItem('errorparrot_master_v1', JSON.stringify(toSave));
 }
 
 function updateHUD() {
-    ui.hudEnergy.textContent = state.userEnergy;
-    ui.hudLvl.textContent = state.userLevel;
+    if (ui.hudEnergy) ui.hudEnergy.textContent = state.userEnergy;
+    if (ui.hudLvl) ui.hudLvl.textContent = state.userLevel;
     
-    if (state.currentLesson) {
-        const progress = (state.currentPhraseIndex / 50) * 100;
-        ui.progressBar.style.width = `${progress}%`;
-    } else {
-        const xpProgress = (state.userExp / (state.userLevel * 200)) * 100;
-        ui.progressBar.style.width = `${xpProgress}%`;
+    if (ui.progressBar) {
+        if (state.currentLesson) {
+            const progress = (state.currentPhraseIndex / 50) * 100;
+            ui.progressBar.style.width = `${progress}%`;
+        } else {
+            const threshold = state.userLevel * 200;
+            const xpProgress = (state.userExp / threshold) * 100;
+            ui.progressBar.style.width = `${xpProgress}%`;
+        }
     }
 }
 
@@ -125,10 +149,10 @@ function energyLoop() {
 }
 
 function bindEvents() {
-    ui.btnBack.onclick = () => switchScreen('lessons');
-    ui.lessonSearch.oninput = () => renderLessons();
+    if (ui.btnBack) ui.btnBack.onclick = () => switchScreen('lessons');
+    if (ui.lessonSearch) ui.lessonSearch.oninput = () => renderLessons();
     
-    ui.tabs.forEach(tab => {
+    if (ui.tabs) ui.tabs.forEach(tab => {
         tab.onclick = () => {
             ui.tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
@@ -137,22 +161,23 @@ function bindEvents() {
         };
     });
 
-    ui.active.btnRecord.onclick = handleRecord;
-    ui.active.btnListen.onclick = () => {
-        const phrase = state.currentLesson.phrases[state.currentPhraseIndex];
-        if (phrase.en) playTTS(phrase.en);
+    if (ui.active.btnRecord) ui.active.btnRecord.onclick = handleRecord;
+    if (ui.active.btnListen) ui.active.btnListen.onclick = () => {
+        const phrase = state.currentLesson?.phrases[state.currentPhraseIndex];
+        if (phrase?.en) playTTS(phrase.en);
     };
-    ui.active.btnNextStep.onclick = nextPhrase;
+    if (ui.active.btnNextStep) ui.active.btnNextStep.onclick = nextPhrase;
 
-    ui.active.selectSpeed.onchange = (e) => state.ttsSpeed = e.target.value;
-    ui.active.selectVoice.onchange = (e) => state.voice = e.target.value;
-    ui.active.selectLeader.onchange = (e) => state.leaderMode = e.target.value;
+    if (ui.active.selectSpeed) ui.active.selectSpeed.onchange = (e) => state.ttsSpeed = e.target.value;
+    if (ui.active.selectVoice) ui.active.selectVoice.onchange = (e) => state.voice = e.target.value;
+    if (ui.active.selectLeader) ui.active.selectLeader.onchange = (e) => state.leaderMode = e.target.value;
 
-    ui.btnWatchAd.onclick = simulateAd;
-    ui.btnRedeem.onclick = handleRedeem;
+    if (ui.btnWatchAd) ui.btnWatchAd.onclick = simulateAd;
+    if (ui.btnRedeem) ui.btnRedeem.onclick = handleRedeem;
 }
 
 async function handleRedeem() {
+    if (!ui.inputRedeem) return;
     const code = ui.inputRedeem.value.trim();
     if (!code) return;
     
@@ -165,7 +190,7 @@ async function handleRedeem() {
         const data = await res.json();
         if (data.success) {
             state.isPremium = true;
-            alert("Premium features successfully activated! Enjoy your advanced tutor.");
+            alert("Premium features successfully activated!");
             ui.inputRedeem.value = '';
             closeAllModals();
             renderLessons();
@@ -174,32 +199,36 @@ async function handleRedeem() {
             alert(data.error || "Invalid code");
         }
     } catch (e) {
-        alert("Redemption service unavailable");
+        alert("Service unavailable");
     }
 }
 
 function renderLessons() {
-    let filtered = state.lessons;
+    if (!ui.lessonList) return;
+    
+    let filtered = state.lessons || [];
     if (state.currentType !== 'all') {
         filtered = filtered.filter(l => l.type === state.currentType);
     }
     
-    const query = ui.lessonSearch.value.toLowerCase();
-    if (query) {
-        filtered = filtered.filter(l => l.topic.toLowerCase().includes(query));
+    if (ui.lessonSearch) {
+        const query = ui.lessonSearch.value.toLowerCase();
+        if (query) {
+            filtered = filtered.filter(l => l.topic.toLowerCase().includes(query));
+        }
     }
 
     ui.lessonList.innerHTML = filtered.map(l => {
-        const isLocked = !state.unlockedLessons.includes(l.id);
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
+        const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
         
         let statusText = '50 Mastery Phrases';
-        if (isAdrian && !state.isPremium) statusText = 'Premium Required ⭐';
-        else if (isLocked) statusText = 'Watch Ad to Unlock';
+        if (isAdrian && !state.isPremium) statusText = 'Premium Activation Required ⭐';
+        else if (isLocked) statusText = 'Unlock with 5s Ad';
 
         return `
-            <div class="topic-card ${isLocked && !(isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
+            <div class="topic-card ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
                 <div class="topic-icon">${isCompleted ? '✅' : l.icon}</div>
                 <div class="topic-info">
                     <div class="topic-type-tag">${l.type} ${isAdrian ? '⭐' : ''}</div>
@@ -215,22 +244,33 @@ function startLesson(id) {
     const lesson = state.lessons.find(l => l.id === id);
     if (!lesson) return;
 
+    const isAdrian = lesson.topic.toLowerCase().includes("adrian") || lesson.topic.toLowerCase().includes("teacher");
+
     // Adrian Check
-    if ((lesson.topic.toLowerCase().includes("adrian") || lesson.topic.toLowerCase().includes("teacher")) && !state.isPremium) {
-        ui.screens.adrian.classList.remove('hidden');
+    if (isAdrian && !state.isPremium) {
+        if (ui.screens.adrian) {
+            ui.screens.adrian.classList.remove('hidden');
+            ui.screens.adrian.style.display = 'flex'; // Force show
+        }
         return;
     }
 
     // Ad Check for lessons > 5
     if (id > 5 && !state.unlockedLessons.includes(id) && !state.isPremium) {
         state.pendingLessonId = id;
-        ui.screens.ad.classList.remove('hidden');
+        if (ui.screens.ad) {
+            ui.screens.ad.classList.remove('hidden');
+            ui.screens.ad.style.display = 'flex'; // Force show
+        }
         return;
     }
     
     // Energy Check
     if (state.userEnergy < 1) {
-        ui.screens.energy.classList.remove('hidden');
+        if (ui.screens.energy) {
+            ui.screens.energy.classList.remove('hidden');
+            ui.screens.energy.style.display = 'flex'; // Force show
+        }
         return;
     }
 
@@ -247,14 +287,17 @@ function startLesson(id) {
 }
 
 function simulateAd() {
+    if (!ui.btnWatchAd) return;
     ui.btnWatchAd.disabled = true;
     let count = 5;
     const timer = setInterval(() => {
-        ui.btnWatchAd.textContent = `Wait... ${count}s`;
+        ui.btnWatchAd.textContent = `Unlocking in ${count}s...`;
         count--;
         if (count < 0) {
             clearInterval(timer);
-            state.unlockedLessons.push(state.pendingLessonId);
+            if (!state.unlockedLessons.includes(state.pendingLessonId)) {
+                state.unlockedLessons.push(state.pendingLessonId);
+            }
             ui.btnWatchAd.disabled = false;
             ui.btnWatchAd.textContent = "Watch Ad (5s)";
             closeAllModals();
@@ -267,7 +310,7 @@ function simulateAd() {
 
 function renderPhrase() {
     const p = state.currentLesson.phrases[state.currentPhraseIndex];
-    ui.active.counter.textContent = state.currentPhraseIndex + 1;
+    if (ui.active.counter) ui.active.counter.textContent = state.currentPhraseIndex + 1;
     
     if (state.currentLesson.type === 'challenge') {
         ui.active.karaoke.innerHTML = `<div class="mission-box">${p.mission}</div>`;
@@ -286,7 +329,7 @@ function renderPhrase() {
 
 async function handleRecord() {
     if (state.isRecording) {
-        mediaRecorder.stop();
+        if (mediaRecorder) mediaRecorder.stop();
         return;
     }
 
@@ -331,7 +374,7 @@ async function handleRecord() {
                     showPhraseFeedback(data);
                 }
             } catch (e) {
-                alert("Evaluation failed.");
+                alert("Connection error.");
                 ui.active.btnRecord.textContent = "🎤 Record";
             }
         };
@@ -413,7 +456,7 @@ async function playTTS(text) {
         });
         const data = await res.json();
         const audio = new Audio("data:audio/mp3;base64," + data.audio);
-        if (data.alignment && state.currentLesson.type !== 'challenge') {
+        if (data.alignment && state.currentLesson?.type !== 'challenge') {
             const words = ui.active.karaoke.querySelectorAll('.word');
             audio.ontimeupdate = () => {
                 const cur = audio.currentTime;
@@ -430,22 +473,33 @@ async function playTTS(text) {
 }
 
 function switchScreen(name) {
-    Object.values(ui.screens).forEach(s => s.classList.add('hidden'));
-    ui.screens[name].classList.remove('hidden');
+    Object.values(ui.screens).forEach(s => {
+        if (s) s.classList.add('hidden');
+    });
+    if (ui.screens[name]) ui.screens[name].classList.remove('hidden');
+    
     if (name === 'lessons') {
         state.currentLesson = null;
-        ui.btnBack.classList.add('hidden');
+        if (ui.btnBack) ui.btnBack.classList.add('hidden');
     } else {
-        ui.btnBack.classList.remove('hidden');
+        if (ui.btnBack) ui.btnBack.classList.remove('hidden');
     }
     updateHUD();
 }
 
 function closeAllModals() {
-    ui.screens.energy.classList.add('hidden');
-    ui.screens.ad.classList.add('hidden');
-    ui.screens.adrian.classList.add('hidden');
+    if (ui.screens.energy) {
+        ui.screens.energy.classList.add('hidden');
+        ui.screens.energy.style.display = 'none'; // Ensure hidden
+    }
+    if (ui.screens.ad) {
+        ui.screens.ad.classList.add('hidden');
+        ui.screens.ad.style.display = 'none';
+    }
+    if (ui.screens.adrian) {
+        ui.screens.adrian.classList.add('hidden');
+        ui.screens.adrian.style.display = 'none';
+    }
 }
 
 window.closeAllModals = closeAllModals;
-init();
