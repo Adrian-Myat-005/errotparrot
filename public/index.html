@@ -11,7 +11,7 @@
 
     <div class="app-shell">
         
-        <!-- Constant App Header -->
+        <!-- App Header -->
         <header class="app-header">
             <button id="btn-back-main" class="icon-btn hidden">✕</button>
             <div class="progress-container">
@@ -26,7 +26,7 @@
 
         <main class="app-main">
             
-            <!-- SCREEN: LESSONS -->
+            <!-- Screen: Lessons -->
             <section id="screen-lessons" class="screen">
                 <div class="scroll-area">
                     <div style="padding: 32px 24px;">
@@ -53,7 +53,7 @@
                         <button id="btn-resume" class="btn-pro">🚀 RESUME LEARNING</button>
                     </div>
 
-                    <div style="position: sticky; top: 0; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); z-index: 10; display: flex; gap: 8px; overflow-x: auto; padding: 16px 24px; scrollbar-width: none;">
+                    <div style="position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 10; display: flex; gap: 8px; overflow-x: auto; padding: 16px 24px; scrollbar-width: none;">
                         <button class="tab-btn active" data-type="all" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">All</button>
                         <button class="tab-btn" data-type="teacher" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">👨‍🏫 Teacher</button>
                         <button class="tab-btn" data-type="grammar" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">Grammar</button>
@@ -61,7 +61,7 @@
                         <button class="tab-btn" data-type="memory" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">⭐ Memory</button>
                     </div>
 
-                    <div style="padding: 0 24px 20px;">
+                    <div style="padding: 12px 24px 20px;">
                         <input type="text" id="lesson-search" placeholder="Search lessons..." style="width: 100%; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg); font-family: inherit; font-weight: 700;">
                     </div>
 
@@ -71,7 +71,7 @@
                 </div>
             </section>
 
-            <!-- SCREEN: PRACTICE -->
+            <!-- Screen: Practice -->
             <section id="screen-active" class="screen hidden">
                 <div class="practice-view">
                     <div class="practice-top">
@@ -83,20 +83,20 @@
                     </div>
 
                     <div class="practice-main">
-                        <div id="grammar-note" class="hidden" style="background: rgba(206, 130, 255, 0.1); color: #a33cf2; padding: 20px; border-radius: 20px; text-align: left; margin-bottom: 20px; font-weight: 600;"></div>
+                        <div id="grammar-note" class="hidden" style="background: var(--purple-soft); color: var(--purple-dark); padding: 20px; border-radius: 20px; text-align: left; margin-bottom: 20px; font-weight: 600;"></div>
                         <div id="grammar-test-area" class="hidden" style="width: 100%;">
                             <div id="grammar-question" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 24px;"></div>
                             <div id="grammar-options" style="display: grid; gap: 12px;"></div>
                         </div>
                         <div id="karaoke-text" class="karaoke-text">...</div>
-                        <div id="translation-text" class="translation">...</div>
+                        <div id="translation-text" class="translation-text">...</div>
                         <div id="chat-history" class="hidden"></div>
                     </div>
 
                     <footer class="practice-footer">
                         <div class="controls-row">
-                            <button id="btn-listen" class="btn-secondary-action">🔊</button>
-                            <button id="btn-record" class="btn-primary-action">🎤 RECORD</button>
+                            <button id="btn-listen" class="btn-circle">🔊</button>
+                            <button id="btn-record" class="btn-mic-pro">🎤 RECORD</button>
                         </div>
 
                         <div class="settings-bar">
@@ -133,18 +133,18 @@
                         </div>
                     </footer>
 
-                    <!-- Result Overlay -->
+                    <!-- Final Action Overlay -->
                     <div id="feedback-overlay" class="feedback-overlay">
                         <div id="feedback-status" class="feedback-status">
                             <span id="feedback-icon"></span>
                             <span id="feedback-label"></span>
                         </div>
-                        <div id="correction-display" style="background: var(--bg); padding: 20px; border-radius: 20px; font-weight: 800; margin-bottom: 16px;"></div>
-                        <div id="feedback-tip" style="margin-bottom: 24px; color: var(--text-muted); font-weight: 600;"></div>
-                        <div style="display: flex; gap: 12px;">
-                            <button id="btn-relisten" class="btn-pro" style="background: var(--bg); color: var(--text); flex: 1;">👂 LISTEN</button>
-                            <button id="btn-next-step" class="btn-pro" style="background: var(--text); flex: 2; display: none;">CONTINUE</button>
-                            <button id="btn-retry-step" class="btn-pro" style="background: var(--secondary); flex: 2; display: none;">TRY AGAIN</button>
+                        <div id="correction-display" class="correction-box"></div>
+                        <div id="feedback-tip" class="tip-text"></div>
+                        <div class="feedback-actions">
+                            <button id="btn-relisten" class="btn-pro ghost" style="flex: 1;">👂 LISTEN</button>
+                            <button id="btn-next-step" class="btn-pro primary" style="flex: 2; display: none;">CONTINUE</button>
+                            <button id="btn-retry-step" class="btn-pro secondary" style="flex: 2; display: none;">TRY AGAIN</button>
                         </div>
                     </div>
                 </div>
@@ -153,12 +153,12 @@
         </main>
     </div>
 
-    <!-- Global Overlays -->
+    <!-- Modals -->
     <div id="modal-energy" class="modal-overlay hidden">
         <div class="modal-card">
             <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">No Energy</h2>
             <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 24px;">Wait for refill or upgrade to Pro for unlimited mastery sessions.</p>
-            <button class="btn-pro" onclick="window.open('https://t.me/Amyat604')" style="background: var(--primary);">UPGRADE PRO</button>
+            <button class="btn-pro primary" onclick="window.open('https://t.me/Amyat604')">UPGRADE PRO</button>
             <button onclick="closeAllModals()" style="margin-top: 16px; background: none; border: none; color: var(--text-muted); font-weight: 800; cursor: pointer;">Maybe later</button>
         </div>
     </div>
@@ -167,7 +167,7 @@
         <div class="modal-card">
             <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Unlock Lesson</h2>
             <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 24px;">Watch a 5s ad to unlock this specialized session.</p>
-            <button id="btn-watch-ad" class="btn-pro" style="background: var(--secondary);">WATCH AD</button>
+            <button id="btn-watch-ad" class="btn-pro secondary">WATCH AD</button>
             <button onclick="closeAllModals()" style="margin-top: 16px; background: none; border: none; color: var(--text-muted); font-weight: 800; cursor: pointer;">Cancel</button>
         </div>
     </div>
@@ -177,7 +177,7 @@
             <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Premium AI Tutor</h2>
             <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 24px;">Activate Tr. Adrian for personalized coaching and unlimited practice.</p>
             <input type="text" id="input-redeem" placeholder="Activation Code" style="width: 100%; padding: 18px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg); margin-bottom: 16px; text-align: center; font-weight: 800; font-size: 1.1rem;">
-            <button id="btn-redeem" class="btn-pro" style="background: var(--secondary); margin-bottom: 12px;">ACTIVATE</button>
+            <button id="btn-redeem" class="btn-pro secondary" style="margin-bottom: 12px;">ACTIVATE</button>
             <button class="btn-pro" onclick="window.open('https://t.me/Amyat604')" style="background: var(--text);">GET CODE</button>
             <button onclick="closeAllModals()" style="margin-top: 16px; background: none; border: none; color: var(--text-muted); font-weight: 800; cursor: pointer;">Dismiss</button>
         </div>

@@ -265,7 +265,7 @@ function bindEvents() {
     };
     if (ui.active.btnNextStep) ui.active.btnNextStep.onclick = nextPhrase;
     if (ui.active.btnRetryStep) ui.active.btnRetryStep.onclick = () => {
-        ui.active.feedback.classList.add('hidden');
+        ui.active.feedback.classList.remove('active');
         renderPhrase();
     };
     if (ui.active.btnRelisten) ui.active.btnRelisten.onclick = () => {
@@ -334,7 +334,7 @@ function renderLessons() {
 
     let html = '';
     filtered.forEach((l, index) => {
-        if (state.currentType === 'all' && index % 10 === 0) html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
+        if (state.currentType === 'all' && index % 10 === 0) html += `<div class="unit-header" style="margin: 20px 24px 8px; font-weight: 800; color: var(--text-light); text-transform: uppercase; font-size: 0.8rem;">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
@@ -350,7 +350,7 @@ function renderLessons() {
                  style="animation-delay: ${index * 0.05}s">
                 <div class="topic-icon">${isAdrian ? '👨‍🏫' : (isCompleted ? '✅' : l.icon)}</div>
                 <div class="topic-info">
-                    <div class="topic-type-tag ${l.type}">${l.type}</div>
+                    <div class="topic-type-tag" style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: var(--bg); padding: 2px 8px; border-radius: 6px; margin-bottom: 4px; display: inline-block;">${l.type}</div>
                     <h4>${l.topic}</h4>
                     <p>${status}</p>
                 </div>
@@ -460,10 +460,10 @@ function renderPhrase() {
         ui.active.translation.classList.add('hidden');
         renderGrammarTest(p);
     } else if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box">📝 ASSESSMENT<br>Repeat after hearing.</div>`;
+        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:20px; border-radius:20px; font-weight:800; color:var(--text-muted);">📝 ASSESSMENT<br>Repeat after hearing.</div>`;
         ui.active.translation.classList.add('hidden');
     } else if (state.currentLesson.type === 'challenge') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box">${p.mission}<br><span style="font-size:0.8rem; font-weight:600; opacity:0.7;">Pass Criteria: natural flow, score > 60.</span></div>`;
+        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:20px; border-radius:20px; font-weight:800; color:var(--text);">${p.mission}<br><span style="font-size:0.8rem; font-weight:600; opacity:0.7;">Pass Criteria: natural flow, score > 60.</span></div>`;
         ui.active.translation.textContent = p.context;
         if (state.currentLesson.topic.toLowerCase().includes("adrian")) {
             ui.active.chatHistory.classList.remove('hidden');
@@ -475,31 +475,27 @@ function renderPhrase() {
         playTTS(p.en);
     }
     
-    ui.active.feedback.classList.add('hidden');
-    ui.active.btnNextStep.classList.add('hidden');
-    ui.active.btnRetryStep.classList.add('hidden');
+    ui.active.feedback.classList.remove('active');
+    ui.active.btnNextStep.style.display = 'none';
+    ui.active.btnRetryStep.style.display = 'none';
+    ui.active.btnRecord.classList.remove('hidden');
     updateHUD();
 }
 
 function renderGrammarTest(p) {
     ui.active.grammarTestArea.classList.remove('hidden');
-    // Simple fill-in-the-blank or multiple choice logic
-    // We will scramble the words of the phrase
     const words = p.en.split(/\s+/);
     const correct = p.en;
     
-    ui.active.grammarQuestion.textContent = "Which is the correct translation for: " + (p.my || "this sentence") + "?";
+    ui.active.grammarQuestion.textContent = "Correct translation for: " + (p.my || "this sentence");
     
-    // Create 3 options: 1 correct, 2 fake
     const options = [correct];
-    options.push(words.slice().reverse().join(' ')); // Scrambled
-    options.push(words.slice(1).join(' ') + ' ' + words[0]); // Rotated
-    
-    // Shuffle options
+    options.push(words.slice().reverse().join(' ')); 
+    options.push(words.slice(1).join(' ') + ' ' + words[0]); 
     options.sort(() => Math.random() - 0.5);
     
     ui.active.grammarOptions.innerHTML = options.map(opt => `
-        <button class="grammar-option" onclick="handleGrammarAnswer(this, '${opt.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">
+        <button class="btn-pro" style="background:white; color:var(--text); border:1px solid var(--border); margin-bottom:10px; text-transform:none;" onclick="handleGrammarAnswer(this, '${opt.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">
             ${opt}
         </button>
     `).join('');
@@ -507,13 +503,15 @@ function renderGrammarTest(p) {
 
 window.handleGrammarAnswer = (btn, selected, correct) => {
     const isCorrect = selected === correct;
-    btn.classList.add(isCorrect ? 'correct' : 'wrong');
-    
     if (isCorrect) {
-        ui.active.btnNextStep.classList.remove('hidden');
+        btn.style.background = 'var(--primary)';
+        btn.style.color = 'white';
+        ui.active.btnNextStep.style.display = 'flex';
         gainExp(10);
     } else {
-        alert("Try again! Look at the grammar structure.");
+        btn.style.background = 'var(--danger)';
+        btn.style.color = 'white';
+        alert("Try again! Look at the structure.");
     }
 };
 
@@ -526,12 +524,11 @@ function renderChatHistory() {
     let html = '';
     state.chatHistory.forEach(msg => {
         const isAI = msg.role === 'assistant';
-        const roleClass = isAI ? 'assistant-row' : 'user-row';
-        const avatar = isAI ? '👨‍🏫' : '👤';
         html += `
-            <div class="chat-bubble-row ${roleClass}">
-                <div class="chat-avatar">${avatar}</div>
-                <div class="chat-bubble">${msg.content}</div>
+            <div style="display:flex; justify-content:${isAI ? 'flex-start' : 'flex-end'}; margin-bottom:12px;">
+                <div style="max-width:80%; padding:12px 16px; border-radius:18px; background:${isAI ? 'var(--bg)' : 'var(--secondary)'}; color:${isAI ? 'var(--text)' : 'white'}; font-weight:600; font-size:0.95rem;">
+                    ${msg.content}
+                </div>
             </div>
         `;
     });
@@ -560,7 +557,6 @@ async function handleRecord() {
             const formData = new FormData();
             formData.append('audio', blob);
             const phrase = state.currentLesson.phrases[state.currentPhraseIndex];
-            const isAdrian = state.currentLesson.topic.toLowerCase().includes("adrian");
 
             try {
                 if (state.currentLesson.type === 'challenge') {
@@ -589,14 +585,16 @@ function showPhraseFeedback(data) {
     const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
     const overlay = ui.active.feedback;
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
+    
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
-    ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Not Enough";
+    ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
     
     if (isPassed) { 
         ui.active.btnNextStep.style.display = 'flex'; 
         ui.active.btnRetryStep.style.display = 'none'; 
+        ui.active.btnRecord.classList.add('hidden');
     } else { 
         ui.active.btnNextStep.style.display = 'none'; 
         ui.active.btnRetryStep.style.display = 'flex'; 
@@ -607,14 +605,16 @@ function showChallengeFeedback(data) {
     const isPassed = data.score > 60;
     const overlay = ui.active.feedback;
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
+    
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span style="font-weight:900;">${data.score}%</span>`;
-    ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Not Quite";
+    ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Keep Trying";
     ui.active.correction.innerHTML = `"${data.userText}"`;
     ui.active.tip.textContent = data.feedback;
     
     if (isPassed) { 
         ui.active.btnNextStep.style.display = 'flex'; 
         ui.active.btnRetryStep.style.display = 'none'; 
+        ui.active.btnRecord.classList.add('hidden');
     } else { 
         ui.active.btnNextStep.style.display = 'none'; 
         ui.active.btnRetryStep.style.display = 'flex'; 
