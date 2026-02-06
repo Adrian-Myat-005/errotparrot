@@ -47,7 +47,7 @@
 * { 
     box-sizing: border-box; 
     -webkit-tap-highlight-color: transparent; 
-    margin: 0; padding: 0; 
+    outline: none; 
     text-decoration: none !important;
 }
 
@@ -89,6 +89,24 @@ html, body {
 
 .screen { position: absolute; inset: 0; display: flex; flex-direction: column; background: var(--surface); }
 .screen.hidden { display: none !important; }
+
+/* ----------------------------------------------------
+   HUD & Premium Components
+---------------------------------------------------- */
+.progress-container { flex: 1; height: 10px; background: #f1f5f9; border-radius: 10px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); transition: width 0.6s var(--spring); }
+
+.hud-stats { display: flex; align-items: center; gap: 16px; font-weight: 800; font-size: 0.85rem; }
+.hud-energy { color: var(--danger); }
+
+.btn-pro-badge {
+    background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+    color: white; padding: 6px 14px; border-radius: 100px; font-size: 0.75rem; font-weight: 900;
+    letter-spacing: 1px; border: none; cursor: pointer; box-shadow: 0 4px 12px var(--purple-soft);
+    transition: all 0.3s var(--ease);
+}
+.btn-pro-badge:hover { transform: translateY(-2px); box-shadow: 0 6px 16px var(--purple-soft); }
+.btn-pro-badge:active { transform: scale(0.92); }
 
 /* ----------------------------------------------------
    Main Navigation & Lists
@@ -173,6 +191,57 @@ html, body {
 .btn-mic-pro.recording { background: var(--danger); animation: pulse 1.5s infinite; }
 
 /* ----------------------------------------------------
+   Practice Settings Dashboard (Capsule UI)
+---------------------------------------------------- */
+.settings-bar { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 10px; 
+}
+
+.select-box { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 6px; 
+    align-items: center; 
+}
+
+.select-box label { 
+    font-size: 0.65rem; 
+    font-weight: 800; 
+    color: var(--text-light); 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em;
+}
+
+.mini-select { 
+    width: 100%; 
+    padding: 12px 4px; 
+    border-radius: 16px; 
+    border: 1px solid var(--border); 
+    background: #f8fafc; 
+    font-size: 0.8rem; 
+    font-weight: 800; 
+    text-align: center; 
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    appearance: none; /* Clean look */
+}
+
+.mini-select:hover { 
+    background: white; 
+    border-color: var(--secondary); 
+    box-shadow: var(--shadow-sm); 
+    transform: translateY(-2px);
+}
+
+.mini-select:focus {
+    border-color: var(--secondary);
+    background: white;
+}
+
+/* ----------------------------------------------------
    Feedback Overlay (The Master Fix)
 ---------------------------------------------------- */
 .feedback-overlay {
@@ -208,6 +277,18 @@ html, body {
 .btn-pro.primary { background: var(--primary); box-shadow: 0 10px 20px var(--primary-soft); }
 .btn-pro.secondary { background: var(--secondary); box-shadow: 0 10px 20px var(--secondary-soft); }
 .btn-pro.ghost { background: var(--bg); color: var(--text); }
+
+/* Modals High-End Finish */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-card {
+    background: var(--surface); width: 90%; max-width: 400px; padding: 48px 32px;
+    border-radius: var(--radius-xl); text-align: center; box-shadow: var(--shadow-lg);
+}
+.modal-card h2 { font-size: 2rem; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 12px; color: var(--text); }
+.modal-card p { font-size: 1.05rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 32px; }
 
 /* Utilities */
 .hidden { display: none !important; }

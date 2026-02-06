@@ -285,6 +285,9 @@ function bindEvents() {
     if (ui.btnWatchAd) ui.btnWatchAd.onclick = simulateAd;
     if (ui.btnRedeem) ui.btnRedeem.onclick = handleRedeem;
     if (ui.active.selectDuration) ui.active.selectDuration.onchange = (e) => state.sessionDuration = e.target.value;
+    if (ui.active.selectSpeed) ui.active.selectSpeed.onchange = (e) => state.ttsSpeed = e.target.value;
+    if (ui.active.selectVoice) ui.active.selectVoice.onchange = (e) => state.voice = e.target.value;
+    if (ui.active.selectLeader) ui.active.selectLeader.onchange = (e) => state.leaderMode = e.target.value;
 }
 
 function toggleSavePhrase() {
