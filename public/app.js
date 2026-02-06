@@ -36,17 +36,14 @@ let mediaRecorder;
 function closeAllModals() {
     ['modal-energy', 'modal-ad', 'modal-adrian'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-            el.classList.add('hidden');
-            el.style.display = 'none';
-        }
+        if (el) { el.classList.add('hidden'); el.style.display = 'none'; }
     });
 }
 
 function switchScreen(name) {
-    // Hide all screens
-    const screenIds = ['screen-lessons', 'screen-active'];
-    screenIds.forEach(id => {
+    // Force hide all screens first
+    const screens = ['screen-lessons', 'screen-active'];
+    screens.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.classList.add('hidden');
@@ -54,11 +51,11 @@ function switchScreen(name) {
         }
     });
 
-    // Show target screen
+    // Force show target screen
     const target = document.getElementById('screen-' + name);
     if (target) {
         target.classList.remove('hidden');
-        target.style.display = 'flex';
+        target.style.display = 'flex'; // Critical fix
     }
     
     const backBtn = document.getElementById('btn-back-main');
@@ -394,13 +391,16 @@ function startLesson(id) {
 }
 
 function simulateAd() {
+    if (!ui.btnWatchAd) return;
     ui.btnWatchAd.disabled = true;
     let count = 5;
     const timer = setInterval(() => {
-        ui.btnWatchAd.textContent = `Unlocking... ${count}s`;
+        ui.btnWatchAd.textContent = `Unlocking in ${count}s...`;
         if (count-- < 0) {
             clearInterval(timer);
-            if (!state.unlockedLessons.includes(state.pendingLessonId)) state.unlockedLessons.push(state.pendingLessonId);
+            if (!state.unlockedLessons.includes(state.pendingLessonId)) {
+                state.unlockedLessons.push(state.pendingLessonId);
+            }
             ui.btnWatchAd.disabled = false;
             ui.btnWatchAd.textContent = "Watch Ad (5s)";
             closeAllModals();
@@ -422,7 +422,7 @@ function renderPhrase() {
     
     if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
-        ui.active.grammarNote.innerHTML = `<strong>Grammar Tip:</strong> ${state.currentLesson.explanation || 'Study the structure below.'}`;
+        ui.active.grammarNote.innerHTML = `<strong>Grammar Tip:</strong> ${state.currentLesson.explanation || 'Focus on correct structure.'}`;
     }
     
     if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
