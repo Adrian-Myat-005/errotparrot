@@ -424,6 +424,8 @@ function renderPhrase() {
         ui.active.translation.textContent = p.context;
         if (isAdrian) {
             ui.active.chatHistory.classList.remove('hidden');
+            // Ensure history is array
+            if (!Array.isArray(state.chatHistory)) state.chatHistory = [];
             renderChatHistory();
         }
     } else {
@@ -441,14 +443,27 @@ function renderPhrase() {
 
 function renderChatHistory() {
     if (state.chatHistory.length === 0) {
-        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic;">Start speaking to begin the conversation...</div>';
+        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:10px;">Start speaking to begin the conversation...</div>';
         return;
     }
-    // Show last AI message only for focus
-    const lastAI = [...state.chatHistory].reverse().find(m => m.role === 'assistant');
-    if (lastAI) {
-        ui.active.chatHistory.innerHTML = `<div class="ai-message-bubble">${lastAI.content}</div>`;
-        playTTS(lastAI.content);
+    
+    let html = '';
+    state.chatHistory.forEach(msg => {
+        const type = msg.role === 'assistant' ? 'teacher' : 'student';
+        html += `<div class="chat-bubble ${type}">${msg.content}</div>`;
+    });
+    ui.active.chatHistory.innerHTML = html;
+    
+    // Auto-scroll to bottom
+    const container = document.querySelector('.practice-main');
+    if (container) container.scrollTop = container.scrollHeight;
+
+    // Play TTS for latest assistant message if it's new
+    const lastMsg = state.chatHistory[state.chatHistory.length - 1];
+    if (lastMsg.role === 'assistant') {
+        // playTTS logic is handled in handleRecord, but we can double check here or just let handleRecord do it?
+        // Actually, handleRecord calls playTTS? No, currently it just renders.
+        // Let's rely on handleRecord to trigger TTS to avoid double playing on re-render.
     }
 }
 
@@ -486,6 +501,9 @@ async function handleRecord() {
                     // Update Chat History
                     state.chatHistory.push({ role: 'user', content: data.userText });
                     state.chatHistory.push({ role: 'assistant', content: data.aiResponse });
+                    
+                    renderChatHistory(); // Render visual history
+                    playTTS(data.aiResponse); // Speak response
                     
                     showChallengeFeedback(data);
                 } else {
@@ -536,9 +554,7 @@ function showChallengeFeedback(data) {
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
     
-    if (state.currentLesson.type === 'challenge' && state.currentLesson.topic.toLowerCase().includes("adrian")) {
-        renderChatHistory();
-    }
+    // History is already updated in handleRecord
 
     if (isPassed) { 
         ui.active.btnNextStep.classList.remove('hidden'); 
