@@ -469,9 +469,16 @@ function simulateAd() {
     ytPlayer = new YT.Player('youtube-player', {
         height: '100%', width: '100%',
         videoId: state.settings.adVideoId || 'jNQXAC9IVRw',
-        playerVars: { 'autoplay': 1, 'controls': 0, 'disablekb': 1, 'rel': 0 },
+        playerVars: { 'autoplay': 1, 'controls': 0, 'disablekb': 1, 'rel': 0, 'modestbranding': 1, 'iv_load_policy': 3 },
         events: {
+            'onStateChange': (event) => {
+                // If video is paused by any means before completion, force play
+                if (event.data === YT.PlayerState.PAUSED) {
+                    ytPlayer.playVideo();
+                }
+            },
             'onReady': (event) => {
+                event.target.playVideo();
                 let count = state.settings.adDuration || 5;
                 const timer = setInterval(() => {
                     ui.btnWatchAd.textContent = `Unlocking in ${count}s...`;
@@ -495,8 +502,8 @@ function simulateAd() {
 
 function playSound(type) {
     const sounds = {
-        pass: 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3',
-        fail: 'https://assets.mixkit.co/sfx/preview/mixkit-negative-tone-interface-947.mp3'
+        pass: '/sfx/win.mp3',
+        fail: '/sfx/lose.mp3'
     };
     if (sounds[type]) {
         const audio = new Audio(sounds[type]);

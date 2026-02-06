@@ -167,8 +167,10 @@
             <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Unlock Lesson</h2>
             <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 20px;">Watch this short video to unlock this specialized session.</p>
             
-            <div id="ad-video-container" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 20px; display: none;">
+            <div id="ad-video-container" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 20px; display: none; position: relative;">
                 <div id="youtube-player"></div>
+                <!-- Click Blocker Overlay -->
+                <div id="yt-blocker" style="position: absolute; inset: 0; z-index: 10; cursor: default;"></div>
             </div>
 
             <button id="btn-watch-ad" class="btn-pro secondary">WATCH AD TO UNLOCK</button>
