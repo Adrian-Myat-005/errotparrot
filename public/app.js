@@ -363,23 +363,22 @@ function renderLessons() {
 function renderMemoryBank() {
     if (state.savedPhrases.length === 0) {
         ui.lessonList.innerHTML = `
-            <div style="padding:120px 40px; text-align:center; animation: entrance 0.8s var(--ease-out);">
-                <div style="font-size:5rem; margin-bottom:24px; filter: drop-shadow(0 10px 20px var(--s-50));">⭐</div>
-                <h3 style="color:var(--n-900); font-weight:800; font-size:1.5rem;">Memory Bank is Empty</h3>
-                <p style="color:var(--n-400); font-weight:600; margin-top:8px;">Save phrases during practice to build your mastery list.</p>
+            <div style="padding:100px 40px; text-align:center;">
+                <div style="font-size:4rem; margin-bottom:20px;">⭐</div>
+                <h3 style="color:var(--text-muted); font-weight:800;">Memory Bank is Empty</h3>
             </div>`;
         return;
     }
-    let html = '<div class="unit-header">SAVED FOR REVIEW</div>';
+    let html = '<div class="unit-header" style="padding: 20px 24px 10px; font-weight:800; color:var(--text-muted); font-size:0.8rem; text-transform:uppercase;">SAVED FOR REVIEW</div>';
     state.savedPhrases.forEach((p, i) => {
         html += `
-            <div class="topic-card" style="margin-bottom: 16px; animation-delay: ${i * 0.05}s;">
-                <button class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--s-50); color:var(--s-500); cursor:pointer;">🔊</button>
+            <div class="topic-card" style="margin: 0 24px 16px; animation-delay: ${i * 0.05}s;">
+                <button class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--secondary-soft); color:var(--secondary); border:none; cursor:pointer;">🔊</button>
                 <div class="topic-info" style="flex:1;">
-                    <h4 style="margin-bottom:4px; font-size:1.15rem;">${p.en}</h4>
-                    <p style="color:var(--n-400); font-weight:600;">${p.my || ''}</p>
+                    <h4 style="margin-bottom:4px; font-size:1.1rem;">${p.en}</h4>
+                    <p style="color:var(--text-muted);">${p.my || ''}</p>
                 </div>
-                <button onclick="removeSavedPhrase(${i})" class="icon-btn" style="color:var(--d-500); background: var(--d-50); width: 48px; height: 48px; border-radius: 14px; font-size: 1.2rem;">✕</button>
+                <button onclick="removeSavedPhrase(${i})" class="icon-btn" style="color:var(--danger); width: 44px; height: 44px; font-size: 1.2rem;">✕</button>
             </div>`;
     });
     ui.lessonList.innerHTML = html;
@@ -588,32 +587,40 @@ async function handleRecord() {
 
 function showPhraseFeedback(data) {
     const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
-    ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
-    ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span class="score-badge">${data.score}%</span>`;
+    const overlay = ui.active.feedback;
+    overlay.classList.add('active');
+    overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
+    ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Not Enough";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
-    ui.active.feedback.classList.remove('hidden');
-    if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
-        const p = state.currentLesson.phrases[state.currentPhraseIndex];
-        ui.active.karaoke.innerHTML = p.en.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
-        ui.active.translation.textContent = p.my;
-        ui.active.translation.classList.remove('hidden');
+    
+    if (isPassed) { 
+        ui.active.btnNextStep.style.display = 'block'; 
+        ui.active.btnRetryStep.style.display = 'none'; 
+    } else { 
+        ui.active.btnNextStep.style.display = 'none'; 
+        ui.active.btnRetryStep.style.display = 'block'; 
     }
-    if (isPassed) { ui.active.btnNextStep.classList.remove('hidden'); ui.active.btnRetryStep.classList.add('hidden'); ui.active.btnRecord.classList.add('hidden'); }
-    else { ui.active.btnNextStep.classList.add('hidden'); ui.active.btnRetryStep.classList.remove('hidden'); }
 }
 
 function showChallengeFeedback(data) {
     const isPassed = data.score > 60;
-    ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
-    ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span class="score-badge">${data.score}%</span>`;
+    const overlay = ui.active.feedback;
+    overlay.classList.add('active');
+    overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
+    ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span style="font-weight:900;">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Not Quite";
     ui.active.correction.innerHTML = `"${data.userText}"`;
     ui.active.tip.textContent = data.feedback;
-    ui.active.feedback.classList.remove('hidden');
-    if (isPassed) { ui.active.btnNextStep.classList.remove('hidden'); ui.active.btnRetryStep.classList.add('hidden'); ui.active.btnRecord.classList.add('hidden'); }
-    else { ui.active.btnNextStep.classList.add('hidden'); ui.active.btnRetryStep.classList.remove('hidden'); }
+    
+    if (isPassed) { 
+        ui.active.btnNextStep.style.display = 'block'; 
+        ui.active.btnRetryStep.style.display = 'none'; 
+    } else { 
+        ui.active.btnNextStep.style.display = 'none'; 
+        ui.active.btnRetryStep.style.display = 'block'; 
+    }
 }
 
 function nextPhrase() {
