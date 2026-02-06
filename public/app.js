@@ -588,7 +588,6 @@ async function handleRecord() {
 function showPhraseFeedback(data) {
     const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
     const overlay = ui.active.feedback;
-    overlay.classList.add('active');
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Not Enough";
@@ -596,18 +595,17 @@ function showPhraseFeedback(data) {
     ui.active.tip.textContent = data.feedback;
     
     if (isPassed) { 
-        ui.active.btnNextStep.style.display = 'block'; 
+        ui.active.btnNextStep.style.display = 'flex'; 
         ui.active.btnRetryStep.style.display = 'none'; 
     } else { 
         ui.active.btnNextStep.style.display = 'none'; 
-        ui.active.btnRetryStep.style.display = 'block'; 
+        ui.active.btnRetryStep.style.display = 'flex'; 
     }
 }
 
 function showChallengeFeedback(data) {
     const isPassed = data.score > 60;
     const overlay = ui.active.feedback;
-    overlay.classList.add('active');
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span style="font-weight:900;">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Not Quite";
@@ -615,11 +613,11 @@ function showChallengeFeedback(data) {
     ui.active.tip.textContent = data.feedback;
     
     if (isPassed) { 
-        ui.active.btnNextStep.style.display = 'block'; 
+        ui.active.btnNextStep.style.display = 'flex'; 
         ui.active.btnRetryStep.style.display = 'none'; 
     } else { 
         ui.active.btnNextStep.style.display = 'none'; 
-        ui.active.btnRetryStep.style.display = 'block'; 
+        ui.active.btnRetryStep.style.display = 'flex'; 
     }
 }
 
