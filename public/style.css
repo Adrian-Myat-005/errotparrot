@@ -255,3 +255,13 @@ body {
 .hidden { display: none !important; }
 .wrong { color: var(--danger); text-decoration: underline wavy; }
 .correct-word { color: var(--primary-dark); }
+
+.btn-link { 
+    background: #f0f2f5; border: none; color: #777; margin-top: 16px; 
+    cursor: pointer; font-weight: 700; font-size: 0.95rem; 
+    width: 100%; padding: 14px; border-radius: 18px;
+    transition: all 0.2s ease;
+}
+.btn-link:hover { background: #e4e6e9; color: var(--text-main); }
+.btn-link:active { transform: scale(0.98); }
+

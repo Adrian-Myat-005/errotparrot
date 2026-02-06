@@ -1,9 +1,9 @@
 {
   "rewrites": [
     { "source": "/api/tts", "destination": "/api/tts.py" },
-    { "source": "/api/(.*)", "destination": "/api/$1.js" },
+    { "source": "/api/admin", "destination": "/api/admin.js" },
     { "source": "/admin", "destination": "/public/admin.html" },
-    { "source": "/(.*)", "destination": "/public/$1" },
-    { "source": "/", "destination": "/public/index.html" }
+    { "source": "/", "destination": "/public/index.html" },
+    { "source": "/(.*)", "destination": "/public/$1" }
   ]
 }
