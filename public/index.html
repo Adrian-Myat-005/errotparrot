@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ErrotParrot | Speaking Mastery</title>
+    <title>ErrorParrot | Speaking Mastery</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -14,9 +14,7 @@
         
         <!-- Header with HUD -->
         <header class="master-header">
-            <div id="hud-back" class="hud-item hidden">
-                <button id="btn-back" class="icon-btn">✕</button>
-            </div>
+            <button id="btn-back-main" class="icon-btn hidden">✕</button>
             <div class="progress-container">
                 <div id="progress-bar" class="progress-fill"></div>
             </div>
@@ -32,7 +30,7 @@
             <section id="screen-lessons" class="screen">
                 <div class="hero-section">
                     <h1>Ready for Mastery?</h1>
-                    <p>Master 11,000 essential shadowing phrases.</p>
+                    <p>Unlock your fluency one phrase at a time.</p>
                 </div>
 
                 <div class="tabs-scroll">
@@ -63,17 +61,21 @@
                 </div>
 
                 <div id="feedback-overlay" class="feedback-overlay hidden">
+                    <div class="feedback-status">
+                        <span id="feedback-icon"></span>
+                        <span id="feedback-label"></span>
+                    </div>
                     <div id="correction-display" class="correction-display"></div>
                     <div id="feedback-tip" class="feedback-tip"></div>
+                    <button id="btn-next-step" class="btn-next-master hidden">Continue</button>
                 </div>
 
                 <footer class="practice-footer">
                     <div class="controls-row">
                         <button id="btn-listen" class="btn-circle">🔊</button>
                         <div class="mic-container">
-                            <button id="btn-record" class="btn-mic">🎤</button>
+                            <button id="btn-record" class="btn-mic">🎤 Record</button>
                         </div>
-                        <button id="btn-next" class="btn-circle hidden">➔</button>
                     </div>
 
                     <div class="settings-bar">

@@ -28,11 +28,17 @@ module.exports = async (req, res) => {
     try {
         await runMiddleware(req, res, upload.single('audio'));
         const audioFile = req.file;
-        const { history, scenario, userRole, aiRole, userApiKey, tier, duration, startTime, leaderMode } = req.body;
+        let { history, scenario, userRole, aiRole, userApiKey, tier, duration, startTime, leaderMode } = req.body;
 
-        if (!audioFile || !history) {
-            if (audioFile && fs.existsSync(audioFile.path)) fs.unlinkSync(audioFile.path);
-            return res.status(400).json({ error: 'Missing data' });
+        // Set defaults if missing
+        history = history || "[]";
+        scenario = scenario || "General Conversation";
+        duration = duration || "30";
+        startTime = startTime || Date.now().toString();
+        leaderMode = leaderMode || "ai";
+
+        if (!audioFile) {
+            return res.status(400).json({ error: 'Missing audio file' });
         }
 
         let apiKey;
