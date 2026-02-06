@@ -367,7 +367,7 @@ function renderLessons() {
 
     let html = '';
     filtered.forEach((l, index) => {
-        if (state.currentType === 'all' && index % 10 === 0) html += `<div class="unit-header" style="margin: 20px 24px 8px; font-weight: 800; color: var(--text-light); text-transform: uppercase; font-size: 0.8rem;">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
+        if (state.currentType === 'all' && index % 10 === 0) html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
@@ -384,7 +384,7 @@ function renderLessons() {
                  style="animation-delay: ${index * 0.05}s">
                 <div class="topic-icon">${isAdrian ? '👨‍🏫' : (isCompleted ? '✅' : l.icon)}</div>
                 <div class="topic-info">
-                    <div class="topic-type-tag" style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: var(--bg); padding: 2px 8px; border-radius: 6px; margin-bottom: 4px; display: inline-block;">${l.type}</div>
+                    <div class="topic-type-tag">${l.type}</div>
                     <h4>${l.topic}</h4>
                     <p>${status}</p>
                 </div>
@@ -436,7 +436,6 @@ function startLesson(id) {
         state.pendingLessonId = id;
         const el = document.getElementById('modal-ad');
         if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
-        // Pre-reset UI for ad button
         ui.btnWatchAd.textContent = "WATCH VIDEO TO UNLOCK";
         document.getElementById('ad-video-container').style.display = 'none';
         document.getElementById('btn-close-ad').style.display = 'block';
@@ -463,16 +462,12 @@ function startLesson(id) {
 
 function simulateAd() {
     if (!ytApiReady) { alert("Ad system loading, try in 2s."); return; }
-    
     ui.btnWatchAd.disabled = true;
     document.getElementById('ad-video-container').style.display = 'block';
-    document.getElementById('btn-close-ad').style.display = 'none'; // Lock close button
-
+    document.getElementById('btn-close-ad').style.display = 'none';
     if (ytPlayer) ytPlayer.destroy();
-    
     ytPlayer = new YT.Player('youtube-player', {
-        height: '100%',
-        width: '100%',
+        height: '100%', width: '100%',
         videoId: state.settings.adVideoId || 'jNQXAC9IVRw',
         playerVars: { 'autoplay': 1, 'controls': 0, 'disablekb': 1, 'rel': 0 },
         events: {
@@ -496,6 +491,18 @@ function simulateAd() {
             }
         }
     });
+}
+
+function playSound(type) {
+    const sounds = {
+        pass: 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3',
+        fail: 'https://assets.mixkit.co/sfx/preview/mixkit-negative-tone-interface-947.mp3'
+    };
+    if (sounds[type]) {
+        const audio = new Audio(sounds[type]);
+        audio.volume = 0.4;
+        audio.play().catch(e => {});
+    }
 }
 
 function renderPhrase() {
@@ -542,17 +549,53 @@ function renderPhrase() {
     updateHUD();
 }
 
+function showPhraseFeedback(data) {
+    const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
+    const overlay = ui.active.feedback;
+    overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
+    ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
+    ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
+    ui.active.correction.innerHTML = data.corrections || data.transcript;
+    ui.active.tip.textContent = data.feedback;
+    playSound(isPassed ? 'pass' : 'fail');
+    if (isPassed) { 
+        ui.active.btnNextStep.style.display = 'flex'; 
+        ui.active.btnRetryStep.style.display = 'none'; 
+        ui.active.btnRecord.classList.add('hidden');
+    } else { 
+        ui.active.btnNextStep.style.display = 'none'; 
+        ui.active.btnRetryStep.style.display = 'flex'; 
+    }
+}
+
+function showChallengeFeedback(data) {
+    const isPassed = data.score > 60;
+    const overlay = ui.active.feedback;
+    overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
+    ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span style="font-weight:900;">${data.score}%</span>`;
+    ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Keep Trying";
+    ui.active.correction.innerHTML = `"${data.userText}"`;
+    ui.active.tip.textContent = data.feedback;
+    playSound(isPassed ? 'pass' : 'fail');
+    if (isPassed) { 
+        ui.active.btnNextStep.style.display = 'flex'; 
+        ui.active.btnRetryStep.style.display = 'none'; 
+        ui.active.btnRecord.classList.add('hidden');
+    } else { 
+        ui.active.btnNextStep.style.display = 'none'; 
+        ui.active.btnRetryStep.style.display = 'flex'; 
+    }
+}
+
 function renderGrammarTest(p) {
     ui.active.grammarTestArea.classList.remove('hidden');
     const words = p.en.split(/\s+/);
     const correct = p.en;
     ui.active.grammarQuestion.textContent = "Translate: " + (p.my || "this phrase");
-    
     const options = [correct];
     options.push(words.slice().reverse().join(' ')); 
     options.push(words.slice(1).join(' ') + ' ' + words[0]); 
     options.sort(() => Math.random() - 0.5);
-    
     ui.active.grammarOptions.innerHTML = options.map(opt => `
         <button class="btn-pro" style="background:white; color:var(--text); border:1px solid var(--border); margin-bottom:12px; text-transform:none;" onclick="handleGrammarAnswer(this, '${opt.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">
             ${opt}
@@ -614,7 +657,6 @@ async function handleRecord() {
             const formData = new FormData();
             formData.append('audio', blob);
             const phrase = state.currentLesson.phrases[state.currentPhraseIndex];
-
             try {
                 if (state.currentLesson.type === 'challenge') {
                     formData.append('scenario', phrase.mission);
@@ -636,62 +678,6 @@ async function handleRecord() {
         };
         mediaRecorder.start();
     } catch (e) { alert("Mic Access Denied"); }
-}
-
-function playSound(type) {
-    const sounds = {
-        pass: 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3',
-        fail: 'https://assets.mixkit.co/sfx/preview/mixkit-negative-tone-interface-947.mp3'
-    };
-    if (sounds[type]) {
-        const audio = new Audio(sounds[type]);
-        audio.volume = 0.4;
-        audio.play().catch(e => {});
-    }
-}
-
-function showPhraseFeedback(data) {
-    const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
-    const overlay = ui.active.feedback;
-    overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
-    
-    ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
-    ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
-    ui.active.correction.innerHTML = data.corrections || data.transcript;
-    ui.active.tip.textContent = data.feedback;
-    
-    playSound(isPassed ? 'pass' : 'fail');
-
-    if (isPassed) { 
-        ui.active.btnNextStep.style.display = 'flex'; 
-        ui.active.btnRetryStep.style.display = 'none'; 
-        ui.active.btnRecord.classList.add('hidden');
-    } else { 
-        ui.active.btnNextStep.style.display = 'none'; 
-        ui.active.btnRetryStep.style.display = 'flex'; 
-    }
-}
-
-function showChallengeFeedback(data) {
-    const isPassed = data.score > 60;
-    const overlay = ui.active.feedback;
-    overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
-    
-    ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span style="font-weight:900;">${data.score}%</span>`;
-    ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Keep Trying";
-    ui.active.correction.innerHTML = `"${data.userText}"`;
-    ui.active.tip.textContent = data.feedback;
-    
-    playSound(isPassed ? 'pass' : 'fail');
-
-    if (isPassed) { 
-        ui.active.btnNextStep.style.display = 'flex'; 
-        ui.active.btnRetryStep.style.display = 'none'; 
-        ui.active.btnRecord.classList.add('hidden');
-    } else { 
-        ui.active.btnNextStep.style.display = 'none'; 
-        ui.active.btnRetryStep.style.display = 'flex'; 
-    }
 }
 
 function nextPhrase() {

@@ -71,13 +71,25 @@
             <input type="checkbox" id="ads-enabled" style="width: 20px; height: 20px; cursor: pointer;">
         </div>
         <div class="input-group">
-            <label>Ad Duration (Seconds)</label>
+            <label>YouTube Ad Video URL</label>
+            <input type="text" id="ad-video-url" class="admin-input" placeholder="https://www.youtube.com/watch?v=...">
+            <div style="font-size: 0.65rem; color: var(--text-light); margin-top: 4px; font-weight: 600;">Paste any YouTube link here.</div>
+        </div>
+        <div class="input-group">
+            <label>Required Watch Duration (Seconds)</label>
             <input type="number" id="ad-duration" class="admin-input" value="5" min="1" max="60">
         </div>
         <button class="btn-action secondary" id="btn-save-settings">Save System Settings</button>
     </div>
 
     <script>
+        // Extract ID from various YT URL formats
+        function extractVideoID(url) {
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[7].length == 11) ? match[7] : url;
+        }
+
         // Load current settings
         async function loadSettings() {
             try {
@@ -89,6 +101,9 @@
                 const data = await res.json();
                 document.getElementById('ads-enabled').checked = data.adsEnabled;
                 document.getElementById('ad-duration').value = data.adDuration;
+                if (data.adVideoId) {
+                    document.getElementById('ad-video-url').value = `https://www.youtube.com/watch?v=${data.adVideoId}`;
+                }
             } catch (e) {}
         }
         loadSettings();
@@ -115,7 +130,12 @@
             const password = document.getElementById('admin-pass').value;
             const adsEnabled = document.getElementById('ads-enabled').checked;
             const adDuration = parseInt(document.getElementById('ad-duration').value);
+            const rawUrl = document.getElementById('ad-video-url').value;
+            const adVideoId = extractVideoID(rawUrl);
+
             if (!password) { alert("Password required"); return; }
+            if (!adVideoId) { alert("Valid YouTube URL required"); return; }
+
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
@@ -123,12 +143,17 @@
                     body: JSON.stringify({ 
                         action: 'updateSettings', 
                         password, 
-                        settings: { adsEnabled, adDuration } 
+                        settings: { adsEnabled, adDuration, adVideoId } 
                     })
                 });
                 const data = await res.json();
-                if (data.success) { alert("Settings updated!"); } else { alert(data.error); }
-            } catch (e) { alert("Error"); }
+                if (data.success) { 
+                    alert("System settings updated successfully! ✅"); 
+                    loadSettings(); // Refresh view
+                } else { 
+                    alert(data.error || "Update failed."); 
+                }
+            } catch (e) { alert("Network error"); }
         };
     </script>
 </body>
