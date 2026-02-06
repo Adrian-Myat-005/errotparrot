@@ -11,63 +11,67 @@
 
     <div class="app-shell">
         
-        <!-- Header with HUD -->
-        <header class="master-header">
-            <button id="btn-back-main" class="icon-btn hidden">✕</button>
-            <div class="progress-container">
-                <div id="progress-bar" class="progress-fill"></div>
-            </div>
-            <div class="hud-stats">
-                <span class="hud-energy">⚡ <span id="hud-energy">5</span></span>
-                <span class="hud-lvl">Lv.<span id="hud-lvl">1</span></span>
-                <button id="btn-show-activation" class="icon-btn" style="margin-left: 5px; color: var(--secondary);">🔑</button>
-            </div>
-        </header>
+        <div class="sticky-top">
+            <!-- Header with HUD -->
+            <header class="master-header">
+                <button id="btn-back-main" class="icon-btn hidden">✕</button>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-fill"></div>
+                </div>
+                <div class="hud-stats">
+                    <span class="hud-energy">⚡ <span id="hud-energy">5</span></span>
+                    <span class="hud-lvl">Lv.<span id="hud-lvl">1</span></span>
+                    <button id="btn-show-activation" class="icon-btn" style="margin-left: 5px; color: var(--secondary);">🔑</button>
+                </div>
+            </header>
+        </div>
 
         <main class="app-body">
             
             <!-- Screen: Lesson Grid -->
             <section id="screen-lessons" class="screen">
-                <div class="hero-section">
-                    <h1>Ready for Mastery?</h1>
-                    <p>Unlock your fluency one phrase at a time.</p>
-                </div>
-
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <div class="stat-value" id="stat-streak">0</div>
-                        <div class="stat-label">Day Streak</div>
+                <div class="scroll-container">
+                    <div class="hero-section">
+                        <h1>Ready for Mastery?</h1>
+                        <p>Unlock your fluency one phrase at a time.</p>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="stat-xp">0</div>
-                        <div class="stat-label">Total XP</div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-streak">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-xp">0</div>
+                            <div class="stat-label">Total XP</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stat-done">0</div>
+                            <div class="stat-label">Units Done</div>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="stat-done">0</div>
-                        <div class="stat-label">Units Done</div>
+
+                    <div class="dashboard-actions">
+                        <button id="btn-resume" class="btn-main" style="margin-top: 0; background: var(--secondary); border-bottom-color: var(--secondary-dark);">
+                            🚀 RESUME MASTERY
+                        </button>
                     </div>
-                </div>
 
-                <div class="dashboard-actions">
-                    <button id="btn-resume" class="btn-main" style="margin-top: 0; background: var(--secondary); border-bottom-color: var(--secondary-dark);">
-                        🚀 RESUME MASTERY
-                    </button>
-                </div>
+                    <div class="tabs-scroll">
+                        <button class="tab-btn active" data-type="all">All Path</button>
+                        <button class="tab-btn" data-type="grammar">Grammar</button>
+                        <button class="tab-btn" data-type="test">Tests</button>
+                        <button class="tab-btn" data-type="challenge">Challenges</button>
+                        <button class="tab-btn" data-type="memory" style="color: #ff9600;">⭐ Memory</button>
+                    </div>
 
-                <div class="tabs-scroll">
-                    <button class="tab-btn active" data-type="all">All</button>
-                    <button class="tab-btn" data-type="grammar">Grammar</button>
-                    <button class="tab-btn" data-type="test">Tests</button>
-                    <button class="tab-btn" data-type="challenge">Challenges</button>
-                    <button class="tab-btn" data-type="memory" style="color: #ff9600;">⭐ Memory</button>
-                </div>
+                    <div class="search-wrap">
+                        <input type="text" id="lesson-search" placeholder="Search lessons...">
+                    </div>
 
-                <div class="search-wrap">
-                    <input type="text" id="lesson-search" placeholder="Search topics...">
-                </div>
-
-                <div id="lesson-list" class="topic-grid">
-                    <div style="padding: 40px; text-align: center; color: #aaa; font-weight: 700;">Loading...</div>
+                    <div id="lesson-list" class="topic-grid">
+                        <div style="padding: 40px; text-align: center; color: #aaa; font-weight: 700;">Loading...</div>
+                    </div>
                 </div>
             </section>
 
