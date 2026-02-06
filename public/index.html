@@ -118,17 +118,41 @@
 
                 <div class="active-controls-wrapper">
                     <div id="active-feedback" class="feedback-toast hidden"></div>
+                    <div id="score-display" class="score-pill hidden">Score: <span id="score-val">0</span>%</div>
+                    <div id="correction-box" class="correction-card hidden">
+                        <h4>💡 Suggestions</h4>
+                        <div id="correction-text"></div>
+                    </div>
                     
                     <div class="control-row" id="active-controls">
-                        <button id="btn-listen" class="btn-round">🔊</button>
+                        <button id="btn-listen" class="btn-round" title="Listen to AI">🔊</button>
+                        <button id="btn-relisten-user" class="btn-round hidden" title="Listen to Me">👂</button>
                         <button id="btn-record" class="btn-main">🎤 Tap to Speak</button>
                         <button id="btn-next" class="btn-main hidden">Next →</button>
                     </div>
                     
-                    <div class="settings-row hidden">
+                    <div class="settings-row">
                         <div class="setting-item">
-                            <label>Tr. Adrian Starts</label>
-                            <input type="checkbox" id="check-ai-starts" checked>
+                            <label>Leader:</label>
+                            <select id="select-leader" class="mini-select">
+                                <option value="ai">Tr. Adrian</option>
+                                <option value="user">Me</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Voice:</label>
+                            <select id="select-voice" class="mini-select">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Speed:</label>
+                            <select id="select-speed" class="mini-select">
+                                <option value="0.8">0.8x</option>
+                                <option value="1.0" selected>1.0x</option>
+                                <option value="1.2">1.2x</option>
+                            </select>
                         </div>
                     </div>
                 </div>

@@ -58,11 +58,12 @@ module.exports = async (req, res) => {
 
             const prompt = `
             Coach speech. Target: "${originalText}". Said: "${transcript}".
+            Provide detailed feedback.
             Return ONLY JSON:
             {
                 "score": number,
                 "feedback": "1 friendly sentence",
-                "missedWords": ["list", "of", "errors"],
+                "corrections": "HTML string highlighting errors vs target (use <span class='wrong'> for omissions/errors and <span class='correct'> for correct words)",
                 "passed": boolean
             }`;
 

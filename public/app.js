@@ -33,7 +33,10 @@ const state = {
     sessionStartTime: null,
     autoPlay: true,
     isDarkMode: false,
-    adVideoId: 'dQw4w9WgXcQ'
+    adVideoId: 'dQw4w9WgXcQ',
+    leaderMode: 'ai',
+    voice: 'male',
+    ttsSpeed: '1.0'
 };
 
 const CONFIG = {
@@ -84,11 +87,16 @@ const ui = {
         durSlider: document.getElementById('duration-slider'),
         durDisplay: document.getElementById('duration-display'),
         typing: document.getElementById('ai-typing'),
-        btnStartQuiz: document.getElementById('btn-start-quiz')
+        btnStartQuiz: document.getElementById('btn-start-quiz'),
+        scoreDisplay: document.getElementById('score-display'),
+        scoreVal: document.getElementById('score-val'),
+        correctionBox: document.getElementById('correction-box'),
+        correctionText: document.getElementById('correction-text')
     },
     btns: {
         record: document.getElementById('btn-record'),
         listen: document.getElementById('btn-listen'),
+        relistenUser: document.getElementById('btn-relisten-user'),
         next: document.getElementById('btn-next'),
         back: document.getElementById('btn-back'),
         premium: document.getElementById('btn-premium-nav')
@@ -97,7 +105,10 @@ const ui = {
         apiKey: document.getElementById('input-api-key'),
         code: document.getElementById('input-redeem-code'),
         adminCodeType: document.getElementById('admin-code-type'),
-        adminAdUrl: document.getElementById('admin-ad-url')
+        adminAdUrl: document.getElementById('admin-ad-url'),
+        leader: document.getElementById('select-leader'),
+        voice: document.getElementById('select-voice'),
+        speed: document.getElementById('select-speed')
     },
     ad: {
         timer: document.getElementById('ad-timer'),
@@ -157,6 +168,9 @@ function loadState() {
             state.totalXp = data.totalXp || 0;
             state.isDarkMode = data.isDarkMode || false;
             state.adVideoId = data.adVideoId || 'dQw4w9WgXcQ';
+            state.leaderMode = data.leaderMode || 'ai';
+            state.voice = data.voice || 'male';
+            state.ttsSpeed = data.ttsSpeed || '1.0';
             state.isPremium = state.subscriptionType !== 'free';
 
             if (state.subscriptionExpiry && Date.now() > state.subscriptionExpiry) {
@@ -174,6 +188,9 @@ function loadState() {
     }
     ui.inputs.apiKey.value = state.userApiKey;
     if (ui.inputs.adminAdUrl) ui.inputs.adminAdUrl.value = state.adVideoId;
+    if (ui.inputs.leader) ui.inputs.leader.value = state.leaderMode;
+    if (ui.inputs.voice) ui.inputs.voice.value = state.voice;
+    if (ui.inputs.speed) ui.inputs.speed.value = state.ttsSpeed;
 }
 
 function saveState() {
@@ -253,11 +270,12 @@ function startTeacherMode() {
     state.modeIndex = 0; state.modes = ['Teacher Chat']; state.chatHistory = []; state.sessionStartTime = Date.now();
     updateHUD(); switchScreen('active'); renderActiveScreen();
     
-    const aiStarts = document.getElementById('check-ai-starts').checked;
-    if (aiStarts) {
+    if (state.leaderMode === 'ai') {
         const greeting = "Hello! I am Tr. Adrian. I'm excited to help you practice English today. What would you like to talk about?";
         addChatMessage('ai', greeting); playTTS(greeting, 'B', true); 
         state.chatHistory.push({ role: "assistant", content: greeting });
+    } else {
+        addChatMessage('ai', "I'm ready when you are! You can start the conversation on any topic you like.");
     }
 }
 
@@ -308,6 +326,9 @@ function renderActiveScreen() {
     
     ui.active.chatBox.classList.add('hidden'); ui.active.shadowBox.classList.add('hidden');
     ui.active.grammarBox.classList.add('hidden'); ui.active.controls.classList.add('hidden');
+    ui.active.feedback.classList.add('hidden'); ui.btns.next.classList.add('hidden');
+    ui.active.scoreDisplay.classList.add('hidden'); ui.active.correctionBox.classList.add('hidden');
+    ui.btns.relistenUser.classList.add('hidden');
 
     if (mode === 'Study') {
         ui.active.grammarBox.classList.remove('hidden');
@@ -383,8 +404,10 @@ async function handleRecord() {
         mediaRecorder.onstop = async () => {
             ui.btns.record.classList.remove('recording'); ui.btns.record.textContent = "🎤 Record";
             setLoading(true);
-            const blob = new Blob(audioChunks, { type: 'audio/webm' });
-            const formData = new FormData(); formData.append('audio', blob, 'audio.webm');
+            state.audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            ui.btns.relistenUser.classList.remove('hidden');
+            
+            const formData = new FormData(); formData.append('audio', state.audioBlob, 'audio.webm');
             formData.append('tier', state.subscriptionType); formData.append('userApiKey', state.userApiKey);
             const isTeacher = state.currentLesson?.id === 'teacher';
             const mode = state.modes[state.modeIndex];
@@ -398,6 +421,7 @@ async function handleRecord() {
                     formData.append('history', JSON.stringify(state.chatHistory));
                     formData.append('scenario', isTeacher ? "English Teacher" : state.currentLesson.title);
                     formData.append('duration', state.discussionDuration);
+                    formData.append('leaderMode', state.leaderMode);
                     ui.active.typing.classList.remove('hidden');
                     const res = await fetch('/api/chat', { method: 'POST', body: formData });
                     ui.active.typing.classList.add('hidden');
@@ -414,6 +438,16 @@ async function handleRecord() {
 }
 
 function handleResult(data) {
+    if (data.score !== undefined) {
+        ui.active.scoreVal.textContent = data.score;
+        ui.active.scoreDisplay.classList.remove('hidden');
+    }
+    
+    if (data.corrections) {
+        ui.active.correctionText.innerHTML = data.corrections;
+        ui.active.correctionBox.classList.remove('hidden');
+    }
+
     if (data.passed) {
         ui.active.feedback.innerHTML = `<span style="color:var(--success)">✅ ${data.feedback}</span>`;
         ui.active.feedback.classList.remove('hidden'); gainExp(15); ui.btns.next.classList.remove('hidden');
@@ -460,8 +494,17 @@ function addChatMessage(role, text) {
 
 async function playTTS(text, role, isKaraoke = false, container = null) {
     if (activeAudio) activeAudio.pause();
+    const isTeacher = state.currentLesson?.id === 'teacher';
     try {
-        const res = await fetch('/api/tts', { method: 'POST', body: JSON.stringify({ text, role }) });
+        const res = await fetch('/api/tts', { 
+            method: 'POST', 
+            body: JSON.stringify({ 
+                text, 
+                role, 
+                voice: isTeacher ? state.voice : null, 
+                speed: state.ttsSpeed 
+            }) 
+        });
         const data = await res.json(); activeAudio = new Audio("data:audio/mp3;base64," + data.audio);
         if (isKaraoke && data.alignment) {
             const words = (container || ui.active.chatList.lastElementChild?.querySelector('.msg-content')).querySelectorAll('.word');
@@ -481,6 +524,14 @@ async function playTTS(text, role, isKaraoke = false, container = null) {
 function bindEvents() {
     ui.btns.record.onclick = handleRecord;
     ui.btns.listen.onclick = () => playTTS(state.currentLesson.lines[state.currentLineIndex].text, state.currentLesson.lines[state.currentLineIndex].role, true);
+    ui.btns.relistenUser.onclick = () => {
+        if (state.audioBlob) {
+            if (activeAudio) activeAudio.pause();
+            const url = URL.createObjectURL(state.audioBlob);
+            activeAudio = new Audio(url);
+            activeAudio.play();
+        }
+    };
     ui.btns.next.onclick = () => {
         state.currentLineIndex++;
         if (state.currentLineIndex >= state.currentLesson.lines.length) {
@@ -519,6 +570,10 @@ function bindEvents() {
     document.getElementById('btn-admin-save-ad').onclick = () => {
         state.adVideoId = ui.inputs.adminAdUrl.value; saveState(); alert("Saved");
     };
+
+    if (ui.inputs.leader) ui.inputs.leader.onchange = (e) => { state.leaderMode = e.target.value; saveState(); };
+    if (ui.inputs.voice) ui.inputs.voice.onchange = (e) => { state.voice = e.target.value; saveState(); };
+    if (ui.inputs.speed) ui.inputs.speed.onchange = (e) => { state.ttsSpeed = e.target.value; saveState(); };
 
     ui.lesson.search.oninput = (e) => renderLessons(state.lessons.filter(l => l.title.toLowerCase().includes(e.target.value.toLowerCase())));
     ui.lesson.tabs.forEach(t => t.onclick = (e) => {

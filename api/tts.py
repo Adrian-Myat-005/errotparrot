@@ -10,13 +10,21 @@ class handler(BaseHTTPRequestHandler):
         body = json.loads(self.rfile.read(length))
         
         text = body.get('text')
-        role = body.get('role', 'A') # A=Male, B=Female
+        voice_type = body.get('voice') # male or female or None
+        role = body.get('role', 'A')
+        speed_val = float(body.get('speed', '1.0'))
 
-        # Voice Selection
-        voice = "en-US-GuyNeural" if role == 'A' else "en-US-JennyNeural"
+        # Voice Selection Logic
+        if voice_type == 'female' or (not voice_type and role == 'B'):
+            voice = "en-US-JennyNeural"
+        else:
+            voice = "en-US-GuyNeural"
+
+        # Rate Selection (Speed)
+        rate = f"{int((speed_val - 1.0) * 100):+d}%"
 
         async def gen():
-            communicate = edge_tts.Communicate(text, voice)
+            communicate = edge_tts.Communicate(text, voice, rate=rate)
             audio = b""
             align = []
             

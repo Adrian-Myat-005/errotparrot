@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
     try {
         await runMiddleware(req, res, upload.single('audio'));
         const audioFile = req.file;
-        const { history, scenario, userRole, aiRole, userApiKey, tier, duration, startTime } = req.body;
+        const { history, scenario, userRole, aiRole, userApiKey, tier, duration, startTime, leaderMode } = req.body;
 
         if (!audioFile || !history) {
             if (audioFile && fs.existsSync(audioFile.path)) fs.unlinkSync(audioFile.path);
@@ -66,16 +66,22 @@ module.exports = async (req, res) => {
             });
             const userText = transcription.text;
 
-            let systemContent = `You are a real human in: ${scenario}. Roleplay as ${aiRole}. 
+            const leadership = leaderMode === 'ai' 
+                ? "LEAD: You are the leader. Ask engaging questions, introduce new sub-topics related to the scenario, and keep the momentum."
+                : "FOLLOW: The student is the leader. Answer their questions and support their chosen direction, but still offer corrections.";
+
+            let systemContent = `You are a real human in: ${scenario}. Roleplay as ${aiRole || 'the partner'}. 
                     STRICT: No AI jargon. Speak naturally. Short responses (1-2 sentences).`;
 
-            if (scenario === 'English Teacher') {
+            if (scenario.includes("Teacher") || scenario.includes("Adrian")) {
                 systemContent = `You are Tr. Adrian, a highly adaptive and proactive English teacher. 
-                1. ANALYZE: Carefully evaluate the student's grammar, vocabulary, and flow.
-                2. ADAPT: Adjust your complexity. If they are basic, use simple words. If advanced, use idioms.
-                3. CORRECT: Polely correct mistakes in a "Teacher Tip" style.
-                4. PROACTIVE: Always end with an engaging question to keep them talking.
-                5. LIMIT: 2-3 sentences. No AI-style preamble. Be human.`;
+                1. ${leadership}
+                2. ANALYZE: Carefully evaluate the student's grammar, vocabulary, and logical consistency. If they say something factually wrong or nonsensical, point it out gently.
+                3. ADAPT: Adjust your complexity. If they are basic, use simple words. If advanced, use idioms and complex structures.
+                4. CORRECT: Politely correct mistakes in a "Teacher Tip" style.
+                5. ANTI-LOOP: NEVER repeat the same questions, phrases, or topics. Keep a mental map of what has been discussed and move forward.
+                6. LOGIC: Your responses must be 100% logically sound and contextually relevant.
+                7. LIMIT: 2-3 sentences max. No AI-style preamble (e.g., "That's a great question!"). Get straight to the point. Be human.`;
             }
 
             const messages = [
@@ -88,7 +94,6 @@ module.exports = async (req, res) => {
                         "aiResponse": "string",
                         "score": number,
                         "feedback": "human-like tip",
-                        "missedWords": ["list", "of", "actual", "wrong", "words"],
                         "passed": boolean
                     }`
                 },
