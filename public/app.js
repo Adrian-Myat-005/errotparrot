@@ -1,3 +1,4 @@
+
 const state = {
     lessons: [],
     unlockedLessons: [1, 2, 3, 4, 5],
@@ -11,13 +12,13 @@ const state = {
     audioUrl: null,
     isPremium: false,
     lastLessonId: null,
-    chatHistory: [], // MEMORY for Tr. Adrian sessions
+    chatHistory: [],
     
-    // Stats
+    // Daily Quota System
     userLevel: 1,
     userExp: 0,
-    userEnergy: 5,
-    lastEnergyUpdate: Date.now(),
+    userEnergy: 50,
+    lastRefillDate: null, // Track the date of last energy reset
     totalXp: 0,
     streak: 0,
     lastActiveDay: null,
@@ -26,6 +27,7 @@ const state = {
     ttsSpeed: '1.0',
     voice: 'male',
     leaderMode: 'ai',
+    sessionDuration: '5',
     currentType: 'all',
     startTime: Date.now()
 };
@@ -54,6 +56,7 @@ function switchScreen(name) {
         else backBtn.classList.remove('hidden');
     }
     if (name === 'lessons') {
+        state.currentLesson = null;
         renderDashboard();
         renderLessons();
     }
@@ -93,7 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btnSavePhrase: document.getElementById('btn-save-phrase'),
             selectSpeed: document.getElementById('select-speed'),
             selectVoice: document.getElementById('select-voice'),
-            selectLeader: document.getElementById('select-leader')
+            selectLeader: document.getElementById('select-leader'),
+            selectDuration: document.getElementById('select-duration')
         },
         btnWatchAd: document.getElementById('btn-watch-ad'),
         inputRedeem: document.getElementById('input-redeem'),
@@ -104,20 +108,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function init() {
     loadState();
+    checkDailyRefill(); // Handle 50 energy per day quota
     updateStreak();
     closeAllModals();
     switchScreen('lessons');
     
     try {
         const res = await fetch('lessons.json');
+        if (!res.ok) throw new Error("Net Error");
         state.lessons = await res.json();
         renderLessons();
         renderDashboard();
-    } catch (e) {}
+    } catch (e) {
+        console.error("Lessons failed", e);
+    }
     
     updateHUD();
     bindEvents();
-    setInterval(energyLoop, 60000);
 }
 
 function loadState() {
@@ -141,8 +148,17 @@ function saveState() {
     delete toSave.isRecording;
     delete toSave.audioBlob;
     delete toSave.audioUrl;
-    delete toSave.chatHistory; // Don't persist current chat history
+    delete toSave.chatHistory;
     localStorage.setItem('errorparrot_master_v1', JSON.stringify(toSave));
+}
+
+function checkDailyRefill() {
+    const today = new Date().toDateString();
+    if (state.lastRefillDate !== today) {
+        state.userEnergy = 50; // Daily quota refill
+        state.lastRefillDate = today;
+        saveState();
+    }
 }
 
 function updateStreak() {
@@ -182,22 +198,9 @@ function updateHUD() {
     }
 }
 
-function energyLoop() {
-    if (state.userEnergy < 5) {
-        const now = Date.now();
-        const elapsed = now - state.lastEnergyUpdate;
-        const gain = Math.floor(elapsed / 600000);
-        if (gain > 0) {
-            state.userEnergy = Math.min(5, state.userEnergy + gain);
-            state.lastEnergyUpdate = now;
-            updateHUD();
-            saveState();
-        }
-    }
-}
-
 function bindEvents() {
-    document.getElementById('btn-back-main').onclick = () => switchScreen('lessons');
+    const backBtn = document.getElementById('btn-back-main');
+    if (backBtn) backBtn.onclick = () => switchScreen('lessons');
     if (ui.dashboard.btnResume) ui.dashboard.btnResume.onclick = resumeLearning;
     if (ui.dashboard.btnShowActivation) ui.dashboard.btnShowActivation.onclick = () => {
         const el = document.getElementById('modal-adrian');
@@ -229,6 +232,7 @@ function bindEvents() {
     ui.active.btnSavePhrase.onclick = toggleSavePhrase;
     if (ui.btnWatchAd) ui.btnWatchAd.onclick = simulateAd;
     if (ui.btnRedeem) ui.btnRedeem.onclick = handleRedeem;
+    if (ui.active.selectDuration) ui.active.selectDuration.onchange = (e) => state.sessionDuration = e.target.value;
 }
 
 function toggleSavePhrase() {
@@ -282,13 +286,21 @@ function renderLessons() {
     if (state.currentType === 'memory') { renderMemoryBank(); return; }
 
     let filtered = state.lessons || [];
-    if (state.currentType !== 'all') filtered = filtered.filter(l => l.type === state.currentType);
+    if (state.currentType === 'teacher') {
+        filtered = filtered.filter(l => l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher"));
+    } else if (state.currentType !== 'all') {
+        filtered = filtered.filter(l => l.type === state.currentType);
+    }
+    
     const query = ui.lessonSearch?.value.toLowerCase();
     if (query) filtered = filtered.filter(l => l.topic.toLowerCase().includes(query));
 
     let html = '';
     filtered.forEach((l, index) => {
-        if (index % 10 === 0) html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
+        // Only show Unit Header in "All Path" or when not filtering by specific type
+        if (state.currentType === 'all' && index % 10 === 0) {
+            html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
+        }
         
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
@@ -424,7 +436,6 @@ function renderPhrase() {
         ui.active.translation.textContent = p.context;
         if (isAdrian) {
             ui.active.chatHistory.classList.remove('hidden');
-            // Ensure history is array
             if (!Array.isArray(state.chatHistory)) state.chatHistory = [];
             renderChatHistory();
         }
@@ -446,25 +457,14 @@ function renderChatHistory() {
         ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:10px;">Start speaking to begin the conversation...</div>';
         return;
     }
-    
     let html = '';
     state.chatHistory.forEach(msg => {
         const type = msg.role === 'assistant' ? 'teacher' : 'student';
         html += `<div class="chat-bubble ${type}">${msg.content}</div>`;
     });
     ui.active.chatHistory.innerHTML = html;
-    
-    // Auto-scroll to bottom
     const container = document.querySelector('.practice-main');
     if (container) container.scrollTop = container.scrollHeight;
-
-    // Play TTS for latest assistant message if it's new
-    const lastMsg = state.chatHistory[state.chatHistory.length - 1];
-    if (lastMsg.role === 'assistant') {
-        // playTTS logic is handled in handleRecord, but we can double check here or just let handleRecord do it?
-        // Actually, handleRecord calls playTTS? No, currently it just renders.
-        // Let's rely on handleRecord to trigger TTS to avoid double playing on re-render.
-    }
 }
 
 async function handleRecord() {
@@ -495,16 +495,16 @@ async function handleRecord() {
                     formData.append('history', JSON.stringify(state.chatHistory));
                     formData.append('userRole', 'Student');
                     formData.append('aiRole', isAdrian ? 'Teacher Adrian' : 'Partner');
+                    formData.append('duration', state.sessionDuration);
+                    formData.append('startTime', state.startTime);
+                    
                     const res = await fetch('/api/chat', { method: 'POST', body: formData });
                     const data = await res.json();
                     
-                    // Update Chat History
                     state.chatHistory.push({ role: 'user', content: data.userText });
                     state.chatHistory.push({ role: 'assistant', content: data.aiResponse });
-                    
-                    renderChatHistory(); // Render visual history
-                    playTTS(data.aiResponse); // Speak response
-                    
+                    renderChatHistory();
+                    playTTS(data.aiResponse);
                     showChallengeFeedback(data);
                 } else {
                     formData.append('originalText', phrase.en);
@@ -521,27 +521,19 @@ function showPhraseFeedback(data) {
     const isPassed = data.score > (state.currentLesson.type === 'exam' ? 85 : 70);
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "✅" : "❌";
-    ui.active.feedbackLabel.textContent = isPassed ? "Pass!" : "Not Enough";
+    ui.active.feedbackLabel.textContent = isPassed ? "Pass!" : "Keep Trying";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
-    
     if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
         const p = state.currentLesson.phrases[state.currentPhraseIndex];
         ui.active.karaoke.innerHTML = p.en.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
         ui.active.translation.textContent = p.my;
         ui.active.translation.classList.remove('hidden');
     }
-
-    if (isPassed) { 
-        ui.active.btnNextStep.classList.remove('hidden'); 
-        ui.active.btnRetryStep.classList.add('hidden');
-        ui.active.btnRecord.classList.add('hidden'); 
-    } else {
-        ui.active.btnNextStep.classList.add('hidden');
-        ui.active.btnRetryStep.classList.remove('hidden');
-    }
+    if (isPassed) { ui.active.btnNextStep.classList.remove('hidden'); ui.active.btnRetryStep.classList.add('hidden'); ui.active.btnRecord.classList.add('hidden'); }
+    else { ui.active.btnNextStep.classList.add('hidden'); ui.active.btnRetryStep.classList.remove('hidden'); }
 }
 
 function showChallengeFeedback(data) {
@@ -553,17 +545,8 @@ function showChallengeFeedback(data) {
     ui.active.tip.textContent = data.feedback;
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
-    
-    // History is already updated in handleRecord
-
-    if (isPassed) { 
-        ui.active.btnNextStep.classList.remove('hidden'); 
-        ui.active.btnRetryStep.classList.add('hidden');
-        ui.active.btnRecord.classList.add('hidden'); 
-    } else {
-        ui.active.btnNextStep.classList.add('hidden');
-        ui.active.btnRetryStep.classList.remove('hidden');
-    }
+    if (isPassed) { ui.active.btnNextStep.classList.remove('hidden'); ui.active.btnRetryStep.classList.add('hidden'); ui.active.btnRecord.classList.add('hidden'); }
+    else { ui.active.btnNextStep.classList.add('hidden'); ui.active.btnRetryStep.classList.remove('hidden'); }
 }
 
 function nextPhrase() {

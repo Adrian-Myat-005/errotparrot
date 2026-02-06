@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ErrorParrot | Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #58cc02;
+            --secondary: #1cb0f6;
+            --bg: #f8f9fb;
+            --text: #3c3c3c;
+            --border: #e5e5e5;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); padding: 40px 20px; margin: 0; display: flex; justify-content: center; }
+        .admin-card { background: white; width: 100%; max-width: 500px; padding: 40px; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; text-align: center; }
+        p { text-align: center; color: #888; margin-bottom: 30px; font-weight: 600; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; color: #aaa; margin-bottom: 8px; letter-spacing: 1px; }
+        input, select { width: 100%; padding: 16px; border-radius: 16px; border: 2px solid var(--border); font-size: 1rem; font-weight: 600; outline: none; box-sizing: border-box; }
+        input:focus { border-color: var(--secondary); }
+        .btn-gen { width: 100%; padding: 18px; border-radius: 18px; border: none; background: var(--secondary); border-bottom: 5px solid #107db3; color: white; font-size: 1.1rem; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; margin-top: 10px; transition: 0.1s; }
+        .btn-gen:active { transform: translateY(3px); border-bottom-width: 2px; }
+        .result-area { margin-top: 30px; padding: 20px; background: #f0f7ff; border-radius: 20px; border: 2px dashed var(--secondary); display: none; text-align: center; }
+        .code-display { font-size: 1.5rem; font-weight: 800; color: var(--secondary-dark); margin: 10px 0; letter-spacing: 2px; }
+        .copy-hint { font-size: 0.8rem; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="admin-card">
+        <h1>Admin Control</h1>
+        <p>Generate One-Time Premium Codes</p>
+        
+        <div class="input-group">
+            <label>Admin Password</label>
+            <input type="password" id="admin-pass" placeholder="••••••••">
+        </div>
+
+        <div class="input-group">
+            <label>Code Type</label>
+            <select id="code-type">
+                <option value="monthly">Monthly Access (30 Days)</option>
+                <option value="yearly">Yearly Access (365 Days)</option>
+                <option value="lifetime">Lifetime Access</option>
+            </select>
+        </div>
+
+        <button class="btn-gen" id="btn-generate">Generate Code</button>
+
+        <div class="result-area" id="result-area">
+            <div class="copy-hint">One-Time Use Code Created:</div>
+            <div class="code-display" id="code-output">EP-XXXX-XXXX</div>
+            <div class="copy-hint">Share this with the user. It will be disabled after one redemption.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btn-generate').onclick = async () => {
+            const password = document.getElementById('admin-pass').value;
+            const type = document.getElementById('code-type').value;
+            const btn = document.getElementById('btn-generate');
+
+            if (!password) { alert("Password required"); return; }
+
+            btn.disabled = true;
+            btn.textContent = "Generating...";
+
+            try {
+                const res = await fetch('/api/admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'generate', password, type })
+                });
+                
+                const data = await res.json();
+                if (data.code) {
+                    document.getElementById('result-area').style.display = 'block';
+                    document.getElementById('code-output').textContent = data.code;
+                } else {
+                    alert(data.error || "Failed to generate code");
+                }
+            } catch (e) {
+                alert("Network error");
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Generate Code";
+            }
+        };
+    </script>
+</body>
+</html>

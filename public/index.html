@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffffff">
     <title>ErrorParrot | Speaking Mastery</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,7 +22,7 @@
                     <div id="progress-bar" class="progress-fill"></div>
                 </div>
                 <div class="hud-stats">
-                    <span class="hud-energy">⚡ <span id="hud-energy">5</span></span>
+                    <span class="hud-energy">⚡ <span id="hud-energy">50</span></span>
                     <span class="hud-lvl">Lv.<span id="hud-lvl">1</span></span>
                     <button id="btn-show-activation" class="icon-btn" style="margin-left: 5px; color: var(--secondary);">🔑</button>
                 </div>
@@ -59,9 +62,9 @@
 
                     <div class="tabs-scroll">
                         <button class="tab-btn active" data-type="all">All Path</button>
+                        <button class="tab-btn" data-type="teacher" style="color: var(--purple); border-color: var(--purple-light);">👨‍🏫 Teacher</button>
                         <button class="tab-btn" data-type="grammar">Grammar</button>
                         <button class="tab-btn" data-type="test">Tests</button>
-                        <button class="tab-btn" data-type="challenge">Challenges</button>
                         <button class="tab-btn" data-type="memory" style="color: #ff9600;">⭐ Memory</button>
                     </div>
 
@@ -126,6 +129,13 @@
                         <select id="select-leader" class="mini-select">
                             <option value="ai">AI Lead</option>
                             <option value="user">User Lead</option>
+                        </select>
+                        <select id="select-duration" class="mini-select">
+                            <option value="1">1 Min</option>
+                            <option value="2">2 Mins</option>
+                            <option value="3">3 Mins</option>
+                            <option value="5" selected>5 Mins</option>
+                            <option value="10">10 Mins</option>
                         </select>
                     </div>
                 </footer>
