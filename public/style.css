@@ -253,8 +253,22 @@ body {
 
 /* Utils */
 .hidden { display: none !important; }
-.wrong { color: var(--danger); text-decoration: underline wavy; }
-.correct-word { color: var(--primary-dark); }
+.wrong { 
+    color: var(--danger); 
+    background: #fff0f0; 
+    padding: 2px 6px; 
+    border-radius: 6px;
+    text-decoration: none !important;
+    font-weight: 800;
+}
+.correct-word { color: var(--primary-dark); font-weight: 800; }
+
+/* Charming Background Blobs */
+body::before, body::after {
+    content: ""; position: fixed; border-radius: 50%; z-index: -1; filter: blur(80px); opacity: 0.3; pointer-events: none;
+}
+body::before { width: 300px; height: 300px; background: var(--secondary-light); top: -100px; left: -100px; }
+body::after { width: 250px; height: 250px; background: var(--purple-light); bottom: -50px; right: -50px; }
 
 .btn-link { 
     background: #f0f2f5; border: none; color: #777; margin-top: 16px; 
@@ -264,4 +278,38 @@ body {
 }
 .btn-link:hover { background: #e4e6e9; color: var(--text-main); }
 .btn-link:active { transform: scale(0.98); }
+
+
+.feedback-status { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 20px; font-size: 1.6rem; font-weight: 800; }
+.score-badge {
+    background: white; color: var(--text-main); padding: 8px 16px; border-radius: 100px;
+    font-size: 1rem; border: 2px solid var(--border); box-shadow: 0 4px 0 var(--border);
+}
+.feedback-overlay.correct .score-badge { border-color: var(--primary); color: var(--primary-dark); }
+.feedback-overlay.wrong .score-badge { border-color: var(--danger); color: var(--danger-dark); }
+
+/* Pulsing Mic with more polish */
+.btn-mic.recording { 
+    background: var(--danger); border-bottom-color: var(--danger-dark); 
+    box-shadow: 0 0 0 0 rgba(255, 75, 75, 0.7);
+    animation: pro-pulse 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+@keyframes pro-pulse {
+    to { box-shadow: 0 0 0 25px rgba(255, 75, 75, 0); }
+}
+
+/* Smooth entry for cards */
+.topic-card {
+    animation: cardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+.topic-card:nth-child(1) { animation-delay: 0.05s; }
+.topic-card:nth-child(2) { animation-delay: 0.1s; }
+.topic-card:nth-child(3) { animation-delay: 0.15s; }
+.topic-card:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes cardPop {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
 

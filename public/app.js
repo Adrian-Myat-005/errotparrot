@@ -510,9 +510,9 @@ async function handleRecord() {
 }
 
 function showPhraseFeedback(data) {
-    const isPassed = data.score > (state.currentLesson.type === 'exam' ? 85 : 70);
+    const isPassed = data.score > (state.currentLesson.type === 'exam' ? 80 : 65);
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
-    ui.active.feedbackIcon.textContent = isPassed ? "✅" : "❌";
+    ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span class="score-badge">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Not Enough";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
@@ -530,7 +530,7 @@ function showPhraseFeedback(data) {
 function showChallengeFeedback(data) {
     const isPassed = data.score > 60;
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
-    ui.active.feedbackIcon.textContent = isPassed ? "🎯" : "⚠️";
+    ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span class="score-badge">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Not Quite";
     ui.active.correction.innerHTML = `"${data.userText}"`;
     ui.active.tip.textContent = data.feedback;

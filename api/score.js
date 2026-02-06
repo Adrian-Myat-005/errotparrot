@@ -57,13 +57,25 @@ module.exports = async (req, res) => {
             const transcript = transcription.text;
 
             const prompt = `
-            Coach speech. Target: "${originalText}". Said: "${transcript}".
-            Provide detailed feedback.
+            Evaluate speech for a friendly shadowing app. 
+            Target Phrase: "${originalText}"
+            User Spoke: "${transcript}"
+
+            HUMANIZED GUIDELINES:
+            1. Be very encouraging. If they got the main idea, they should pass.
+            2. Ignore capitalization, punctuation, and minor Whisper artifacts.
+            3. Do NOT punish for natural speech variations or minor stumbles.
+            4. Focus on the 'flow' and core vocabulary.
+            5. Provide an HTML string for 'corrections':
+               - Correct words: <span class='correct-word'>
+               - Challenging words: <span class='wrong'> (NO underlines allowed)
+            6. A score of 65+ is a PASS for regular lessons.
+
             Return ONLY JSON:
             {
-                "score": number,
-                "feedback": "1 friendly sentence",
-                "corrections": "HTML string highlighting errors vs target (use <span class='wrong'> for omissions/errors and <span class='correct'> for correct words)",
+                "score": number (0-100),
+                "feedback": "1 charm and friendly sentence",
+                "corrections": "HTML string",
                 "passed": boolean
             }`;
 
