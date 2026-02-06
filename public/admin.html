@@ -4,34 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ErrorParrot | Admin Panel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: var(--bg-main); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .admin-card { 
+            background: white; width: 100%; max-width: 440px; padding: 48px 32px; 
+            border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); 
+            text-align: center; animation: cardPop 0.6s var(--spring);
+        }
+        .input-group { text-align: left; margin-bottom: 24px; }
+        .input-group label { display: block; font-size: 0.75rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em; }
+        .admin-input { 
+            width: 100%; padding: 16px; border-radius: 14px; border: none; 
+            background: #f1f5f9; font-family: var(--font); font-weight: 700; color: var(--text-main);
+            transition: var(--transition);
+        }
+        .admin-input:focus { background: white; box-shadow: 0 0 0 4px var(--secondary-soft); transform: translateY(-2px); }
+        .btn-gen { 
+            width: 100%; padding: 18px; border-radius: 18px; border: none; 
+            background: var(--secondary); color: white; font-weight: 800; font-size: 1rem;
+            cursor: pointer; box-shadow: 0 10px 20px -5px var(--secondary-soft); transition: var(--transition);
+        }
+        .btn-gen:hover { transform: translateY(-4px); box-shadow: 0 15px 30px -5px var(--secondary-soft); background: var(--secondary-dark); }
+        .btn-gen:active { transform: scale(0.96); }
+        .result-area { 
+            margin-top: 32px; padding: 24px; background: var(--secondary-soft); 
+            border-radius: 20px; display: none; animation: fadeIn 0.5s; 
+        }
+    </style>
 </head>
 <body>
-    <div class="modal-card" style="width: 100%; max-width: 480px; box-shadow: var(--shadow-xl); animation: none; transform: none; opacity: 1;">
-        <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Admin Control</h1>
-        <p style="margin-bottom: 24px;">Generate One-Time Premium Codes</p>
+    <div class="admin-card">
+        <h1 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em;">Admin Control</h1>
+        <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 32px;">Create Premium Activation Codes</p>
         
-        <div style="margin-bottom: 20px; text-align: left;">
-            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase;">Admin Password</label>
-            <input type="password" id="admin-pass" placeholder="••••••••" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-m);">
+        <div class="input-group">
+            <label>Master Password</label>
+            <input type="password" id="admin-pass" class="admin-input" placeholder="••••••••">
         </div>
 
-        <div style="margin-bottom: 24px; text-align: left;">
-            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase;">Code Type</label>
-            <select id="code-type" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-m); background: white;">
+        <div class="input-group">
+            <label>Access Duration</label>
+            <select id="code-type" class="admin-input">
                 <option value="monthly">Monthly Access (30 Days)</option>
                 <option value="yearly">Yearly Access (365 Days)</option>
                 <option value="lifetime">Lifetime Access</option>
             </select>
         </div>
 
-        <button class="btn-main" id="btn-generate">Generate Code</button>
+        <button class="btn-gen" id="btn-generate">Generate Code</button>
 
-        <div id="result-area" style="margin-top: 24px; padding: 16px; background: var(--surface); border-radius: var(--radius-m); border: 1px dashed var(--secondary); display: none;">
-            <div style="font-size: 0.8rem; color: var(--text-muted);">One-Time Use Code Created:</div>
-            <div id="code-output" style="font-size: 1.4rem; font-weight: 800; color: var(--secondary); margin: 8px 0; letter-spacing: 1px; user-select: all;">EP-XXXX-XXXX</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Share this with the user.</div>
+        <div class="result-area" id="result-area">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--secondary-dark); text-transform: uppercase;">Code Created</div>
+            <div id="code-output" style="font-size: 1.6rem; font-weight: 800; color: var(--secondary-dark); margin: 12px 0; letter-spacing: 1px; user-select: all;">EP-XXXX-XXXX</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Share this code with the user.</div>
         </div>
     </div>
 

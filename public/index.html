@@ -24,7 +24,7 @@
                 <div class="hud-stats">
                     <span class="hud-energy">⚡ <span id="hud-energy">50</span></span>
                     <span class="hud-lvl">Lv.<span id="hud-lvl">1</span></span>
-                    <button id="btn-show-activation" class="icon-btn" style="margin-left: 8px; color: var(--secondary);">🔑</button>
+                    <button id="btn-show-activation" class="icon-btn" style="color: var(--s-500);">🔑</button>
                 </div>
             </header>
         </div>
@@ -62,7 +62,7 @@
                     <div class="sticky-nav">
                         <div class="tabs-scroll">
                             <button class="tab-btn active" data-type="all">All Path</button>
-                            <button class="tab-btn" data-type="teacher" style="color: var(--accent);">👨‍🏫 Teacher</button>
+                            <button class="tab-btn" data-type="teacher" style="color: var(--v-500);">👨‍🏫 Teacher</button>
                             <button class="tab-btn" data-type="grammar">Grammar</button>
                             <button class="tab-btn" data-type="test">Tests</button>
                             <button class="tab-btn" data-type="memory" style="color: #eab308;">⭐ Memory</button>
@@ -74,25 +74,25 @@
                     </div>
 
                     <div id="lesson-list" class="topic-grid">
-                        <div style="padding: 40px; text-align: center; color: var(--text-muted); font-weight: 700;">Loading...</div>
+                        <div style="padding: 60px; text-align: center; color: var(--n-400); font-weight: 700;">Loading System...</div>
                     </div>
             </section>
 
             <!-- Screen: Practice -->
             <section id="screen-active" class="screen hidden">
-                <div class="practice-top">
-                    <button id="btn-restart-lesson" class="icon-btn" style="color: var(--danger);">🔄</button>
-                    <div class="phrase-counter"><span id="current-phrase-num">1</span> / 50</div>
+                <div class="practice-top" style="display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--n-100);">
+                    <button id="btn-restart-lesson" class="icon-btn" style="color: var(--d-500);">🔄</button>
+                    <div class="phrase-counter" style="font-weight: 800; color: var(--n-400); font-size: 0.9rem;"><span id="current-phrase-num">1</span> / 50</div>
                     <div style="width: 40px;"></div>
                 </div>
 
                 <div class="practice-main">
-                    <button id="btn-save-phrase" class="icon-btn" style="position: absolute; top: 16px; right: 20px; font-size: 1.5rem; color: #eab308; z-index: 10;">☆</button>
-                    <div class="phrase-card">
+                    <button id="btn-save-phrase" class="icon-btn" style="position: absolute; top: 16px; right: 24px; font-size: 1.8rem; color: #eab308; z-index: 10;">☆</button>
+                    <div class="phrase-card" style="width: 100%;">
                         <div id="grammar-note" class="grammar-box hidden"></div>
-                        <div id="grammar-test-area" class="hidden" style="margin-top: 20px;">
-                            <div id="grammar-question" style="font-weight: 700; margin-bottom: 16px; font-size: 1.1rem; color: var(--text-main);"></div>
-                            <div id="grammar-options" style="display: grid; gap: 8px;"></div>
+                        <div id="grammar-test-area" class="hidden" style="margin-top: 24px;">
+                            <div id="grammar-question" style="font-weight: 800; margin-bottom: 20px; font-size: 1.2rem; color: var(--n-900);"></div>
+                            <div id="grammar-options" style="display: grid; gap: 12px;"></div>
                         </div>
                         <div id="karaoke-text" class="karaoke-text">Loading...</div>
                         <div id="translation-text" class="translation-text">...</div>

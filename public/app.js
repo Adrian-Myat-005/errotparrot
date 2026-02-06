@@ -345,7 +345,9 @@ function renderLessons() {
         else if (isCompleted) status = 'Mastered ✅';
 
         html += `
-            <div class="topic-card ${isAdrian ? 'premium-teacher' : ''} ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
+            <div class="topic-card ${isAdrian ? 'premium-teacher' : ''} ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" 
+                 onclick="startLesson(${l.id})"
+                 style="animation-delay: ${index * 0.05}s">
                 <div class="topic-icon">${isAdrian ? '👨‍🏫' : (isCompleted ? '✅' : l.icon)}</div>
                 <div class="topic-info">
                     <div class="topic-type-tag ${l.type}">${l.type}</div>
@@ -360,19 +362,24 @@ function renderLessons() {
 
 function renderMemoryBank() {
     if (state.savedPhrases.length === 0) {
-        ui.lessonList.innerHTML = `<div style="padding:100px 40px; text-align:center;"><div style="font-size:5rem; margin-bottom:24px; opacity:0.2;">⭐</div><h3 style="color:var(--text-muted); font-weight:800;">Memory Bank is Empty</h3><p style="color:var(--text-light);">Save phrases during practice to review them here.</p></div>`;
+        ui.lessonList.innerHTML = `
+            <div style="padding:120px 40px; text-align:center; animation: entrance 0.8s var(--ease-out);">
+                <div style="font-size:5rem; margin-bottom:24px; filter: drop-shadow(0 10px 20px var(--s-50));">⭐</div>
+                <h3 style="color:var(--n-900); font-weight:800; font-size:1.5rem;">Memory Bank is Empty</h3>
+                <p style="color:var(--n-400); font-weight:600; margin-top:8px;">Save phrases during practice to build your mastery list.</p>
+            </div>`;
         return;
     }
     let html = '<div class="unit-header">SAVED FOR REVIEW</div>';
     state.savedPhrases.forEach((p, i) => {
         html += `
-            <div class="topic-card" style="margin-bottom: 16px;">
-                <button class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--secondary-soft); color:var(--secondary); cursor:pointer;">🔊</button>
+            <div class="topic-card" style="margin-bottom: 16px; animation-delay: ${i * 0.05}s;">
+                <button class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--s-50); color:var(--s-500); cursor:pointer;">🔊</button>
                 <div class="topic-info" style="flex:1;">
-                    <h4 style="margin-bottom:4px; font-size:1.1rem;">${p.en}</h4>
-                    <p style="color:var(--text-muted);">${p.my || ''}</p>
+                    <h4 style="margin-bottom:4px; font-size:1.15rem;">${p.en}</h4>
+                    <p style="color:var(--n-400); font-weight:600;">${p.my || ''}</p>
                 </div>
-                <button onclick="removeSavedPhrase(${i})" class="icon-btn" style="color:var(--danger); background: var(--danger-soft); width: 44px; height: 44px; border-radius: 12px; font-size: 1.2rem;">✕</button>
+                <button onclick="removeSavedPhrase(${i})" class="icon-btn" style="color:var(--d-500); background: var(--d-50); width: 48px; height: 48px; border-radius: 14px; font-size: 1.2rem;">✕</button>
             </div>`;
     });
     ui.lessonList.innerHTML = html;
