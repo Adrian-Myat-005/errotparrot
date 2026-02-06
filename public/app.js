@@ -26,7 +26,12 @@ const state = {
     leaderMode: 'ai',
     sessionDuration: '5',
     currentType: 'all',
-    startTime: Date.now()
+    startTime: Date.now(),
+
+    settings: {
+        adsEnabled: true,
+        adDuration: 5
+    }
 };
 
 let ui = {};
@@ -128,6 +133,11 @@ async function init() {
     bindEvents();
 
     try {
+        // Fetch System Settings
+        const settingsRes = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'getSettings' }) });
+        const settingsData = await settingsRes.json();
+        if (settingsData) state.settings = { ...state.settings, ...settingsData };
+
         const res = await fetch('lessons.json?v=' + Date.now());
         const data = await res.json();
         state.lessons = data;
@@ -305,17 +315,26 @@ function resumeLearning() {
 async function handleRedeem() {
     const code = ui.inputRedeem.value.trim();
     if (!code) return;
+    ui.btnRedeem.disabled = true;
+    ui.btnRedeem.textContent = "Verifying...";
     try {
         const res = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'redeem', code }) });
         const data = await res.json();
         if (data.success) {
             state.isPremium = true;
-            alert("Unlocked!");
+            alert("Mastery Premium Activated! ⭐");
             closeAllModals();
             renderLessons();
             saveState();
+        } else {
+            alert(data.error || "Invalid activation code.");
         }
-    } catch(e) {}
+    } catch(e) {
+        alert("Activation failed. Check your connection.");
+    } finally {
+        ui.btnRedeem.disabled = false;
+        ui.btnRedeem.textContent = "ACTIVATE";
+    }
 }
 
 function renderLessons() {
@@ -340,12 +359,13 @@ function renderLessons() {
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
         const progress = state.lessonProgress[l.id] || 0;
         let status = progress > 0 ? `Resume at Step ${progress+1}` : '50 Practice Phrases';
+        
         if (isAdrian && !state.isPremium) status = 'Premium Required ⭐';
-        else if (isLocked) status = 'Unlock with 5s Ad 📺';
+        else if (isLocked && state.settings.adsEnabled) status = 'Unlock with Short Ad 📺';
         else if (isCompleted) status = 'Mastered ✅';
 
         html += `
-            <div class="topic-card ${isAdrian ? 'premium-teacher' : ''} ${isLocked || (isAdrian && !state.isPremium) ? 'locked' : ''}" 
+            <div class="topic-card ${isAdrian ? 'premium-teacher' : ''} ${isLocked && state.settings.adsEnabled && !state.isPremium ? 'locked' : ''}" 
                  onclick="startLesson(${l.id})"
                  style="animation-delay: ${index * 0.05}s">
                 <div class="topic-icon">${isAdrian ? '👨‍🏫' : (isCompleted ? '✅' : l.icon)}</div>
@@ -396,13 +416,16 @@ function startLesson(id) {
         if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
         return;
     }
-    if (id > 5 && !state.unlockedLessons.includes(id) && !state.isPremium) {
+    
+    const isLocked = id > 5 && !state.unlockedLessons.includes(id) && !state.isPremium;
+    if (isLocked && state.settings.adsEnabled) {
         state.pendingLessonId = id;
         const el = document.getElementById('modal-ad');
         if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
         return;
     }
-    if (state.userEnergy < 1) {
+
+    if (state.userEnergy < 1 && !state.isPremium) {
         const el = document.getElementById('modal-energy');
         if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
         return;
@@ -413,7 +436,7 @@ function startLesson(id) {
     state.currentPhraseIndex = state.lessonProgress[id] || 0;
     state.chatHistory = [];
     state.startTime = Date.now();
-    state.userEnergy--;
+    if (!state.isPremium) state.userEnergy--;
     state.lastEnergyUpdate = Date.now();
     switchScreen('active');
     renderPhrase();
@@ -422,14 +445,14 @@ function startLesson(id) {
 
 function simulateAd() {
     ui.btnWatchAd.disabled = true;
-    let count = 5;
+    let count = state.settings.adDuration || 5;
     const timer = setInterval(() => {
         ui.btnWatchAd.textContent = `Unlocking... ${count}s`;
         if (count-- < 0) {
             clearInterval(timer);
             if (!state.unlockedLessons.includes(state.pendingLessonId)) state.unlockedLessons.push(state.pendingLessonId);
             ui.btnWatchAd.disabled = false;
-            ui.btnWatchAd.textContent = "Watch Ad (5s)";
+            ui.btnWatchAd.textContent = "WATCH AD";
             closeAllModals();
             startLesson(state.pendingLessonId);
             renderLessons();
@@ -460,10 +483,10 @@ function renderPhrase() {
         ui.active.translation.classList.add('hidden');
         renderGrammarTest(p);
     } else if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:20px; border-radius:20px; font-weight:800; color:var(--text-muted);">📝 ASSESSMENT<br>Repeat after hearing.</div>`;
+        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:24px; border-radius:24px; font-weight:800; color:var(--text-muted); line-height:1.4;">📝 ASSESSMENT<br>Repeat exactly what you hear.</div>`;
         ui.active.translation.classList.add('hidden');
     } else if (state.currentLesson.type === 'challenge') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:20px; border-radius:20px; font-weight:800; color:var(--text);">${p.mission}<br><span style="font-size:0.8rem; font-weight:600; opacity:0.7;">Pass Criteria: natural flow, score > 60.</span></div>`;
+        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:24px; border-radius:24px; font-weight:800; color:var(--text); line-height:1.4;">${p.mission}<br><span style="font-size:0.85rem; font-weight:600; opacity:0.7;">Pass Criteria: natural flow & score > 60.</span></div>`;
         ui.active.translation.textContent = p.context;
         if (state.currentLesson.topic.toLowerCase().includes("adrian")) {
             ui.active.chatHistory.classList.remove('hidden');
@@ -486,8 +509,7 @@ function renderGrammarTest(p) {
     ui.active.grammarTestArea.classList.remove('hidden');
     const words = p.en.split(/\s+/);
     const correct = p.en;
-    
-    ui.active.grammarQuestion.textContent = "Correct translation for: " + (p.my || "this sentence");
+    ui.active.grammarQuestion.textContent = "Translate: " + (p.my || "this phrase");
     
     const options = [correct];
     options.push(words.slice().reverse().join(' ')); 
@@ -495,7 +517,7 @@ function renderGrammarTest(p) {
     options.sort(() => Math.random() - 0.5);
     
     ui.active.grammarOptions.innerHTML = options.map(opt => `
-        <button class="btn-pro" style="background:white; color:var(--text); border:1px solid var(--border); margin-bottom:10px; text-transform:none;" onclick="handleGrammarAnswer(this, '${opt.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">
+        <button class="btn-pro" style="background:white; color:var(--text); border:1px solid var(--border); margin-bottom:12px; text-transform:none;" onclick="handleGrammarAnswer(this, '${opt.replace(/'/g, "\\'")}', '${correct.replace(/'/g, "\\'")}')">
             ${opt}
         </button>
     `).join('');
@@ -504,29 +526,27 @@ function renderGrammarTest(p) {
 window.handleGrammarAnswer = (btn, selected, correct) => {
     const isCorrect = selected === correct;
     if (isCorrect) {
-        btn.style.background = 'var(--primary)';
-        btn.style.color = 'white';
+        btn.style.background = 'var(--primary)'; btn.style.color = 'white';
         ui.active.btnNextStep.style.display = 'flex';
-        gainExp(10);
+        gainExp(20);
     } else {
-        btn.style.background = 'var(--danger)';
-        btn.style.color = 'white';
-        alert("Try again! Look at the structure.");
+        btn.style.background = 'var(--danger)'; btn.style.color = 'white';
+        alert("Try again!");
     }
 };
 
 function renderChatHistory() {
     if (!ui.active.chatHistory) return;
     if (state.chatHistory.length === 0) {
-        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:20px; text-align:center;">Say something to start...</div>';
+        ui.active.chatHistory.innerHTML = '<div style="color:var(--text-light); font-style:italic; padding:32px; text-align:center; font-weight:600;">Say something to Tr. Adrian...</div>';
         return;
     }
     let html = '';
     state.chatHistory.forEach(msg => {
         const isAI = msg.role === 'assistant';
         html += `
-            <div style="display:flex; justify-content:${isAI ? 'flex-start' : 'flex-end'}; margin-bottom:12px;">
-                <div style="max-width:80%; padding:12px 16px; border-radius:18px; background:${isAI ? 'var(--bg)' : 'var(--secondary)'}; color:${isAI ? 'var(--text)' : 'white'}; font-weight:600; font-size:0.95rem;">
+            <div style="display:flex; justify-content:${isAI ? 'flex-start' : 'flex-end'}; margin-bottom:16px;">
+                <div style="max-width:85%; padding:14px 20px; border-radius:22px; background:${isAI ? 'var(--bg)' : 'var(--secondary)'}; color:${isAI ? 'var(--text)' : 'white'}; font-weight:600; font-size:1rem; box-shadow:var(--shadow-sm);">
                     ${msg.content}
                 </div>
             </div>
@@ -622,7 +642,7 @@ function showChallengeFeedback(data) {
 }
 
 function nextPhrase() {
-    gainExp(15);
+    gainExp(20);
     state.currentPhraseIndex++;
     state.lessonProgress[state.currentLesson.id] = state.currentPhraseIndex;
     if (state.currentPhraseIndex >= 50) {
@@ -637,7 +657,7 @@ function nextPhrase() {
 function completeLesson() {
     if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     if (!state.completedLessons.includes(state.currentLesson.id)) state.completedLessons.push(state.currentLesson.id);
-    gainExp(100);
+    gainExp(150);
     switchScreen('lessons');
     saveState();
 }

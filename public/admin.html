@@ -7,92 +7,128 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: var(--bg-main); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        body { background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .admin-card { 
-            background: white; width: 100%; max-width: 440px; padding: 48px 32px; 
+            background: white; width: 100%; max-width: 440px; padding: 40px 32px; 
             border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); 
-            text-align: center; animation: cardPop 0.6s var(--spring);
+            text-align: center; animation: cardEntrance 0.6s var(--ease);
         }
-        .input-group { text-align: left; margin-bottom: 24px; }
-        .input-group label { display: block; font-size: 0.75rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em; }
+        .section-title { font-size: 0.8rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; margin: 32px 0 16px; text-align: left; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        .input-group { text-align: left; margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
         .admin-input { 
-            width: 100%; padding: 16px; border-radius: 14px; border: none; 
-            background: #f1f5f9; font-family: var(--font); font-weight: 700; color: var(--text-main);
-            transition: var(--transition);
+            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); 
+            background: #f8fafc; font-family: inherit; font-weight: 700; color: var(--text);
+            transition: 0.2s;
         }
-        .admin-input:focus { background: white; box-shadow: 0 0 0 4px var(--secondary-soft); transform: translateY(-2px); }
-        .btn-gen { 
-            width: 100%; padding: 18px; border-radius: 18px; border: none; 
-            background: var(--secondary); color: white; font-weight: 800; font-size: 1rem;
-            cursor: pointer; box-shadow: 0 10px 20px -5px var(--secondary-soft); transition: var(--transition);
+        .admin-input:focus { border-color: var(--secondary); background: white; outline: none; }
+        
+        .toggle-group { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; }
+        .toggle-group span { font-weight: 700; font-size: 0.9rem; }
+        
+        .btn-action { 
+            width: 100%; padding: 16px; border-radius: 16px; border: none; 
+            font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.2s;
         }
-        .btn-gen:hover { transform: translateY(-4px); box-shadow: 0 15px 30px -5px var(--secondary-soft); background: var(--secondary-dark); }
-        .btn-gen:active { transform: scale(0.96); }
+        .btn-action.primary { background: var(--secondary); color: white; margin-bottom: 12px; }
+        .btn-action.secondary { background: var(--text); color: white; }
+        .btn-action:active { transform: scale(0.98); }
+        
         .result-area { 
-            margin-top: 32px; padding: 24px; background: var(--secondary-soft); 
-            border-radius: 20px; display: none; animation: fadeIn 0.5s; 
+            margin-top: 24px; padding: 20px; background: var(--secondary-soft); 
+            border-radius: 16px; display: none; 
         }
     </style>
 </head>
 <body>
     <div class="admin-card">
-        <h1 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em;">Admin Control</h1>
-        <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 32px;">Create Premium Activation Codes</p>
-        
-        <div class="input-group">
-            <label>Master Password</label>
-            <input type="password" id="admin-pass" class="admin-input" placeholder="••••••••">
-        </div>
+        <h1 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.03em;">Master Control</h1>
+        <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 10px;">System Configuration Panel</p>
 
         <div class="input-group">
-            <label>Access Duration</label>
+            <label>Admin Password</label>
+            <input type="password" id="admin-pass" class="admin-input" placeholder="Required for all changes">
+        </div>
+
+        <div class="section-title">Premium Codes</div>
+        <div class="input-group">
+            <label>Code Type</label>
             <select id="code-type" class="admin-input">
-                <option value="monthly">Monthly Access (30 Days)</option>
-                <option value="yearly">Yearly Access (365 Days)</option>
+                <option value="monthly">Monthly Access</option>
+                <option value="yearly">Yearly Access</option>
                 <option value="lifetime">Lifetime Access</option>
             </select>
         </div>
-
-        <button class="btn-gen" id="btn-generate">Generate Code</button>
-
+        <button class="btn-action primary" id="btn-generate">Generate Premium Code</button>
         <div class="result-area" id="result-area">
-            <div style="font-size: 0.8rem; font-weight: 800; color: var(--secondary-dark); text-transform: uppercase;">Code Created</div>
-            <div id="code-output" style="font-size: 1.6rem; font-weight: 800; color: var(--secondary-dark); margin: 12px 0; letter-spacing: 1px; user-select: all;">EP-XXXX-XXXX</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Share this code with the user.</div>
+            <div style="font-size: 0.7rem; font-weight: 800; color: var(--secondary-dark); text-transform: uppercase;">Generated Code</div>
+            <div id="code-output" style="font-size: 1.4rem; font-weight: 800; color: var(--secondary-dark); margin: 8px 0; letter-spacing: 1px; user-select: all;">EP-XXXX-XXXX</div>
         </div>
+
+        <div class="section-title">Ad Management</div>
+        <div class="toggle-group">
+            <span>Enable Ads for Free Users</span>
+            <input type="checkbox" id="ads-enabled" style="width: 20px; height: 20px; cursor: pointer;">
+        </div>
+        <div class="input-group">
+            <label>Ad Duration (Seconds)</label>
+            <input type="number" id="ad-duration" class="admin-input" value="5" min="1" max="60">
+        </div>
+        <button class="btn-action secondary" id="btn-save-settings">Save System Settings</button>
     </div>
 
     <script>
+        // Load current settings
+        async function loadSettings() {
+            try {
+                const res = await fetch('/api/admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'getSettings' })
+                });
+                const data = await res.json();
+                document.getElementById('ads-enabled').checked = data.adsEnabled;
+                document.getElementById('ad-duration').value = data.adDuration;
+            } catch (e) {}
+        }
+        loadSettings();
+
         document.getElementById('btn-generate').onclick = async () => {
             const password = document.getElementById('admin-pass').value;
             const type = document.getElementById('code-type').value;
-            const btn = document.getElementById('btn-generate');
-
             if (!password) { alert("Password required"); return; }
-
-            btn.disabled = true;
-            btn.textContent = "Generating...";
-
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'generate', password, type })
                 });
-                
                 const data = await res.json();
                 if (data.code) {
                     document.getElementById('result-area').style.display = 'block';
                     document.getElementById('code-output').textContent = data.code;
-                } else {
-                    alert(data.error || "Failed to generate code");
-                }
-            } catch (e) {
-                alert("Network error");
-            } finally {
-                btn.disabled = false;
-                btn.textContent = "Generate Code";
-            }
+                } else { alert(data.error); }
+            } catch (e) { alert("Error"); }
+        };
+
+        document.getElementById('btn-save-settings').onclick = async () => {
+            const password = document.getElementById('admin-pass').value;
+            const adsEnabled = document.getElementById('ads-enabled').checked;
+            const adDuration = parseInt(document.getElementById('ad-duration').value);
+            if (!password) { alert("Password required"); return; }
+            try {
+                const res = await fetch('/api/admin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        action: 'updateSettings', 
+                        password, 
+                        settings: { adsEnabled, adDuration } 
+                    })
+                });
+                const data = await res.json();
+                if (data.success) { alert("Settings updated!"); } else { alert(data.error); }
+            } catch (e) { alert("Error"); }
         };
     </script>
 </body>
