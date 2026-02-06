@@ -38,7 +38,7 @@ const ui = {
         active: document.getElementById('screen-active'),
         energy: document.getElementById('modal-energy'),
         ad: document.getElementById('modal-ad'),
-        premium: document.getElementById('modal-premium')
+        adrian: document.getElementById('modal-adrian')
     },
     active: {
         counter: document.getElementById('current-phrase-num'),
@@ -56,7 +56,9 @@ const ui = {
         selectVoice: document.getElementById('select-voice'),
         selectLeader: document.getElementById('select-leader')
     },
-    btnWatchAd: document.getElementById('btn-watch-ad')
+    btnWatchAd: document.getElementById('btn-watch-ad'),
+    inputRedeem: document.getElementById('input-redeem'),
+    btnRedeem: document.getElementById('btn-redeem')
 };
 
 let mediaRecorder;
@@ -80,8 +82,12 @@ function loadState() {
     const saved = localStorage.getItem('errorparrot_master_v1');
     if (saved) {
         const data = JSON.parse(saved);
-        // Merge saved data into state
         Object.assign(state, data);
+    } else {
+        // First time users: ensure only first 5 are unlocked, no popups.
+        state.unlockedLessons = [1, 2, 3, 4, 5];
+        state.isPremium = false;
+        saveState();
     }
 }
 
@@ -143,6 +149,33 @@ function bindEvents() {
     ui.active.selectLeader.onchange = (e) => state.leaderMode = e.target.value;
 
     ui.btnWatchAd.onclick = simulateAd;
+    ui.btnRedeem.onclick = handleRedeem;
+}
+
+async function handleRedeem() {
+    const code = ui.inputRedeem.value.trim();
+    if (!code) return;
+    
+    try {
+        const res = await fetch('/api/admin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'redeem', code })
+        });
+        const data = await res.json();
+        if (data.success) {
+            state.isPremium = true;
+            alert("Premium features successfully activated! Enjoy your advanced tutor.");
+            ui.inputRedeem.value = '';
+            closeAllModals();
+            renderLessons();
+            saveState();
+        } else {
+            alert(data.error || "Invalid code");
+        }
+    } catch (e) {
+        alert("Redemption service unavailable");
+    }
 }
 
 function renderLessons() {
@@ -159,15 +192,19 @@ function renderLessons() {
     ui.lessonList.innerHTML = filtered.map(l => {
         const isLocked = !state.unlockedLessons.includes(l.id);
         const isCompleted = state.completedLessons.includes(l.id);
-        const isAdrian = l.topic.includes("Adrian");
+        const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         
+        let statusText = '50 Mastery Phrases';
+        if (isAdrian && !state.isPremium) statusText = 'Premium Required ⭐';
+        else if (isLocked) statusText = 'Watch Ad to Unlock';
+
         return `
-            <div class="topic-card ${isLocked ? 'locked' : ''}" onclick="startLesson(${l.id})">
+            <div class="topic-card ${isLocked && !(isAdrian && !state.isPremium) ? 'locked' : ''}" onclick="startLesson(${l.id})">
                 <div class="topic-icon">${isCompleted ? '✅' : l.icon}</div>
                 <div class="topic-info">
                     <div class="topic-type-tag">${l.type} ${isAdrian ? '⭐' : ''}</div>
                     <h4>${l.topic}</h4>
-                    <p>${isLocked ? 'Watch Ad to Unlock' : '50 Mastery Phrases'}</p>
+                    <p>${statusText}</p>
                 </div>
             </div>
         `;
@@ -179,13 +216,13 @@ function startLesson(id) {
     if (!lesson) return;
 
     // Adrian Check
-    if (lesson.topic.includes("Adrian") && !state.isPremium) {
-        ui.screens.premium.classList.remove('hidden');
+    if ((lesson.topic.toLowerCase().includes("adrian") || lesson.topic.toLowerCase().includes("teacher")) && !state.isPremium) {
+        ui.screens.adrian.classList.remove('hidden');
         return;
     }
 
     // Ad Check for lessons > 5
-    if (id > 5 && !state.unlockedLessons.includes(id)) {
+    if (id > 5 && !state.unlockedLessons.includes(id) && !state.isPremium) {
         state.pendingLessonId = id;
         ui.screens.ad.classList.remove('hidden');
         return;
@@ -278,6 +315,8 @@ async function handleRecord() {
                 if (state.currentLesson.type === 'challenge') {
                     formData.append('scenario', phrase.mission);
                     formData.append('history', JSON.stringify([]));
+                    formData.append('userRole', 'Student');
+                    formData.append('aiRole', 'Teacher Adrian');
                     formData.append('leaderMode', state.leaderMode);
                     formData.append('startTime', state.startTime);
                     formData.append('duration', "30");
@@ -405,7 +444,7 @@ function switchScreen(name) {
 function closeAllModals() {
     ui.screens.energy.classList.add('hidden');
     ui.screens.ad.classList.add('hidden');
-    ui.screens.premium.classList.add('hidden');
+    ui.screens.adrian.classList.add('hidden');
 }
 
 window.closeAllModals = closeAllModals;
