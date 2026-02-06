@@ -24,6 +24,7 @@ body {
     width: 100%; max-width: 480px; background: var(--bg);
     display: flex; flex-direction: column; height: 100%; position: relative;
     box-shadow: 0 0 40px rgba(0,0,0,0.05);
+    min-height: 100vh; /* Ensure full height */
 }
 
 /* Header & HUD */
@@ -31,6 +32,7 @@ body {
     padding: 12px 20px; display: flex; align-items: center; gap: 15px;
     border-bottom: 2px solid var(--border);
     background: white; z-index: 100;
+    flex-shrink: 0; /* Prevent header collapse */
 }
 
 .progress-container {

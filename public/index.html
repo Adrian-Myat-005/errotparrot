@@ -6,7 +6,6 @@
     <title>ErrorParrot | Speaking Mastery</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -44,7 +43,9 @@
                     <input type="text" id="lesson-search" placeholder="Search topics...">
                 </div>
 
-                <div id="lesson-list" class="topic-grid"></div>
+                <div id="lesson-list" class="topic-grid">
+                    <div style="padding: 40px; text-align: center; color: #aaa; font-weight: 700;">Loading...</div>
+                </div>
             </section>
 
             <!-- Screen: Practice -->
@@ -131,6 +132,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
