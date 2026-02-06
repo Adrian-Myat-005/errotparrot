@@ -496,17 +496,24 @@ window.handleGrammarAnswer = (btn, selected, correct) => {
 function renderChatHistory() {
     if (!ui.active.chatHistory) return;
     if (state.chatHistory.length === 0) {
-        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:10px;">Say something to start...</div>';
+        ui.active.chatHistory.innerHTML = '<div style="color:#aaa; font-style:italic; padding:20px; text-align:center;">Say something to start...</div>';
         return;
     }
     let html = '';
     state.chatHistory.forEach(msg => {
-        const type = msg.role === 'assistant' ? 'teacher' : 'student';
-        html += `<div class="chat-bubble ${type}">${msg.content}</div>`;
+        const isAI = msg.role === 'assistant';
+        const roleClass = isAI ? 'assistant-row' : 'user-row';
+        const avatar = isAI ? '👨‍🏫' : '👤';
+        html += `
+            <div class="chat-bubble-row ${roleClass}">
+                <div class="chat-avatar">${avatar}</div>
+                <div class="chat-bubble">${msg.content}</div>
+            </div>
+        `;
     });
     ui.active.chatHistory.innerHTML = html;
     const container = document.querySelector('.practice-main');
-    if (container) container.scrollTop = container.scrollHeight;
+    if (container) container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
 }
 
 async function handleRecord() {
