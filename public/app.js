@@ -360,19 +360,19 @@ function renderLessons() {
 
 function renderMemoryBank() {
     if (state.savedPhrases.length === 0) {
-        ui.lessonList.innerHTML = `<div style="padding:80px 40px; text-align:center;"><div style="font-size:4rem; margin-bottom:20px;">⭐</div><h3 style="color:var(--text-muted);">Memory Bank is Empty</h3></div>`;
+        ui.lessonList.innerHTML = `<div style="padding:100px 40px; text-align:center;"><div style="font-size:5rem; margin-bottom:24px; opacity:0.2;">⭐</div><h3 style="color:var(--text-muted); font-weight:800;">Memory Bank is Empty</h3><p style="color:var(--text-light);">Save phrases during practice to review them here.</p></div>`;
         return;
     }
     let html = '<div class="unit-header">SAVED FOR REVIEW</div>';
     state.savedPhrases.forEach((p, i) => {
         html += `
-            <div class="topic-card" style="margin-bottom: 12px;">
-                <button class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--secondary); color:white; border:none; cursor:pointer;">🔊</button>
+            <div class="topic-card" style="margin-bottom: 16px;">
+                <button class="topic-icon" onclick="playTTS('${p.en.replace(/'/g, "\\'")}')" style="background:var(--secondary-soft); color:var(--secondary); cursor:pointer;">🔊</button>
                 <div class="topic-info" style="flex:1;">
-                    <h4 style="margin-bottom:4px;">${p.en}</h4>
-                    <p>${p.my || ''}</p>
+                    <h4 style="margin-bottom:4px; font-size:1.1rem;">${p.en}</h4>
+                    <p style="color:var(--text-muted);">${p.my || ''}</p>
                 </div>
-                <button onclick="removeSavedPhrase(${i})" class="icon-btn" style="color:var(--danger); background: var(--danger-light); width: 40px; height: 40px;">✕</button>
+                <button onclick="removeSavedPhrase(${i})" class="icon-btn" style="color:var(--danger); background: var(--danger-soft); width: 44px; height: 44px; border-radius: 12px; font-size: 1.2rem;">✕</button>
             </div>`;
     });
     ui.lessonList.innerHTML = html;
