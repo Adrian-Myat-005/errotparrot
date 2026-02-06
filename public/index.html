@@ -81,7 +81,9 @@
             <!-- Screen: Practice -->
             <section id="screen-active" class="screen hidden">
                 <div class="practice-top">
+                    <button id="btn-restart-lesson" class="icon-btn" style="color: var(--danger); font-size: 1.2rem;">🔄</button>
                     <div class="phrase-counter"><span id="current-phrase-num">1</span> / 50</div>
+                    <div style="width: 40px;"></div>
                 </div>
 
                 <div class="practice-main">
@@ -121,26 +123,38 @@
                     </div>
 
                     <div class="settings-bar">
-                        <select id="select-speed" class="mini-select">
-                            <option value="0.8">0.8x</option>
-                            <option value="1.0" selected>1.0x</option>
-                            <option value="1.2">1.2x</option>
-                        </select>
-                        <select id="select-voice" class="mini-select">
-                            <option value="male">Male Voice</option>
-                            <option value="female">Female Voice</option>
-                        </select>
-                        <select id="select-leader" class="mini-select">
-                            <option value="ai">AI Lead</option>
-                            <option value="user">User Lead</option>
-                        </select>
-                        <select id="select-duration" class="mini-select">
-                            <option value="1">1 Min</option>
-                            <option value="2">2 Mins</option>
-                            <option value="3">3 Mins</option>
-                            <option value="5" selected>5 Mins</option>
-                            <option value="10">10 Mins</option>
-                        </select>
+                        <div class="select-wrapper">
+                            <span class="select-label">Speed</span>
+                            <select id="select-speed" class="mini-select">
+                                <option value="0.8">0.8x</option>
+                                <option value="1.0" selected>1.0x</option>
+                                <option value="1.2">1.2x</option>
+                            </select>
+                        </div>
+                        <div class="select-wrapper">
+                            <span class="select-label">Voice</span>
+                            <select id="select-voice" class="mini-select">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="select-wrapper">
+                            <span class="select-label">Lead</span>
+                            <select id="select-leader" class="mini-select">
+                                <option value="ai">AI</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
+                        <div class="select-wrapper">
+                            <span class="select-label">Time</span>
+                            <select id="select-duration" class="mini-select">
+                                <option value="1">1m</option>
+                                <option value="2">2m</option>
+                                <option value="3">3m</option>
+                                <option value="5" selected>5m</option>
+                                <option value="10">10m</option>
+                            </select>
+                        </div>
                     </div>
                 </footer>
             </section>

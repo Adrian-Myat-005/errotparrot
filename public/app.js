@@ -231,6 +231,16 @@ function energyLoop() {
 function bindEvents() {
     const backBtn = document.getElementById('btn-back-main');
     if (backBtn) backBtn.onclick = () => switchScreen('lessons');
+    
+    const restartBtn = document.getElementById('btn-restart-lesson');
+    if (restartBtn) restartBtn.onclick = () => {
+        if (confirm("Restart this lesson from Step 1?")) {
+            state.currentPhraseIndex = 0;
+            state.lessonProgress[state.currentLesson.id] = 0;
+            renderPhrase();
+            saveState();
+        }
+    };
     if (ui.dashboard.btnResume) ui.dashboard.btnResume.onclick = resumeLearning;
     if (ui.dashboard.btnShowActivation) ui.dashboard.btnShowActivation.onclick = () => {
         const el = document.getElementById('modal-adrian');
