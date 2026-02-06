@@ -1,12 +1,12 @@
-
 const state = {
     lessons: [],
-    unlockedLessons: [1],
+    unlockedLessons: [1, 2, 3, 4, 5],
     completedLessons: [],
     currentLesson: null,
     currentPhraseIndex: 0,
     isRecording: false,
     audioBlob: null,
+    isPremium: false,
     
     // User Stats
     userLevel: 1,
@@ -36,6 +36,8 @@ const ui = {
     screens: {
         lessons: document.getElementById('screen-lessons'),
         active: document.getElementById('screen-active'),
+        energy: document.getElementById('modal-energy'),
+        ad: document.getElementById('modal-ad'),
         premium: document.getElementById('modal-premium')
     },
     active: {
@@ -53,7 +55,8 @@ const ui = {
         selectSpeed: document.getElementById('select-speed'),
         selectVoice: document.getElementById('select-voice'),
         selectLeader: document.getElementById('select-leader')
-    }
+    },
+    btnWatchAd: document.getElementById('btn-watch-ad')
 };
 
 let mediaRecorder;
@@ -63,10 +66,6 @@ async function init() {
     try {
         const res = await fetch('lessons.json');
         state.lessons = await res.json();
-        
-        // Safety: If somehow unlockedLessons is empty
-        if (state.unlockedLessons.length === 0) state.unlockedLessons = [1];
-        
         renderLessons();
     } catch (e) {
         console.error("Failed to load lessons", e);
@@ -74,28 +73,28 @@ async function init() {
     
     updateHUD();
     bindEvents();
-    setInterval(energyLoop, 60000); // Check energy every minute
+    setInterval(energyLoop, 60000);
 }
 
 function loadState() {
-    const saved = localStorage.getItem('errotparrot_v6_state');
+    const saved = localStorage.getItem('errorparrot_master_v1');
     if (saved) {
         const data = JSON.parse(saved);
+        // Merge saved data into state
         Object.assign(state, data);
     }
 }
 
 function saveState() {
     const toSave = { ...state };
-    delete toSave.lessons; // Don't save 11,000 phrases to localStorage
-    localStorage.setItem('errotparrot_v6_state', JSON.stringify(toSave));
+    delete toSave.lessons;
+    localStorage.setItem('errorparrot_master_v1', JSON.stringify(toSave));
 }
 
 function updateHUD() {
     ui.hudEnergy.textContent = state.userEnergy;
     ui.hudLvl.textContent = state.userLevel;
     
-    // Progress bar logic: if in lesson, show lesson progress, otherwise show XP progress
     if (state.currentLesson) {
         const progress = (state.currentPhraseIndex / 50) * 100;
         ui.progressBar.style.width = `${progress}%`;
@@ -109,7 +108,7 @@ function energyLoop() {
     if (state.userEnergy < 5) {
         const now = Date.now();
         const elapsed = now - state.lastEnergyUpdate;
-        const gain = Math.floor(elapsed / 600000); // 10 mins per energy
+        const gain = Math.floor(elapsed / 600000);
         if (gain > 0) {
             state.userEnergy = Math.min(5, state.userEnergy + gain);
             state.lastEnergyUpdate = now;
@@ -121,7 +120,6 @@ function energyLoop() {
 
 function bindEvents() {
     ui.btnBack.onclick = () => switchScreen('lessons');
-    
     ui.lessonSearch.oninput = () => renderLessons();
     
     ui.tabs.forEach(tab => {
@@ -143,6 +141,8 @@ function bindEvents() {
     ui.active.selectSpeed.onchange = (e) => state.ttsSpeed = e.target.value;
     ui.active.selectVoice.onchange = (e) => state.voice = e.target.value;
     ui.active.selectLeader.onchange = (e) => state.leaderMode = e.target.value;
+
+    ui.btnWatchAd.onclick = simulateAd;
 }
 
 function renderLessons() {
@@ -159,14 +159,15 @@ function renderLessons() {
     ui.lessonList.innerHTML = filtered.map(l => {
         const isLocked = !state.unlockedLessons.includes(l.id);
         const isCompleted = state.completedLessons.includes(l.id);
+        const isAdrian = l.topic.includes("Adrian");
         
         return `
             <div class="topic-card ${isLocked ? 'locked' : ''}" onclick="startLesson(${l.id})">
                 <div class="topic-icon">${isCompleted ? '✅' : l.icon}</div>
                 <div class="topic-info">
-                    <div class="topic-type-tag">${l.type}</div>
+                    <div class="topic-type-tag">${l.type} ${isAdrian ? '⭐' : ''}</div>
                     <h4>${l.topic}</h4>
-                    <p>${isLocked ? 'Locked' : '50 Mastery Phrases'}</p>
+                    <p>${isLocked ? 'Watch Ad to Unlock' : '50 Mastery Phrases'}</p>
                 </div>
             </div>
         `;
@@ -174,17 +175,29 @@ function renderLessons() {
 }
 
 function startLesson(id) {
-    if (!state.unlockedLessons.includes(id)) {
-        ui.screens.premium.classList.remove('hidden');
-        return;
-    }
-    
-    if (state.userEnergy < 1) {
+    const lesson = state.lessons.find(l => l.id === id);
+    if (!lesson) return;
+
+    // Adrian Check
+    if (lesson.topic.includes("Adrian") && !state.isPremium) {
         ui.screens.premium.classList.remove('hidden');
         return;
     }
 
-    state.currentLesson = state.lessons.find(l => l.id === id);
+    // Ad Check for lessons > 5
+    if (id > 5 && !state.unlockedLessons.includes(id)) {
+        state.pendingLessonId = id;
+        ui.screens.ad.classList.remove('hidden');
+        return;
+    }
+    
+    // Energy Check
+    if (state.userEnergy < 1) {
+        ui.screens.energy.classList.remove('hidden');
+        return;
+    }
+
+    state.currentLesson = lesson;
     state.currentPhraseIndex = 0;
     state.startTime = Date.now();
     
@@ -194,6 +207,25 @@ function startLesson(id) {
     switchScreen('active');
     renderPhrase();
     updateHUD();
+}
+
+function simulateAd() {
+    ui.btnWatchAd.disabled = true;
+    let count = 5;
+    const timer = setInterval(() => {
+        ui.btnWatchAd.textContent = `Wait... ${count}s`;
+        count--;
+        if (count < 0) {
+            clearInterval(timer);
+            state.unlockedLessons.push(state.pendingLessonId);
+            ui.btnWatchAd.disabled = false;
+            ui.btnWatchAd.textContent = "Watch Ad (5s)";
+            closeAllModals();
+            startLesson(state.pendingLessonId);
+            renderLessons();
+            saveState();
+        }
+    }, 1000);
 }
 
 function renderPhrase() {
@@ -234,7 +266,7 @@ async function handleRecord() {
         mediaRecorder.onstop = async () => {
             state.isRecording = false;
             ui.active.btnRecord.classList.remove('recording');
-            ui.active.btnRecord.textContent = "Recording...";
+            ui.active.btnRecord.textContent = "Analyzing...";
             
             const audioBlob = new Blob(chunks, { type: 'audio/webm' });
             const formData = new FormData();
@@ -248,7 +280,7 @@ async function handleRecord() {
                     formData.append('history', JSON.stringify([]));
                     formData.append('leaderMode', state.leaderMode);
                     formData.append('startTime', state.startTime);
-                    formData.append('duration', "30"); // 30 mins session
+                    formData.append('duration', "30");
                     
                     const res = await fetch('/api/chat', { method: 'POST', body: formData });
                     const data = await res.json();
@@ -260,7 +292,7 @@ async function handleRecord() {
                     showPhraseFeedback(data);
                 }
             } catch (e) {
-                alert("Evaluation failed. Check connection.");
+                alert("Evaluation failed.");
                 ui.active.btnRecord.textContent = "🎤 Record";
             }
         };
@@ -273,16 +305,13 @@ async function handleRecord() {
 
 function showPhraseFeedback(data) {
     const isPassed = data.passed || data.score > 70;
-    
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "✅" : "❌";
-    ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Not quite...";
+    ui.active.feedbackLabel.textContent = isPassed ? "Excellent!" : "Try Again";
     ui.active.correction.innerHTML = data.corrections || data.transcript;
     ui.active.tip.textContent = data.feedback;
-    
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
-    
     if (isPassed) {
         ui.active.btnNextStep.classList.remove('hidden');
         ui.active.btnRecord.classList.add('hidden');
@@ -291,16 +320,13 @@ function showPhraseFeedback(data) {
 
 function showChallengeFeedback(data) {
     const isPassed = data.score > 60;
-    
     ui.active.feedback.className = `feedback-overlay ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.textContent = isPassed ? "🎯" : "⚠️";
-    ui.active.feedbackLabel.textContent = isPassed ? "Mission Success!" : "Keep trying";
+    ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Keep Talking";
     ui.active.correction.innerHTML = `"${data.userText}"`;
     ui.active.tip.textContent = data.feedback;
-    
     ui.active.feedback.classList.remove('hidden');
     ui.active.btnRecord.textContent = "🎤 Record";
-
     if (isPassed) {
         ui.active.btnNextStep.classList.remove('hidden');
         ui.active.btnRecord.classList.add('hidden');
@@ -310,7 +336,6 @@ function showChallengeFeedback(data) {
 function nextPhrase() {
     gainExp(15);
     state.currentPhraseIndex++;
-    
     if (state.currentPhraseIndex >= 50) {
         completeLesson();
     } else {
@@ -319,21 +344,10 @@ function nextPhrase() {
 }
 
 function completeLesson() {
-    confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 }
-    });
-
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     if (!state.completedLessons.includes(state.currentLesson.id)) {
         state.completedLessons.push(state.currentLesson.id);
-        const nextId = state.currentLesson.id + 1;
-        if (!state.unlockedLessons.includes(nextId)) {
-            state.unlockedLessons.push(nextId);
-        }
     }
-
-    alert("Lesson Completed! +100 XP");
     gainExp(100);
     switchScreen('lessons');
     renderLessons();
@@ -347,7 +361,6 @@ function gainExp(amt) {
     if (state.userExp >= threshold) {
         state.userLevel++;
         state.userExp -= threshold;
-        alert(`LEVEL UP! You are now Level ${state.userLevel}`);
     }
     updateHUD();
     saveState();
@@ -357,15 +370,10 @@ async function playTTS(text) {
     try {
         const res = await fetch('/api/tts', {
             method: 'POST',
-            body: JSON.stringify({ 
-                text, 
-                speed: state.ttsSpeed, 
-                voice: state.voice 
-            })
+            body: JSON.stringify({ text, speed: state.ttsSpeed, voice: state.voice })
         });
         const data = await res.json();
         const audio = new Audio("data:audio/mp3;base64," + data.audio);
-        
         if (data.alignment && state.currentLesson.type !== 'challenge') {
             const words = ui.active.karaoke.querySelectorAll('.word');
             audio.ontimeupdate = () => {
@@ -379,15 +387,12 @@ async function playTTS(text) {
             };
         }
         audio.play();
-    } catch (e) {
-        console.error("TTS failed", e);
-    }
+    } catch (e) {}
 }
 
 function switchScreen(name) {
     Object.values(ui.screens).forEach(s => s.classList.add('hidden'));
     ui.screens[name].classList.remove('hidden');
-    
     if (name === 'lessons') {
         state.currentLesson = null;
         ui.btnBack.classList.add('hidden');
@@ -398,9 +403,10 @@ function switchScreen(name) {
 }
 
 function closeAllModals() {
-    Object.values(ui.screens).forEach(s => {
-        if (s.id.startsWith('modal')) s.classList.add('hidden');
-    });
+    ui.screens.energy.classList.add('hidden');
+    ui.screens.ad.classList.add('hidden');
+    ui.screens.premium.classList.add('hidden');
 }
 
+window.closeAllModals = closeAllModals;
 init();
