@@ -1,6 +1,6 @@
 const state = {
     lessons: [],
-    unlockedLessons: [1, 2, 3, 4, 5],
+    unlockedLessons: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     completedLessons: [],
     lessonProgress: {},
     savedPhrases: [],
@@ -31,7 +31,7 @@ const state = {
     settings: {
         adsEnabled: true,
         adDuration: 5,
-        adVideoId: 'jNQXAC9IVRw' // Default educational video
+        adVideoId: 'jNQXAC9IVRw'
     }
 };
 
@@ -40,7 +40,6 @@ let mediaRecorder;
 let ytPlayer;
 let ytApiReady = false;
 
-// Load YouTube API
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -145,24 +144,28 @@ async function init() {
     updateHUD();
     bindEvents();
 
-    try {
-        const settingsRes = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'getSettings' }) });
-        const settingsData = await settingsRes.json();
-        if (settingsData) state.settings = { ...state.settings, ...settingsData };
+    // Fetch lessons independently
+    fetch('lessons.json?v=' + Date.now())
+        .then(res => res.json())
+        .then(data => {
+            state.lessons = data;
+            renderLessons();
+            renderDashboard();
+        })
+        .catch(e => console.error("Failed to load lessons", e));
 
-        const res = await fetch('lessons.json?v=' + Date.now());
-        const data = await res.json();
-        state.lessons = data;
-        renderLessons();
-        renderDashboard();
-    } catch (e) {}
+    // Fetch settings
+    fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'getSettings' }) })
+        .then(res => res.json())
+        .then(data => { if (data) state.settings = { ...state.settings, ...data }; })
+        .catch(e => {});
 
     setInterval(energyLoop, 60000);
 }
 
 function loadState() {
     try {
-        const saved = localStorage.getItem('errorparrot_master_v2');
+        const saved = localStorage.getItem('errorparrot_master_v3');
         if (saved) {
             const data = JSON.parse(saved);
             Object.keys(data).forEach(k => {
@@ -170,7 +173,7 @@ function loadState() {
             });
         }
     } catch(e) {}
-    if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = [1, 2, 3, 4, 5];
+    if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     if (typeof state.isPremium !== 'boolean') state.isPremium = false;
     if (!state.lessonProgress) state.lessonProgress = {};
     if (!state.savedPhrases) state.savedPhrases = [];
@@ -184,7 +187,7 @@ function saveState() {
     delete toSave.audioBlob;
     delete toSave.audioUrl;
     delete toSave.chatHistory;
-    localStorage.setItem('errorparrot_master_v2', JSON.stringify(toSave));
+    localStorage.setItem('errorparrot_master_v3', JSON.stringify(toSave));
 }
 
 function checkDailyRefill() {
@@ -369,10 +372,7 @@ function renderLessons() {
     let html = '';
     filtered.forEach((l, index) => {
         if (state.currentType === 'all') {
-            if (l.id === 1) html += `<div class="unit-header">Phase 1: Social Foundations</div>`;
-            else if (l.id === 31) html += `<div class="unit-header">Phase 2: Daily Life</div>`;
-            else if (l.id === 61) html += `<div class="unit-header">Phase 3: Complex Situations</div>`;
-            else if (l.id === 91) html += `<div class="unit-header">Phase 4: Social Mastery</div>`;
+            if (l.id === 1) html += `<div class="unit-header" style="display:block;">Phase 1: Social Foundations</div>`;
         }
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
@@ -437,7 +437,7 @@ function startLesson(id) {
         return;
     }
     
-    const isLocked = id > 5 && !state.unlockedLessons.includes(id) && !state.isPremium;
+    const isLocked = id > 12 && !state.unlockedLessons.includes(id) && !state.isPremium;
     if (isLocked && state.settings.adsEnabled) {
         state.pendingLessonId = id;
         const el = document.getElementById('modal-ad');
@@ -478,7 +478,6 @@ function simulateAd() {
         playerVars: { 'autoplay': 1, 'controls': 0, 'disablekb': 1, 'rel': 0, 'modestbranding': 1, 'iv_load_policy': 3 },
         events: {
             'onStateChange': (event) => {
-                // If video is paused by any means before completion, force play
                 if (event.data === YT.PlayerState.PAUSED) {
                     ytPlayer.playVideo();
                 }
@@ -542,7 +541,8 @@ function renderPhrase() {
         renderGrammarTest(p);
     } else if (state.currentLesson.type === 'test' || state.currentLesson.type === 'exam') {
         ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:24px; border-radius:24px; font-weight:800; color:var(--text-muted); line-height:1.4;">📝 ASSESSMENT<br>Repeat exactly what you hear.</div>`;
-        ui.active.translation.classList.add('hidden');
+        ui.active.translation.textContent = p.my;
+        ui.active.translation.classList.remove('hidden');
     } else if (state.currentLesson.type === 'challenge') {
         ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:24px; border-radius:24px; font-weight:800; color:var(--text); line-height:1.4;">${p.mission}<br><span style="font-size:0.85rem; font-weight:600; opacity:0.7;">Pass Criteria: natural flow & score > 60.</span></div>`;
         ui.active.translation.textContent = p.context;
