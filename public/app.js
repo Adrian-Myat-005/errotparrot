@@ -162,7 +162,7 @@ async function init() {
 
 function loadState() {
     try {
-        const saved = localStorage.getItem('errorparrot_master_v1');
+        const saved = localStorage.getItem('errorparrot_master_v2');
         if (saved) {
             const data = JSON.parse(saved);
             Object.keys(data).forEach(k => {
@@ -184,7 +184,7 @@ function saveState() {
     delete toSave.audioBlob;
     delete toSave.audioUrl;
     delete toSave.chatHistory;
-    localStorage.setItem('errorparrot_master_v1', JSON.stringify(toSave));
+    localStorage.setItem('errorparrot_master_v2', JSON.stringify(toSave));
 }
 
 function checkDailyRefill() {
@@ -368,7 +368,12 @@ function renderLessons() {
 
     let html = '';
     filtered.forEach((l, index) => {
-        if (state.currentType === 'all' && index % 10 === 0) html += `<div class="unit-header">Unit ${Math.floor(l.id / 10) + 1} Path</div>`;
+        if (state.currentType === 'all') {
+            if (l.id === 1) html += `<div class="unit-header">Phase 1: Social Foundations</div>`;
+            else if (l.id === 31) html += `<div class="unit-header">Phase 2: Daily Life</div>`;
+            else if (l.id === 61) html += `<div class="unit-header">Phase 3: Complex Situations</div>`;
+            else if (l.id === 91) html += `<div class="unit-header">Phase 4: Social Mastery</div>`;
+        }
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
