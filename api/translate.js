@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
 
         const completion = await groq.chat.completions.create({
             messages: [{ role: "user", content: prompt }],
-            model: "llama-3.3-70b-versatile",
+            model: "llama-3.1-8b-instant",
             max_tokens: 100
         });
 

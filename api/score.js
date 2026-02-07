@@ -80,8 +80,9 @@ module.exports = async (req, res) => {
 
             const completion = await groq.chat.completions.create({
                 messages: [{ role: "user", content: prompt }],
-                model: "llama-3.3-70b-versatile",
-                response_format: { type: "json_object" }
+                model: "llama-3.1-8b-instant",
+                response_format: { type: "json_object" },
+                max_tokens: 300
             });
 
             const data = JSON.parse(completion.choices[0].message.content);

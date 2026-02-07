@@ -27,6 +27,7 @@ const state = {
     sessionDuration: '5',
     currentType: 'all',
     startTime: Date.now(),
+    ttsCache: {},
 
     settings: {
         adsEnabled: true,
@@ -470,42 +471,94 @@ function startLesson(id) {
 }
 
 function simulateAd() {
-    if (!ytApiReady) { alert("Ad system loading, try in 2s."); return; }
+    if (!ytApiReady) { 
+        ui.btnWatchAd.textContent = "Loading Ad System...";
+        setTimeout(simulateAd, 1000); 
+        return; 
+    }
+    
     ui.btnWatchAd.disabled = true;
-    document.getElementById('ad-video-container').style.display = 'block';
+    const container = document.getElementById('ad-video-container');
+    container.style.display = 'block';
+    container.classList.remove('hidden'); // Ensure visibility
+    
     document.getElementById('btn-close-ad').style.display = 'none';
-    if (ytPlayer) ytPlayer.destroy();
+    
+    // Clear previous player if exists
+    if (ytPlayer && typeof ytPlayer.destroy === 'function') ytPlayer.destroy();
+    
+    let timer = null;
+    let secondsLeft = state.settings.adDuration || 10;
+    
     ytPlayer = new YT.Player('youtube-player', {
-        height: '100%', width: '100%',
+        height: '100%', 
+        width: '100%',
         videoId: state.settings.adVideoId || 'jNQXAC9IVRw',
-        playerVars: { 'autoplay': 1, 'controls': 0, 'disablekb': 1, 'rel': 0, 'modestbranding': 1, 'iv_load_policy': 3 },
+        playerVars: { 
+            'autoplay': 1, 
+            'controls': 0, 
+            'disablekb': 1, 
+            'rel': 0, 
+            'modestbranding': 1, 
+            'iv_load_policy': 3,
+            'fs': 0,
+            'mute': 1 // Mute to ensure autoplay works on most browsers
+        },
         events: {
             'onStateChange': (event) => {
+                // If ended or paused by system, try to resume
                 if (event.data === YT.PlayerState.PAUSED) {
-                    ytPlayer.playVideo();
+                    // Optional: could force play, but let's just leave it
+                }
+                if (event.data === YT.PlayerState.ENDED) {
+                    // Early finish?
                 }
             },
             'onReady': (event) => {
                 event.target.playVideo();
-                let count = state.settings.adDuration || 5;
-                const timer = setInterval(() => {
-                    ui.btnWatchAd.textContent = `Unlocking in ${count}s...`;
-                    if (count-- <= 0) {
+                
+                ui.btnWatchAd.textContent = `Reward in ${secondsLeft}s...`;
+                
+                timer = setInterval(() => {
+                    secondsLeft--;
+                    if (secondsLeft > 0) {
+                        ui.btnWatchAd.textContent = `Reward in ${secondsLeft}s...`;
+                    } else {
                         clearInterval(timer);
-                        if (!state.unlockedLessons.includes(state.pendingLessonId)) state.unlockedLessons.push(state.pendingLessonId);
-                        ui.btnWatchAd.disabled = false;
-                        ui.btnWatchAd.textContent = "UNLOCK COMPLETED! ✅";
-                        setTimeout(() => {
-                            closeAllModals();
-                            startLesson(state.pendingLessonId);
-                            renderLessons();
-                            saveState();
-                        }, 1000);
+                        completeAd();
                     }
                 }, 1000);
+            },
+            'onError': (e) => {
+                console.error("Ad Error", e);
+                alert("Ad failed to load. Granting reward anyway.");
+                completeAd();
             }
         }
     });
+
+    function completeAd() {
+        if (timer) clearInterval(timer);
+        
+        // Unlock logic
+        if (!state.unlockedLessons.includes(state.pendingLessonId)) {
+            state.unlockedLessons.push(state.pendingLessonId);
+        }
+        
+        ui.btnWatchAd.disabled = false;
+        ui.btnWatchAd.textContent = "LESSON UNLOCKED! 🔓";
+        ui.btnWatchAd.style.background = "var(--primary)";
+        ui.btnWatchAd.style.color = "white";
+
+        setTimeout(() => {
+            closeAllModals();
+            ui.btnWatchAd.style.background = ""; // Reset
+            ui.btnWatchAd.style.color = "";
+            startLesson(state.pendingLessonId);
+            renderLessons();
+            saveState();
+        }, 1200);
+    }
 }
 
 function playSound(type) {
@@ -729,10 +782,19 @@ function gainExp(amt) {
 
 async function playTTS(text) {
     try {
+        const cacheKey = `${text}_${state.ttsSpeed}_${state.voice}`;
         const listenBtn = ui.active.btnListen;
         if (listenBtn) listenBtn.classList.add('playing');
-        const res = await fetch('/api/tts', { method: 'POST', body: JSON.stringify({ text, speed: state.ttsSpeed, voice: state.voice }) });
-        const data = await res.json();
+
+        let data;
+        if (state.ttsCache[cacheKey]) {
+            data = state.ttsCache[cacheKey];
+        } else {
+            const res = await fetch('/api/tts', { method: 'POST', body: JSON.stringify({ text, speed: state.ttsSpeed, voice: state.voice }) });
+            data = await res.json();
+            state.ttsCache[cacheKey] = data;
+        }
+
         const audio = new Audio("data:audio/mp3;base64," + data.audio);
         if (data.alignment && state.currentLesson?.type !== 'challenge') {
             const words = ui.active.karaoke.querySelectorAll('.word');

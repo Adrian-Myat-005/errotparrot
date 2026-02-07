@@ -90,6 +90,9 @@ module.exports = async (req, res) => {
                 7. LIMIT: 2-3 sentences max. No AI-style preamble (e.g., "That's a great question!"). Get straight to the point. Be human.`;
             }
 
+            const chatHistory = JSON.parse(history);
+            const limitedHistory = chatHistory.slice(-10);
+
             const messages = [
                 { 
                     role: "system", 
@@ -103,13 +106,14 @@ module.exports = async (req, res) => {
                         "passed": boolean
                     }`
                 },
-                ...JSON.parse(history)
+                ...limitedHistory
             ];
 
             const completion = await groq.chat.completions.create({
                 messages,
-                model: "llama-3.3-70b-versatile",
-                response_format: { type: "json_object" }
+                model: "llama-3.1-8b-instant",
+                response_format: { type: "json_object" },
+                max_tokens: 300
             });
 
             const data = JSON.parse(completion.choices[0].message.content);

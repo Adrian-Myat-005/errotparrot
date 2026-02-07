@@ -3,94 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ErrorParrot | Admin Panel</title>
+    <title>ErrorParrot | Command Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: var(--bg); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        body { 
+            background: var(--bg); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 20px; 
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(88, 204, 2, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(28, 176, 246, 0.1) 0px, transparent 50%);
+        }
+        
         .admin-card { 
-            background: white; width: 100%; max-width: 440px; padding: 40px 32px; 
-            border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); 
-            text-align: center; animation: cardEntrance 0.6s var(--ease);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            width: 100%; 
+            max-width: 480px; 
+            padding: 40px; 
+            border-radius: 32px; 
+            box-shadow: 
+                0 20px 60px -10px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(255,255,255,0.5) inset;
+            animation: cardEntrance 0.8s var(--spring);
         }
-        .section-title { font-size: 0.8rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; margin: 32px 0 16px; text-align: left; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-        .input-group { text-align: left; margin-bottom: 20px; }
-        .input-group label { display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+
+        .section-label {
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            color: var(--text-light); 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em;
+            margin: 32px 0 16px; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px;
+        }
+        .section-label::after {
+            content: ''; flex: 1; height: 1px; background: var(--border);
+        }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { 
+            display: block; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            color: var(--text); 
+            margin-bottom: 8px; 
+        }
+
         .admin-input { 
-            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); 
-            background: #f8fafc; font-family: inherit; font-weight: 700; color: var(--text);
-            transition: 0.2s;
+            width: 100%; 
+            padding: 16px; 
+            border-radius: 16px; 
+            border: 2px solid var(--border); 
+            background: white; 
+            font-family: inherit; 
+            font-weight: 600; 
+            color: var(--text);
+            transition: 0.2s ease;
+            font-size: 1rem;
         }
-        .admin-input:focus { border-color: var(--secondary); background: white; outline: none; }
-        
-        .toggle-group { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; }
-        .toggle-group span { font-weight: 700; font-size: 0.9rem; }
-        
-        .btn-action { 
-            width: 100%; padding: 16px; border-radius: 16px; border: none; 
-            font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.2s;
+        .admin-input:focus { 
+            border-color: var(--secondary); 
+            box-shadow: 0 0 0 4px var(--secondary-soft);
+            outline: none; 
         }
-        .btn-action.primary { background: var(--secondary); color: white; margin-bottom: 12px; }
-        .btn-action.secondary { background: var(--text); color: white; }
-        .btn-action:active { transform: scale(0.98); }
         
-        .result-area { 
-            margin-top: 24px; padding: 20px; background: var(--secondary-soft); 
-            border-radius: 16px; display: none; 
+        .toggle-row { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 16px; 
+            background: white; 
+            border: 2px solid var(--border);
+            border-radius: 16px; 
+            margin-bottom: 20px;
+        }
+        .toggle-row span { font-weight: 700; color: var(--text); }
+        
+        /* Custom Checkbox */
+        .toggle-switch {
+            position: relative;
+            width: 50px; height: 28px;
+            appearance: none; background: var(--text-light);
+            border-radius: 100px; cursor: pointer; transition: 0.3s;
+        }
+        .toggle-switch:checked { background: var(--primary); }
+        .toggle-switch::after {
+            content: ''; position: absolute; top: 4px; left: 4px;
+            width: 20px; height: 20px; background: white;
+            border-radius: 50%; transition: 0.3s var(--spring);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch:checked::after { transform: translateX(22px); }
+
+        .result-box { 
+            margin-top: 24px; 
+            padding: 24px; 
+            background: linear-gradient(135deg, var(--secondary-soft), white);
+            border: 1px solid var(--secondary-soft);
+            border-radius: 20px; 
+            display: none; 
+            text-align: center;
+        }
+
+        .code-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-dark);
+            letter-spacing: 2px;
+            margin: 12px 0;
+            user-select: all;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px dashed var(--secondary);
         }
     </style>
 </head>
 <body>
-    <div class="admin-card">
-        <h1 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.03em;">Master Control</h1>
-        <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 10px;">System Configuration Panel</p>
 
-        <div class="input-group">
-            <label>Admin Password</label>
-            <input type="password" id="admin-pass" class="admin-input" placeholder="Required for all changes">
+    <div class="admin-card">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🛠️</div>
+            <h1 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; margin: 0;">Command Center</h1>
+            <p style="color: var(--text-muted); font-weight: 600;">System Configuration & Access</p>
         </div>
 
-        <div class="section-title">Premium Codes</div>
         <div class="input-group">
-            <label>Code Type</label>
+            <label>Master Password</label>
+            <input type="password" id="admin-pass" class="admin-input" placeholder="••••••••">
+        </div>
+
+        <div class="section-label">Premium Access</div>
+        
+        <div class="input-group">
+            <label>Plan Type</label>
             <select id="code-type" class="admin-input">
-                <option value="monthly">Monthly Access</option>
-                <option value="yearly">Yearly Access</option>
+                <option value="monthly">Monthly Pro</option>
+                <option value="yearly">Yearly Pro</option>
                 <option value="lifetime">Lifetime Access</option>
             </select>
         </div>
-        <button class="btn-action primary" id="btn-generate">Generate Premium Code</button>
-        <div class="result-area" id="result-area">
-            <div style="font-size: 0.7rem; font-weight: 800; color: var(--secondary-dark); text-transform: uppercase;">Generated Code</div>
-            <div id="code-output" style="font-size: 1.4rem; font-weight: 800; color: var(--secondary-dark); margin: 8px 0; letter-spacing: 1px; user-select: all;">EP-XXXX-XXXX</div>
+        
+        <button id="btn-generate" class="btn-pro primary">Generate Access Code</button>
+        
+        <div id="result-area" class="result-box">
+            <div style="font-size: 0.7rem; font-weight: 800; color: var(--text-light); text-transform: uppercase;">Generated Code</div>
+            <div id="code-output" class="code-display"></div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Share this code with the user</div>
         </div>
 
-        <div class="section-title">Ad Management</div>
-        <div class="toggle-group">
-            <span>Enable Ads for Free Users</span>
-            <input type="checkbox" id="ads-enabled" style="width: 20px; height: 20px; cursor: pointer;">
+        <div class="section-label">Monetization</div>
+        
+        <div class="toggle-row">
+            <span>Enable Video Ads</span>
+            <input type="checkbox" id="ads-enabled" class="toggle-switch">
         </div>
+
         <div class="input-group">
-            <label>YouTube Ad Video URL</label>
-            <input type="text" id="ad-video-url" class="admin-input" placeholder="https://www.youtube.com/watch?v=...">
-            <div style="font-size: 0.65rem; color: var(--text-light); margin-top: 4px; font-weight: 600;">Paste any YouTube link here.</div>
+            <label>YouTube Ad URL</label>
+            <input type="text" id="ad-video-url" class="admin-input" placeholder="youtube.com/watch?v=...">
         </div>
+
         <div class="input-group">
-            <label>Required Watch Duration (Seconds)</label>
-            <input type="number" id="ad-duration" class="admin-input" value="5" min="1" max="60">
+            <label>Force Watch Duration (Seconds)</label>
+            <input type="number" id="ad-duration" class="admin-input" min="5" max="60">
         </div>
-        <button class="btn-action secondary" id="btn-save-settings">Save System Settings</button>
+
+        <button id="btn-save-settings" class="btn-pro secondary">Save System Settings</button>
     </div>
 
     <script>
-        // Extract ID from various YT URL formats
         function extractVideoID(url) {
             const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
             const match = url.match(regExp);
             return (match && match[7].length == 11) ? match[7] : url;
         }
 
-        // Load current settings
         async function loadSettings() {
             try {
                 const res = await fetch('/api/admin', {
@@ -104,14 +200,19 @@
                 if (data.adVideoId) {
                     document.getElementById('ad-video-url').value = `https://www.youtube.com/watch?v=${data.adVideoId}`;
                 }
-            } catch (e) {}
+            } catch (e) { console.error(e); }
         }
         loadSettings();
 
         document.getElementById('btn-generate').onclick = async () => {
             const password = document.getElementById('admin-pass').value;
             const type = document.getElementById('code-type').value;
-            if (!password) { alert("Password required"); return; }
+            if (!password) { alert("Please enter the Master Password."); return; }
+            
+            const btn = document.getElementById('btn-generate');
+            btn.textContent = "Generating...";
+            btn.disabled = true;
+
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
@@ -122,8 +223,13 @@
                 if (data.code) {
                     document.getElementById('result-area').style.display = 'block';
                     document.getElementById('code-output').textContent = data.code;
-                } else { alert(data.error); }
-            } catch (e) { alert("Error"); }
+                } else { 
+                    alert(data.error || "Authentication failed."); 
+                }
+            } catch (e) { alert("Network error."); }
+            
+            btn.textContent = "Generate Access Code";
+            btn.disabled = false;
         };
 
         document.getElementById('btn-save-settings').onclick = async () => {
@@ -133,9 +239,12 @@
             const rawUrl = document.getElementById('ad-video-url').value;
             const adVideoId = extractVideoID(rawUrl);
 
-            if (!password) { alert("Password required"); return; }
-            if (!adVideoId) { alert("Valid YouTube URL required"); return; }
+            if (!password) { alert("Please enter the Master Password."); return; }
 
+            const btn = document.getElementById('btn-save-settings');
+            const originalText = btn.textContent;
+            btn.textContent = "Saving...";
+            
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
@@ -148,12 +257,14 @@
                 });
                 const data = await res.json();
                 if (data.success) { 
-                    alert("System settings updated successfully! ✅"); 
-                    loadSettings(); // Refresh view
+                    alert("Settings saved successfully!"); 
+                    loadSettings(); 
                 } else { 
                     alert(data.error || "Update failed."); 
                 }
-            } catch (e) { alert("Network error"); }
+            } catch (e) { alert("Network error."); }
+            
+            btn.textContent = originalText;
         };
     </script>
 </body>
