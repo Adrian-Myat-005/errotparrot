@@ -10,7 +10,7 @@
       { "en": "It's a beautiful day, isn't it?", "my": "ဒီနေ့ ရာသီဥတု သာယာတယ်နော်။" },
       { "en": "It was great seeing you again!", "my": "ပြန်တွေ့ရတာ ဝမ်းသာပါတယ်။" },
       { "en": "I should probably get going now.", "my": "ကျွန်တော် အခု သွားရတော့မယ်။" },
-      { "en": "Take care and have a wonderful evening.", "my": "ဂရုစိုက်ပါ၊ ပျော်ရွှင်စရာ ညနေခင်းလေး ဖြစ်ပါစေ။" },
+      { "en": "Take care and have a wonderful evening.", "my": "ဂုုစိုက်ပါ၊ ပျော်ရွှင်စရာ ညနေခင်းလေး ဖြစ်ပါစေ။" },
       { "en": "See you around, neighbor!", "my": "ပြန်တွေ့ကြတာပေါ့ အိမ်နီးချင်းရေ။" },
       { "en": "Have a safe trip home.", "my": "အိမ်ကို ဘေးကင်းစွာ ပြန်နိုင်ပါစေ။" },
       { "en": "Catch you later!", "my": "နောက်မှ ပြန်တွေ့ကြမယ်။" },
@@ -194,7 +194,7 @@
       { "en": "That makes a lot of sense.", "my": "ဒါက တကယ်ကို အဓိပ္ပာယ်ရှိပါတယ်။" },
       { "en": "So, what did you do after that?", "my": "ဒါနဲ့၊ အဲဒါပြီးတော့ မင်းဘာလုပ်လဲ။" },
       { "en": "Tell me more about it.", "my": "အဲဒါကို နောက်ထပ် ပြောပြပါဦး။" },
-      { "en": "I totally get where you're coming from.", "my": "မင်း ဘာကြောင့် အဲလိုဖြစ်လဲဆိုတာ ငါ လုံးဝ နားလည်ပါတယ်။" }
+      { "en": "I totally get where you're coming from.", "my": "မင်း ဘာကြောင့် အဲလိုဖြစ်ရလဲဆိုတာ ငါ လုံးဝ နားလည်ပါတယ်။" }
     ]
   },
   {
@@ -213,6 +213,1950 @@
       { "en": "Could you do me a quick favor?", "my": "အကူအညီလေး တစ်ခုလောက် ပေးနိုင်မလား။" },
       { "en": "I'd be happy to help you with that.", "my": "ဒါကို ကူညီပေးရတာ ဝမ်းသာပါတယ်။" },
       { "en": "It's the least I could do for a friend.", "my": "ဒါက သူငယ်ချင်းတစ်ယောက်အတွက် ငါလုပ်ပေးနိုင်တဲ့ အနည်းဆုံး အရာပါ။" }
+    ]
+  },
+  {
+    "id": 13,
+    "type": "speaking",
+    "topic": "Lesson 11: Ending Conversations",
+    "icon": "🏃",
+    "phrases": [
+      { "en": "It was great catching up, but I have to run.", "my": "စကားပြောရတာ တကယ် ကောင်းပါတယ်၊ ဒါပေမဲ့ ကျွန်တော် သွားရတော့မယ်။" },
+      { "en": "I don't want to keep you, I'll let you get back to it.", "my": "မင်းကို အချိန်မဆွဲချင်တော့ပါဘူး၊ အလုပ်ပြန်လုပ်ပါတော့။" },
+      { "en": "I've got a meeting in five minutes, so I should head off.", "my": "၅ မိနစ်နေရင် အစည်းအဝေး ရှိလို့ သွားရတော့မယ်။" },
+      { "en": "Anyway, I'll let you get on with your day.", "my": "ဒါနဲ့ပဲ၊ မင်းရဲ့ အလုပ်တွေ ဆက်လုပ်ပါတော့။" },
+      { "en": "I should probably let you go now.", "my": "မင်းကို အခု သွားခွင့်ပေးရတော့မယ် ထင်တယ်။" },
+      { "en": "It's been a pleasure talking to you.", "my": "စကားပြောရတာ ဝမ်းသာပါတယ်။" },
+      { "en": "We should do this again sometime.", "my": "နောက်တစ်ခါ ပြန်ဆုံကြသေးတာပေါ့။" },
+      { "en": "I'll give you a call later this week.", "my": "ဒီအပတ်ထဲ နောက်မှ ဖုန်းဆက်လိုက်မယ်။" },
+      { "en": "Have a productive afternoon!", "my": "အကျိုးရှိတဲ့ မွန်းလွဲပိုင်းလေး ဖြစ်ပါစေ။" },
+      { "en": "Right, I'd better be off. Bye!", "my": "ဟုတ်ပြီ၊ သွားရတော့မယ်။ တာ့တာ!" }
+    ]
+  },
+  {
+    "id": 14,
+    "type": "speaking",
+    "topic": "Lesson 12: Answering the Phone",
+    "icon": "📱",
+    "phrases": [
+      { "en": "Hello, this is Adrian speaking.", "my": "ဟယ်လို၊ Adrian ပြောနေတာပါ။" },
+      { "en": "Hi there! Who am I speaking with?", "my": "ဟယ်လို! ဘယ်သူနဲ့ စကားပြောနေတာလဲခင်ဗျ။" },
+      { "en": "Could I speak to Sarah, please?", "my": "Sarah နဲ့ စကားပြောလို့ ရမလားခင်ဗျ။" },
+      { "en": "Just a moment, let me check if she's available.", "my": "ခဏလေးနော်၊ သူ အားလားဆိုတာ ကြည့်ပေးမယ်။" },
+      { "en": "I'm sorry, she's in a meeting right now.", "my": "တောင်းပန်ပါတယ်၊ သူ အခု အစည်းအဝေး မိနေလို့ပါ။" },
+      { "en": "Would you like to leave a message?", "my": "စကားပါးချင်ပါသလား။" },
+      { "en": "I'll have her call you back as soon as possible.", "my": "သူ့ကို အမြန်ဆုံး ဖုန်းပြန်ဆက်ခိုင်းလိုက်ပါ့မယ်။" },
+      { "en": "Thanks for calling, have a great day.", "my": "ဖုန်းဆက်တဲ့အတွက် ကျေးဇူးပါ၊ ကောင်းသောနေ့လေး ဖြစ်ပါစေ။" },
+      { "en": "Sorry, you have the wrong number.", "my": "တောင်းပန်ပါတယ်၊ ဖုန်းနံပါတ် မှားနေပါတယ်။" },
+      { "en": "I can barely hear you, the connection is bad.", "my": "မင်းပြောတာ သိပ်မကြားရဘူး၊ လိုင်းမကောင်းလို့။" }
+    ]
+  },
+  {
+    "id": 15,
+    "type": "speaking",
+    "topic": "Lesson 13: Asking for Information",
+    "icon": "🗺️",
+    "phrases": [
+      { "en": "Excuse me, do you know where the nearest station is?", "my": "တစ်ဆိတ်လောက်ဗျာ၊ အနီးဆုံး ဘူတာရုံ ဘယ်မှာလဲ သိပါသလား။" },
+      { "en": "Could you tell me how to get to the library?", "my": "စာကြည့်တိုက်ကို ဘယ်လိုသွားရမလဲ ပြောပြနိုင်မလား။" },
+      { "en": "Would you happen to know what time the mall opens?", "my": "ကုန်တိုက် ဘယ်နှနာရီ ဖွင့်လဲဆိုတာ မင်းသိမလား။" },
+      { "en": "Excuse me, is there a post office around here?", "my": "တစ်ဆိတ်လောက်၊ ဒီနားမှာ စာတိုက် ရှိလား။" },
+      { "en": "How much does a ticket to the museum cost?", "my": "ပြတိုက် လက်မှတ်က ဘယ်လောက်လဲ။" },
+      { "en": "Could you point me in the right direction?", "my": "လမ်းညွှန်ပေးနိုင်မလား။" },
+      { "en": "Is this the right way to the city center?", "my": "ဒါက မြို့ထဲကို သွားတဲ့ လမ်းမှန်လား။" },
+      { "en": "Where can I find a good place to eat?", "my": "စားလို့ကောင်းတဲ့ နေရာ ဘယ်မှာ ရှိမလဲ။" },
+      { "en": "Do you have any recommendations for local sights?", "my": "ဒီနားမှာ လည်ပတ်စရာ နေရာလေးတွေ အကြံပေးနိုင်မလား။" },
+      { "en": "Thank you so much for your help!", "my": "ကူညီတဲ့အတွက် တကယ်ကို ကျေးဇူးတင်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 16,
+    "type": "speaking",
+    "topic": "Lesson 14: Admitting Ignorance",
+    "icon": "🤷",
+    "phrases": [
+      { "en": "I'm sorry, I'm not really sure about that.", "my": "တောင်းပန်ပါတယ်၊ အဲဒါကို ကျွန်တော် သိပ်မသေချာဘူး။" },
+      { "en": "I have no idea, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် ကျွန်တော် မသိပါဘူး။" },
+      { "en": "I'm afraid I can't help you with that.", "my": "တောင်းပန်ပါတယ်၊ အဲဒါကို ကျွန်တော် မကူညီနိုင်ဘူး။" },
+      { "en": "That's a good question, I'll have to look it up.", "my": "ဒါက မေးခွန်းကောင်းပဲ၊ ကျွန်တော် ရှာကြည့်လိုက်ဦးမယ်။" },
+      { "en": "Your guess is as good as mine.", "my": "မင်းလိုပဲ ငါလည်း မသိပါဘူး။" },
+      { "en": "I'm not the best person to ask about this.", "my": "ဒါကို မေးဖို့ ကျွန်တော်က အသင့်တော်ဆုံးလူ မဟုတ်ပါဘူး။" },
+      { "en": "It beats me!", "my": "ငါလည်း မသိဘူး။" },
+      { "en": "I'm not familiar with that topic.", "my": "ဒီအကြောင်းအရာကို ကျွန်တော် သိပ်မသိဘူး။" },
+      { "en": "Let me double-check and get back to you.", "my": "ကျွန်တော် သေချာ ပြန်စစ်ကြည့်ပြီးမှ ပြန်ပြောပြမယ်။" },
+      { "en": "I wish I knew the answer, but I don't.", "my": "အဖြေကို သိချင်ပေမယ့် မသိဘူး ဖြစ်နေတယ်။" }
+    ]
+  },
+  {
+    "id": 17,
+    "type": "speaking",
+    "topic": "Lesson 15: Asking for Clarification",
+    "icon": "❓",
+    "phrases": [
+      { "en": "I'm sorry, I didn't catch that last part.", "my": "တောင်းပန်ပါတယ်၊ နောက်ဆုံး ပြောလိုက်တာ မကြားလိုက်ဘူး။" },
+      { "en": "Could you say that again, please?", "my": "နောက်တစ်ခေါက်လောက် ပြန်ပြောပြမလား။" },
+      { "en": "What exactly do you mean by that?", "my": "အဲဒါနဲ့ ဘာကို ဆိုလိုတာလဲ။" },
+      { "en": "Sorry, I'm not following. Could you explain?", "my": "တောင်းပန်ပါတယ်၊ ကျွန်တော် နားမလည်လိုက်ဘူး။ ရှင်းပြပေးမလား။" },
+      { "en": "So, are you saying that we should wait?", "my": "ဒါဆို၊ တို့တွေ စောင့်သင့်တယ်လို့ ပြောတာလား။" },
+      { "en": "Could you speak a bit more slowly, please?", "my": "နည်းနည်းလောက် နှေးနှေးလေး ပြောပေးမလား။" },
+      { "en": "I'm not quite sure I understand.", "my": "ကျွန်တော် နားလည်ရဲ့လားဆိုတာ မသေချာဘူး။" },
+      { "en": "Could you give me an example?", "my": "ဥပမာလေး တစ်ခုလောက် ပေးနိုင်မလား။" },
+      { "en": "Let me see if I've got this right.", "my": "ငါ နားလည်တာ မှန်ရဲ့လား ကြည့်ပါရစေ။" },
+      { "en": "Just to clarify, we're meeting at noon?", "my": "သေချာအောင် မေးတာပါ၊ တို့တွေ မွန်းတည့်မှာ တွေ့မှာလား။" }
+    ]
+  },
+  {
+    "id": 18,
+    "type": "test",
+    "topic": "🔴 Test 3: The 'Information Gap'",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "Would you happen to know where the bank is?", "my": "ဘဏ် ဘယ်မှာလဲဆိုတာ မင်း သိမလား။" },
+      { "en": "Could you repeat that one more time?", "my": "နောက်ထပ် တစ်ခေါက်လောက် ပြန်ပြောပြမလား။" },
+      { "en": "I didn't quite get what you meant.", "my": "မင်းဆိုလိုတာကို ငါ သိပ်နားမလည်လိုက်ဘူး။" },
+      { "en": "Sorry to interrupt, but I have a question.", "my": "ကြားဖြတ်ပြောရတာ အားနာပါတယ်၊ မေးစရာလေး ရှိလို့ပါ။" },
+      { "en": "How do you spell your last name?", "my": "မင်းရဲ့ မျိုးရိုးနာမည်ကို ဘယ်လို ပေါင်းလဲ။" },
+      { "en": "Whereabouts is the hospital located?", "my": "ဆေးရုံက ဘယ်နားမှာလဲ။" },
+      { "en": "I'm sorry, I'm a stranger here myself.", "my": "တောင်းပန်ပါတယ်၊ ကျွန်တော်လည်း ဒီမှာ လူစိမ်းပါပဲ။" },
+      { "en": "Does that make sense to you?", "my": "မင်းအတွက် အဲဒါက အဓိပ္ပာယ်ရှိရဲ့လား။" },
+      { "en": "Could you point me towards the exit?", "my": "ထွက်ပေါက်ဘက်ကို လမ်းညွှန်ပေးမလား။" },
+      { "en": "I'm not entirely sure, but I think so.", "my": "လုံးဝကြီးတော့ မသေချာဘူး၊ ဒါပေမဲ့ အဲလို ထင်တာပဲ။" }
+    ]
+  },
+  {
+    "id": 19,
+    "type": "speaking",
+    "topic": "Lesson 16: Giving Your Opinion",
+    "icon": "🗣️",
+    "phrases": [
+      { "en": "In my opinion, the movie was a bit too long.", "my": "ကျွန်တော့်အမြင်ပြောရရင် ရုပ်ရှင်က နည်းနည်း ရှည်လွန်းတယ်။" },
+      { "en": "If you ask me, we should start earlier.", "my": "ကျွန်တော့်ကို မေးရင်တော့ တို့တွေ ပိုစောစော စသင့်တယ်။" },
+      { "en": "Personally, I think it's a great idea.", "my": "ကိုယ်တိုင်ကတော့ ဒါဟာ အကြံကောင်းတစ်ခုလို့ ထင်ပါတယ်။" },
+      { "en": "I feel like we need more time to decide.", "my": "ဆုံးဖြတ်ဖို့ အချိန်ပိုလိုတယ်လို့ ခံစားရတယ်။" },
+      { "en": "As far as I'm concerned, it's finished.", "my": "ကျွန်တော့်အမြင်အရတော့ ဒါက ပြီးသွားပါပြီ။" },
+      { "en": "To be honest, I didn't really like the food.", "my": "အမှန်အတိုင်း ပြောရရင် အစားအသောက်ကို သိပ်သဘောမကျဘူး။" },
+      { "en": "It seems to me that they're making a mistake.", "my": "သူတို့ အမှားလုပ်နေကြတယ်လို့ ကျွန်တော့်ကို ထင်ရတယ်။" },
+      { "en": "I'm of the opinion that we should wait.", "my": "တို့တွေ စောင့်သင့်တယ်ဆိုတဲ့ အမြင်ရှိပါတယ်။" },
+      { "en": "My take on it is quite different.", "my": "ဒီအပေါ်မှာ ကျွန်တော့်ရဲ့ အမြင်ကတော့ တော်တော်လေး ကွဲပြားပါတယ်။" },
+      { "en": "From my perspective, it's a win-win situation.", "my": "ကျွန်တော့် ရှုထောင့်ကကြည့်ရင်တော့ နှစ်ဦးနှစ်ဖက် အကျိုးရှိမယ့် အခြေအနေပါ။" }
+    ]
+  },
+  {
+    "id": 20,
+    "type": "speaking",
+    "topic": "Lesson 17: Staying Neutral",
+    "icon": "⚖️",
+    "phrases": [
+      { "en": "I don't really have a strong opinion on this.", "my": "ဒီအပေါ်မှာ ထွေထွေထူးထူး အမြင် မရှိပါဘူး။" },
+      { "en": "It doesn't really matter to me either way.", "my": "ဘယ်လိုပဲဖြစ်ဖြစ် ကျွန်တော့်အတွက် အဆင်ပြေပါတယ်။" },
+      { "en": "I can see both sides of the argument.", "my": "ငြင်းခုံမှုရဲ့ နှစ်ဖက်လုံးကို ကျွန်တော် မြင်နိုင်ပါတယ်။" },
+      { "en": "I'm sitting on the fence for now.", "my": "လောလောဆယ်တော့ ဘယ်ဘက်ကမှ မပါသေးပါဘူး။" },
+      { "en": "Either option is fine with me.", "my": "ဘယ်ရွေးချယ်မှုမဆို ကျွန်တော့်အတွက် ရပါတယ်။" },
+      { "en": "I'm neutral about the whole thing.", "my": "အားလုံးအပေါ်မှာ ကျွန်တော် ကြားနေပါပဲ။" },
+      { "en": "It's all the same to me.", "my": "ကျွန်တော့်အတွက်တော့ အတူတူပါပဲ။" },
+      { "en": "I don't mind what we do.", "my": "ဘာလုပ်လုပ် ကျွန်တော် စိတ်မရှိပါဘူး။" },
+      { "en": "Whatever you decide is okay.", "my": "မင်း ဘာပဲ ဆုံးဖြတ်ဆုံးဖြတ် အဆင်ပြေပါတယ်။" },
+      { "en": "I'll go with the flow.", "my": "အခြေအနေ ကြည့်ပြီးပဲ လုပ်သွားမှာပါ။" }
+    ]
+  },
+  {
+    "id": 21,
+    "type": "speaking",
+    "topic": "Lesson 18: Total Agreement",
+    "icon": "💯",
+    "phrases": [
+      { "en": "I totally agree with you!", "my": "မင်းပြောတာကို လုံးဝ သဘောတူပါတယ်။" },
+      { "en": "That's exactly what I was thinking.", "my": "ငါ စဉ်းစားနေတာလည်း အတိအကျ အဲဒါပါပဲ။" },
+      { "en": "You're absolutely right.", "my": "မင်းပြောတာ လုံးဝ မှန်ပါတယ်။" },
+      { "en": "I couldn't agree more.", "my": "ဒီထက်ပိုပြီးတော့တောင် သဘောမတူနိုင်တော့ဘူး။" },
+      { "en": "Spot on!", "my": "အတိအကျပဲ!" },
+      { "en": "You hit the nail on the head.", "my": "မင်းပြောတာ ကွက်တိပဲ။" },
+      { "en": "I'm with you one hundred percent.", "my": "ငါ မင်းဘက်က ၁၀၀ ရာခိုင်နှုန်း ရှိပါတယ်။" },
+      { "en": "That's for sure!", "my": "အဲဒါကတော့ သေချာတာပေါ့!" },
+      { "en": "I was just about to say that.", "my": "ငါလည်း အဲဒါကို ပြောမလို့ ရှိသေးတာ။" },
+      { "en": "No doubt about it.", "my": "အဲဒါကတော့ သံသယဖြစ်စရာ မလိုပါဘူး။" }
+    ]
+  },
+  {
+    "id": 22,
+    "type": "speaking",
+    "topic": "Lesson 19: Respectful Disagreement",
+    "icon": "🤝",
+    "phrases": [
+      { "en": "I see your point, but I have a different view.", "my": "မင်းဆိုလိုတာကို နားလည်ပါတယ်၊ ဒါပေမဲ့ ငါ့မှာ တခြားအမြင် ရှိတယ်။" },
+      { "en": "I'm not so sure about that, actually.", "my": "အမှန်တော့ အဲဒါကို သိပ်မသေချာဘူး။" },
+      { "en": "I beg to differ.", "my": "ကျွန်တော်ကတော့ ကွဲပြားတဲ့ အမြင် ရှိပါတယ်။" },
+      { "en": "That's interesting, but I don't quite agree.", "my": "အဲဒါက စိတ်ဝင်စားဖို့ ကောင်းပါတယ်၊ ဒါပေမဲ့ သိပ်တော့ သဘောမတူဘူး။" },
+      { "en": "I understand where you're coming from, but...", "my": "မင်း ဘာကြောင့် အဲလိုဖြစ်လဲဆိုတာ နားလည်ပါတယ်၊ ဒါပေမဲ့..." },
+      { "en": "I'm afraid I have to disagree with you on this.", "my": "တောင်းပန်ပါတယ်၊ ဒါနဲ့ပတ်သက်ရင်တော့ မင်းကို သဘောမတူဘူး။" },
+      { "en": "Let's agree to disagree.", "my": "အမြင်မတူတာကိုပဲ လက်ခံထားလိုက်ကြရအောင်။" },
+      { "en": "I see it a bit differently.", "my": "ငါကတော့ နည်းနည်း ကွဲပြားပြီး မြင်တယ်။" },
+      { "en": "That's a valid point, however...", "my": "ဒါက မှန်သင့်သလောက် မှန်ပါတယ်၊ ဒါပေမဲ့..." },
+      { "en": "I'm not entirely convinced.", "my": "ငါ လုံးဝကြီးတော့ ယုံကြည်မသွားဘူး။" }
+    ]
+  },
+  {
+    "id": 23,
+    "type": "speaking",
+    "topic": "Lesson 20: Strong Disagreement",
+    "icon": "🛑",
+    "phrases": [
+      { "en": "No way! That's not true at all.", "my": "မဖြစ်နိုင်တာ! အဲဒါ လုံးဝ မမှန်ဘူး။" },
+      { "en": "I totally disagree with that statement.", "my": "ဒီပြောဆိုချက်ကို လုံးဝ သဘောမတူဘူး။" },
+      { "en": "You must be joking!", "my": "မင်း နောက်နေတာ ဖြစ်ရမယ်!" },
+      { "en": "That's out of the question.", "my": "အဲဒါကတော့ မဖြစ်နိုင်တာပါ။" },
+      { "en": "I completely reject that idea.", "my": "အဲဒီ အကြံကို လုံးဝ ပယ်ချပါတယ်။" },
+      { "en": "That's absolute nonsense!", "my": "ဒါက လုံးဝ အဓိပ္ပာယ်မရှိတာ!" },
+      { "en": "I'm strictly against it.", "my": "ကျွန်တော် ဒါကို ပြတ်ပြတ်သားသား ကန့်ကွက်ပါတယ်။" },
+      { "en": "No, I won't have it.", "my": "ဟင့်အင်း၊ လက်မခံနိုင်ဘူး။" },
+      { "en": "That's simply not the case.", "my": "ဒါက ရိုးရိုးလေးပဲ၊ အဲလို မဟုတ်ဘူး။" },
+      { "en": "I'm standing my ground on this.", "my": "ဒါနဲ့ပတ်သက်ရင်တော့ ငါ့ရဲ့ ရပ်တည်ချက်ကို မပြောင်းဘူး။" }
+    ]
+  },
+  {
+    "id": 24,
+    "type": "test",
+    "topic": "🔴 Test 4: Argumentation Flow",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "I beg to differ.", "my": "ကျွန်တော်ကတော့ ကွဲပြားတဲ့ အမြင် ရှိပါတယ်။" },
+      { "en": "I totally disagree.", "my": "လုံးဝ သဘောမတူဘူး။" },
+      { "en": "You've got a point there.", "my": "မင်းပြောတာလည်း ဟုတ်တာပဲ။" },
+      { "en": "I'm not sure I follow your logic.", "my": "မင်းရဲ့ ကျိုးကြောင်းပြချက်ကို နားမလည်လိုက်ဘူး။" },
+      { "en": "Let's look at the facts.", "my": "အချက်အလက်တွေကို ကြည့်ရအောင်။" },
+      { "en": "That's a bit of a stretch, don't you think?", "my": "ဒါက နည်းနည်းတော့ လွန်မနေဘူးလား။" },
+      { "en": "I hear what you're saying.", "my": "မင်းပြောတာကို ငါ ကြားပါတယ်။" },
+      { "en": "Can you prove that?", "my": "အဲဒါကို မင်း သက်သေပြနိုင်မလား။" },
+      { "en": "We'll have to agree to disagree.", "my": "အမြင်မတူတာကိုပဲ လက်ခံထားလိုက်ကြရအောင်။" },
+      { "en": "That's besides the point.", "my": "ဒါက အဓိက အချက် မဟုတ်ပါဘူး။" }
+    ]
+  },
+  {
+    "id": 25,
+    "type": "speaking",
+    "topic": "Lesson 21: Good News Responses",
+    "icon": "🎉",
+    "phrases": [
+      { "en": "Congratulations on your promotion!", "my": "ရာထူးတိုးတဲ့အတွက် ဂုဏ်ယူပါတယ်။" },
+      { "en": "That's wonderful news, I'm so happy for you!", "my": "ဒါက တကယ့်ကို ဝမ်းသာစရာ သတင်းပါပဲ၊ မင်းအတွက် ငါ တကယ် ဝမ်းသာပါတယ်။" },
+      { "en": "Wow, you did it! Well done!", "my": "ဝါး၊ မင်း လုပ်နိုင်သွားပြီ! တော်တယ်!" },
+      { "en": "I knew you could do it!", "my": "မင်း လုပ်နိုင်မယ်ဆိုတာ ငါ သိပြီးသားပါ။" },
+      { "en": "That's such a relief, I'm glad to hear it.", "my": "တော်သေးတာပေါ့၊ ကြားရတာ ဝမ်းသာပါတယ်။" },
+      { "en": "Good for you! You deserve it.", "my": "မင်းအတွက် ကောင်းပါတယ်။ မင်းနဲ့ ထိုက်တန်ပါတယ်။" },
+      { "en": "I'm thrilled for you!", "my": "မင်းအတွက် ငါ တကယ် စိတ်လှုပ်ရှား ဝမ်းသာမိပါတယ်။" },
+      { "en": "That's great! Let's celebrate!", "my": "ကောင်းတာပေါ့! အောင်ပွဲခံကြစို့!" },
+      { "en": "Cheers to your success!", "my": "မင်းရဲ့ အောင်မြင်မှုအတွက် ဂုဏ်ပြုပါတယ်။" },
+      { "en": "What a fantastic achievement!", "my": "တကယ့်ကို ကောင်းမွန်တဲ့ အောင်မြင်မှုပါပဲ!" }
+    ]
+  },
+  {
+    "id": 26,
+    "type": "speaking",
+    "topic": "Lesson 22: Bad News Responses",
+    "icon": "😟",
+    "phrases": [
+      { "en": "I'm so sorry to hear that.", "my": "ဒါကို ကြားရတာ စိတ်မကောင်းပါဘူး။" },
+      { "en": "That's terrible, I'm so sorry for your loss.", "my": "ဒါက တကယ်ကို ဆိုးရွားပါတယ်၊ မင်းရဲ့ ဆုံးရှုံးမှုအတွက် တကယ်ကို စိတ်မကောင်းပါဘူး။" },
+      { "en": "My heart goes out to you.", "my": "မင်းအတွက် ငါ တကယ် စိတ်မကောင်းဖြစ်မိပါတယ်။" },
+      { "en": "Please accept my deepest condolences.", "my": "ကျွန်တော့်ရဲ့ အလေးအနက် ဝမ်းနည်းကြောင်းကို လက်ခံပေးပါ။" },
+      { "en": "I'm here for you if you need anything.", "my": "တစ်ခုခု လိုအပ်ရင် ငါ ရှိနေပါတယ်နော်။" },
+      { "en": "That must be so hard for you.", "my": "ဒါက မင်းအတွက် တကယ်ကို ခက်ခဲမှာပဲ။" },
+      { "en": "I don't know what to say, I'm just so sorry.", "my": "ဘာပြောရမှန်းတောင် မသိဘူး၊ တကယ်ကို စိတ်မကောင်းပါဘူး။" },
+      { "en": "Is there anything I can do to help?", "my": "ကူညီပေးနိုင်မယ့် အရာများ ရှိမလား။" },
+      { "en": "Hang in there, things will get better.", "my": "အားတင်းထားပါ၊ အားလုံး ပြန်ကောင်းလာမှာပါ။" },
+      { "en": "Thinking of you during this difficult time.", "my": "ဒီလို ခက်ခဲတဲ့ အချိန်မှာ မင်းအကြောင်း တွေးနေမိပါတယ်။" }
+    ]
+  },
+  {
+    "id": 27,
+    "type": "speaking",
+    "topic": "Lesson 23: Making Invitations",
+    "icon": "🍽️",
+    "phrases": [
+      { "en": "Would you like to grab dinner with us tonight?", "my": "ဒီည ငါတို့နဲ့ အတူတူ ညစာ စားမလား။" },
+      { "en": "Do you want to go see a movie this weekend?", "my": "ဒီအပတ် ပိတ်ရက်မှာ ရုပ်ရှင်သွားကြည့်မလား။" },
+      { "en": "Are you free for coffee tomorrow afternoon?", "my": "မနက်ဖြန် မွန်းလွဲပိုင်း ကော်ဖီသောက်ဖို့ အားလား။" },
+      { "en": "How about joining us for a hike on Sunday?", "my": "တနင်္ဂနွေနေ့ တောင်တက်ဖို့ ငါတို့နဲ့ လိုက်မလား။" },
+      { "en": "We're having a party on Saturday, would you like to come?", "my": "စနေနေ့မှာ ပါတီလုပ်မလို့၊ မင်း လာချင်သလား။" },
+      { "en": "I was wondering if you'd like to join our study group.", "my": "ငါတို့ရဲ့ စာလေ့လာတဲ့ အဖွဲ့ထဲ ဝင်ချင်သလားလို့ သိချင်လို့ပါ။" },
+      { "en": "Let's get together sometime soon.", "my": "မကြာခင် တစ်ချိန်ချိန်မှာ ဆုံကြရအောင်။" },
+      { "en": "Do you have any plans for tonight?", "my": "ဒီညအတွက် အစီအစဉ် ရှိလား။" },
+      { "en": "If you're not busy, come over for a drink.", "my": "အလုပ်မရှုပ်ရင် သောက်ဖို့ လာခဲ့လေ။" },
+      { "en": "You're more than welcome to join us.", "my": "ငါတို့နဲ့ ပူးပေါင်းဖို့ လုံးဝ ကြိုဆိုပါတယ်။" }
+    ]
+  },
+  {
+    "id": 28,
+    "type": "speaking",
+    "topic": "Lesson 24: Accepting/Declining Offers",
+    "icon": "🤝",
+    "phrases": [
+      { "en": "That sounds great, I'd love to!", "my": "နားထောင်လို့ ကောင်းတာပဲ၊ လိုက်ချင်တာပေါ့!" },
+      { "en": "Sure, that sounds like fun.", "my": "ရတာပေါ့၊ ပျော်စရာကောင်းမယ့်ပုံပဲ။" },
+      { "en": "I'd love to, but I'm afraid I'm busy tonight.", "my": "လိုက်ချင်ပါတယ်၊ ဒါပေမဲ့ ဒီညတော့ အလုပ်ရှုပ်နေလို့ပါ။" },
+      { "en": "Thanks for the invite, but I can't make it.", "my": "ဖိတ်တဲ့အတွက် ကျေးဇူးပါ၊ ဒါပေမဲ့ မလာနိုင်ဘူး ဖြစ်နေတယ်။" },
+      { "en": "I'm sorry, I've already made other plans.", "my": "တောင်းပန်ပါတယ်၊ တခြား အစီအစဉ်တွေ ရှိထားပြီးသားမို့လို့ပါ။" },
+      { "en": "Maybe another time?", "my": "နောက်တစ်ခါမှပေါ့။" },
+      { "en": "I'll have to take a rain check on that.", "my": "နောက်တစ်ခါမှပဲ လုပ်ကြရအောင်။" },
+      { "en": "That's very kind of you, thank you.", "my": "မင်းက တကယ်ကို ကြင်နာတာပဲ၊ ကျေးဇူးပါ။" },
+      { "en": "I'd better not, I have an early start tomorrow.", "my": "မလိုက်တော့ပါဘူး၊ မနက်ဖြန် စောစော သွားစရာ ရှိလို့ပါ။" },
+      { "en": "I'm tied up at the moment, sorry.", "my": "လောလောဆယ် အလုပ်ရှုပ်နေလို့ပါ၊ တောင်းပန်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 29,
+    "type": "speaking",
+    "topic": "Lesson 25: Future Plans",
+    "icon": "📅",
+    "phrases": [
+      { "en": "What are you doing this weekend?", "my": "ဒီအပတ် ပိတ်ရက်မှာ ဘာလုပ်မှာလဲ။" },
+      { "en": "I'm planning to go to the beach.", "my": "ကမ်းခြေသွားဖို့ စီစဉ်နေပါတယ်။" },
+      { "en": "I'm thinking of starting a new course soon.", "my": "မကြာခင် သင်တန်းအသစ်တစ်ခု စတက်ဖို့ စဉ်းစားနေတယ်။" },
+      { "en": "What do you see yourself doing in five years?", "my": "နောက် ၅ နှစ်နေရင် မင်းကိုယ်မင်း ဘာလုပ်နေမယ်လို့ မြင်လဲ။" },
+      { "en": "I'm hoping to travel around Europe next summer.", "my": "လာမယ့် နွေရာသီမှာ ဥရောပတိုက်ကို ခရီးလှည့်လည်ဖို့ မျှော်လင့်နေပါတယ်။" },
+      { "en": "I'm looking forward to the holidays.", "my": "အားလပ်ရက်တွေကို မျှော်လင့်နေပါတယ်။" },
+      { "en": "Are you going to the concert tonight?", "my": "ဒီည ဖျော်ဖြေပွဲကို သွားမှာလား။" },
+      { "en": "I might move to a bigger apartment next year.", "my": "နောက်နှစ်မှာ ပိုကျယ်တဲ့ တိုက်ခန်းကို ပြောင်းရင် ပြောင်းမယ်။" },
+      { "en": "I'm definitely going to finish this project by Friday.", "my": "သောကြာနေ့ကျရင် ဒီပရောဂျက်ကို အပြီးသတ်မှာ သေချာပါတယ်။" },
+      { "en": "We'll see what the future holds.", "my": "အနာဂတ်မှာ ဘာဖြစ်မလဲ ကြည့်ကြတာပေါ့။" }
+    ]
+  },
+  {
+    "id": 30,
+    "type": "test",
+    "topic": "🔴 Test 5: Empathy & Planning",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "I'm so sorry for your loss.", "my": "မင်းရဲ့ ဆုံးရှုံးမှုအတွက် တကယ်ကို စိတ်မကောင်းပါဘူး။" },
+      { "en": "Are you free this Saturday?", "my": "ဒီစနေနေ့ အားလား။" },
+      { "en": "I'll be there, count me in!", "my": "ငါ လာခဲ့မယ်၊ ငါ့ကိုလည်း ထည့်ထားလိုက်!" },
+      { "en": "That's a shame, I hope things get better.", "my": "နှမြောစရာပဲ၊ အဆင်ပြေသွားမှာပါလို့ မျှော်လင့်ပါတယ်။" },
+      { "en": "What's the plan for tomorrow?", "my": "မနက်ဖြန်အတွက် ဘာအစီအစဉ် ရှိလဲ။" },
+      { "en": "I'm really looking forward to it.", "my": "အဲဒါကို တကယ်ကို မျှော်လင့်နေပါတယ်။" },
+      { "en": "I'll have to pass this time.", "my": "ဒီတစ်ခါတော့ မလိုက်တော့ပါဘူး။" },
+      { "en": "Sounds like a plan!", "my": "အစီအစဉ်ကတော့ ဟုတ်နေပြီ!" },
+      { "en": "I'm here if you need to talk.", "my": "စကားပြောဖို့ လိုအပ်ရင် ငါ ရှိနေပါတယ်နော်။" },
+      { "en": "Let's touch base next week.", "my": "နောက်အပတ်မှ ပြန်ပြီး အဆက်အသွယ် လုပ်ကြတာပေါ့။" }
+    ]
+  },
+  {
+    "id": 31,
+    "type": "speaking",
+    "topic": "Lesson 26: Talking About Likes",
+    "icon": "❤️",
+    "phrases": [
+      { "en": "I'm really into photography lately.", "my": "နောက်ပိုင်း ဓာတ်ပုံရိုက်တာကို တကယ် စိတ်ဝင်စားနေတယ်။" },
+      { "en": "I'm a big fan of classical music.", "my": "ကျွန်တော်က ဂန္ထဝင်ဂီတကို အရမ်းကြိုက်တဲ့သူပါ။" },
+      { "en": "I absolutely love hiking in the mountains.", "my": "တောင်တက်ရတာကို တကယ်ကို နှစ်သက်ပါတယ်။" },
+      { "en": "Cooking is one of my favorite hobbies.", "my": "ဟင်းချက်တာက ကျွန်တော့်ရဲ့ အနှစ်သက်ဆုံး ဝါသနာတွေထဲက တစ်ခုပါ။" },
+      { "en": "I find gardening very relaxing.", "my": "ပန်းခြံထဲ အလုပ်လုပ်ရတာ စိတ်အပန်းပြေစေတယ်လို့ ထင်ပါတယ်။" },
+      { "en": "I've always had a passion for travel.", "my": "ကျွန်တော့်မှာ ခရီးသွားဖို့ အမြဲတမ်း ပြင်းပြတဲ့ ဆန္ဒ ရှိခဲ့တယ်။" },
+      { "en": "What kind of things do you enjoy doing?", "my": "မင်းကော ဘာတွေလုပ်ရတာ ဝမ်းသာသလဲ။" },
+      { "en": "I'm quite fond of reading historical novels.", "my": "သမိုင်းနောက်ခံ ဝတ္ထုတွေ ဖတ်ရတာကို တော်တော်လေး နှစ်သက်ပါတယ်။" },
+      { "en": "I really enjoy spending time outdoors.", "my": "အပြင်မှာ အချိန်ကုန်ဆုံးရတာကို တကယ် နှစ်သက်ပါတယ်။" },
+      { "en": "Nothing beats a good movie on a Friday night.", "my": "သောကြာနေ့ညမှာ ရုပ်ရှင်ကောင်းကောင်းတစ်ကား ကြည့်ရတာထက် ဘာမှ မသာပါဘူး။" }
+    ]
+  },
+  {
+    "id": 32,
+    "type": "speaking",
+    "topic": "Lesson 27: Expressing Dislikes",
+    "icon": "😒",
+    "phrases": [
+      { "en": "I'm not really a big fan of spicy food.", "my": "ကျွန်တော်က အစပ်ကို သိပ်မကြိုက်ပါဘူး။" },
+      { "en": "To be honest, it's not really my cup of tea.", "my": "အမှန်အတိုင်း ပြောရရင် ဒါက ကျွန်တော် သိပ်ကြိုက်တဲ့အရာ မဟုတ်ပါဘူး။" },
+      { "en": "I can't stand being stuck in traffic.", "my": "ယာဉ်ကြောပိတ်ဆို့မှုထဲ ပိတ်မိနေတာကို မခံနိုင်ဘူး။" },
+      { "en": "I'm not particularly fond of loud parties.", "my": "ဆူညံတဲ့ ပါတီတွေကို သိပ်သဘောမကျဘူး။" },
+      { "en": "Actually, I'm not that into sports.", "my": "တကယ်တော့ အားကစားကို အဲလောက်ကြီး စိတ်မဝင်စားပါဘူး။" },
+      { "en": "I'm not much of a morning person.", "my": "ကျွန်တော်က မနက်စောစော ထရတာကို ဝါသနာပါတဲ့သူ မဟုတ်ပါဘူး။" },
+      { "en": "That's not really my thing, if I'm honest.", "my": "အမှန်အတိုင်း ပြောရရင် ဒါက ကျွန်တော့် ဝါသနာ မဟုတ်ပါဘူး။" },
+      { "en": "I'm not a huge fan of horror movies.", "my": "သရဲကားတွေကို သိပ်မကြိုက်ပါဘူး။" },
+      { "en": "I don't really care for sweet drinks.", "my": "အချိုရည်တွေကို သိပ်ပြီး ဂရုမစိုက်ပါဘူး။" },
+      { "en": "I'd rather do something else, to be fair.", "my": "အမှန်အတိုင်း ပြောရရင် တခြား တစ်ခုခုပဲ လုပ်ချင်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 33,
+    "type": "speaking",
+    "topic": "Lesson 28: Making Suggestions",
+    "icon": "💡",
+    "phrases": [
+      { "en": "Why don't we try that new Italian restaurant?", "my": "ဟို အီတလီ စားသောက်ဆိုင်အသစ်ကို သွားကြည့်ကြရင် မကောင်းဘူးလား။" },
+      { "en": "How about we meet at the park instead?", "my": "အဲဒီအစား ပန်းခြံမှာ တွေ့ကြရင်ကော။" },
+      { "en": "Maybe we should upgrade our computers soon.", "my": "တို့တွေ ကွန်ပျူတာတွေကို မကြာခင် အဆင့်မြှင့်သင့်တယ် ထင်တယ်။" },
+      { "en": "I suggest we take a look at the strategy again.", "my": "နည်းဗျူဟာကို နောက်တစ်ခေါက် ပြန်ကြည့်ဖို့ ကျွန်တော် အကြံပြုပါတယ်။" },
+      { "en": "Have you thought about using a different app?", "my": "တခြား အက်ပ်တစ်ခု သုံးဖို့ကော စဉ်းစားဖူးလား။" },
+      { "en": "It might be a good idea to call them first.", "my": "သူတို့ကို အရင် ဖုန်းဆက်လိုက်ရင် ကောင်းမယ် ထင်တယ်။" },
+      { "en": "What if we postpone the meeting until Monday?", "my": "အစည်းအဝေးကို တနင်္လာနေ့အထိ ရွှေ့လိုက်ရင်ကော။" },
+      { "en": "I reckon we should go with the first option.", "my": "ပထမ ရွေးချယ်မှုအတိုင်းပဲ သွားသင့်တယ်လို့ ထင်ပါတယ်။" },
+      { "en": "Perhaps we could ask for more feedback.", "my": "တုံ့ပြန်မှုတွေ ထပ်တောင်းကြည့်ရင် ကောင်းမလားလို့။" },
+      { "en": "We could always try a different approach.", "my": "တခြား နည်းလမ်းတစ်ခုခုနဲ့ အမြဲတမ်း ကြိုးစားကြည့်လို့ ရပါတယ်။" }
+    ]
+  },
+  {
+    "id": 34,
+    "type": "speaking",
+    "topic": "Lesson 29: Workplace Roles",
+    "icon": "💼",
+    "phrases": [
+      { "en": "I'm currently working as a software developer.", "my": "ကျွန်တော် အခု ဆော့ဖ်ဝဲလ်ရေးသူအဖြစ် အလုပ်လုပ်နေပါတယ်။" },
+      { "en": "I'm in charge of the marketing department.", "my": "ကျွန်တော် မားကတ်တင်းဌာနကို တာဝန်ယူထားပါတယ်။" },
+      { "en": "I've been with this company for three years now.", "my": "ဒီကုမ္ပဏီမှာ လုပ်လာတာ ၃ နှစ် ရှိပါပြီ။" },
+      { "en": "I'm between jobs at the moment.", "my": "လောလောဆယ်တော့ အလုပ်ရှာနေတုန်းပါ။" },
+      { "en": "I run my own small business from home.", "my": "အိမ်ကနေ ကိုယ်ပိုင်လုပ်ငန်းသေးသေးလေး လုပ်နေပါတယ်။" },
+      { "en": "I'm responsible for training new employees.", "my": "ဝန်ထမ်းအသစ်တွေကို သင်တန်းပေးဖို့ တာဝန်ယူထားပါတယ်။" },
+      { "en": "I deal with customer complaints on a daily basis.", "my": "နေ့တိုင်း ဖောက်သည်တွေရဲ့ တိုင်ကြားချက်တွေကို ဖြေရှင်းပေးရပါတယ်။" },
+      { "en": "What do you do for a living?", "my": "အသက်မွေးဝမ်းကြောင်းအတွက် ဘာလုပ်ပါသလဲ။" },
+      { "en": "I'm looking for a career change, actually.", "my": "အမှန်တော့ အလုပ်အကိုင် လိုင်းပြောင်းဖို့ စဉ်းစားနေတာပါ။" },
+      { "en": "It's a challenging but rewarding role.", "my": "ဒါက စိန်ခေါ်မှု ရှိပေမယ့် အကျိုးကျေးဇူး များတဲ့ အလုပ်ပါ။" }
+    ]
+  },
+  {
+    "id": 35,
+    "type": "speaking",
+    "topic": "Lesson 30: Relationship Status",
+    "icon": "💍",
+    "phrases": [
+      { "en": "I'm currently single and enjoying it.", "my": "လောလောဆယ် တစ်ယောက်တည်းပါပဲ၊ ဒါကိုလည်း သဘောကျပါတယ်။" },
+      { "en": "We've been married for over ten years.", "my": "ကျွန်တော်တို့ အိမ်ထောင်ကျတာ ၁၀ နှစ်ကျော်ပါပြီ။" },
+      { "en": "I'm engaged and getting married next summer.", "my": "ကျွန်တော် စေ့စပ်ထားပြီးပြီ၊ လာမယ့် နွေရာသီမှာ လက်ထပ်မှာပါ။" },
+      { "en": "We're in a long-term relationship.", "my": "တို့တွေက ရေရှည် လက်တွဲလာခဲ့ကြတာပါ။" },
+      { "en": "I'm recently divorced, actually.", "my": "အမှန်တော့ ကျွန်တော် မကြာသေးခင်ကမှ ကွာရှင်းထားတာပါ။" },
+      { "en": "We've been dating for about six months.", "my": "တို့တွေ တွဲလာတာ ၆ လလောက် ရှိပါပြီ။" },
+      { "en": "I'm seeing someone at the moment.", "my": "လောလောဆယ် တစ်ယောက်ယောက်နဲ့ တွဲနေပါတယ်။" },
+      { "en": "It's complicated, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် နည်းနည်း ရှုပ်ထွေးနေပါတယ်။" },
+      { "en": "We're just good friends for now.", "my": "အခုလောလောဆယ်တော့ သူငယ်ချင်းကောင်းတွေပါပဲ။" },
+      { "en": "Are you seeing anyone lately?", "my": "နောက်ပိုင်း တစ်ယောက်ယောက်နဲ့ တွဲဖြစ်နေလား။" }
+    ]
+  },
+  {
+    "id": 36,
+    "type": "test",
+    "topic": "🔴 Test 6: Professional & Personal Identity",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "I'm between jobs at the moment.", "my": "လောလောဆယ်တော့ အလုပ်ရှာနေတုန်းပါ။" },
+      { "en": "What do you do for a living?", "my": "အသက်မွေးဝမ်းကြောင်းအတွက် ဘာလုပ်ပါသလဲ။" },
+      { "en": "I'm really into photography lately.", "my": "နောက်ပိုင်း ဓာတ်ပုံရိုက်တာကို တကယ် စိတ်ဝင်စားနေတယ်။" },
+      { "en": "I've always had a passion for travel.", "my": "ကျွန်တော့်မှာ ခရီးသွားဖို့ အမြဲတမ်း ပြင်းပြတဲ့ ဆန္ဒ ရှိခဲ့တယ်။" },
+      { "en": "I'm engaged and getting married soon.", "my": "ကျွန်တော် စေ့စပ်ထားပြီးပြီ၊ မကြာခင် လက်ထပ်မှာပါ။" },
+      { "en": "I'm in charge of a small team.", "my": "ကျွန်တော် အဖွဲ့ငယ်လေးတစ်ခုကို တာဝန်ယူထားပါတယ်။" },
+      { "en": "That's not really my cup of tea.", "my": "ဒါက ကျွန်တော် သိပ်ကြိုက်တဲ့အရာ မဟုတ်ပါဘူး။" },
+      { "en": "I'm looking for new opportunities.", "my": "အခွင့်အလမ်းအသစ်တွေကို ရှာဖွေနေပါတယ်။" },
+      { "en": "We've been married for a long time.", "my": "တို့တွေ အိမ်ထောင်ကျတာ ကြာပါပြီ။" },
+      { "en": "I find gardening very relaxing.", "my": "ပန်းခြံထဲ အလုပ်လုပ်ရတာ စိတ်အပန်းပြေစေတယ်လို့ ထင်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 37,
+    "type": "speaking",
+    "topic": "Lesson 31: Checking Understanding",
+    "icon": "🤔",
+    "phrases": [
+      { "en": "Does that make sense to you so far?", "my": "အခုထိတော့ အဲဒါက မင်းအတွက် အဓိပ္ပာယ်ရှိရဲ့လား။" },
+      { "en": "Are you following what I'm saying?", "my": "ငါပြောတာကို မင်း နားလည်လိုက်ရဲ့လား။" },
+      { "en": "Do you see where I'm coming from?", "my": "ငါ ဘာကြောင့် အဲလိုပြောရလဲဆိုတာ မင်း သိလား။" },
+      { "en": "Is that clear, or should I explain again?", "my": "ဒါက ရှင်းရဲ့လား၊ ဒါမှမဟုတ် ထပ်ရှင်းပြရမလား။" },
+      { "en": "Am I making myself clear?", "my": "ကျွန်တော် ပြောတာ ရှင်းရှင်းလင်းလင်း ဖြစ်ရဲ့လား။" },
+      { "en": "Do you have any questions about that?", "my": "အဲဒါနဲ့ ပတ်သက်ပြီး မေးစရာ ရှိလား။" },
+      { "en": "You know what I mean, right?", "my": "ငါ ဘာကို ဆိုလိုတာလဲ သိတယ်မလား။" },
+      { "en": "Let me know if you need more details.", "my": "အသေးစိတ် ထပ်လိုရင် ပြောနော်။" },
+      { "en": "Are we on the same page?", "my": "တို့တွေ အမြင်တူရဲ့လား။" },
+      { "en": "Just checking to see if you're with me.", "my": "မင်း ငါပြောတာကို နားလည်နေရဲ့လားဆိုတာ သိချင်လို့ပါ။" }
+    ]
+  },
+  {
+    "id": 38,
+    "type": "speaking",
+    "topic": "Lesson 32: Physical Help",
+    "icon": "📦",
+    "phrases": [
+      { "en": "Could you give me a hand with this sofa?", "my": "ဒီဆိုဖာကို ကူပြီး မပေးနိုင်မလား။" },
+      { "en": "Can you help me move these boxes upstairs?", "my": "ဒီသေတ္တာတွေကို အပေါ်ထပ်ကို ကူသယ်ပေးမလား။" },
+      { "en": "Would you mind holding the door for me?", "my": "တံခါးလေး ခဏလောက် ဖွင့်ပေးထားလို့ ရမလား။" },
+      { "en": "I need some help fixing this chair.", "my": "ဒီကုလားထိုင် ပြင်ဖို့ အကူအညီ လိုနေတယ်။" },
+      { "en": "Can you reach that top shelf for me?", "my": "အပေါ်ဆုံး စင်ကို လှမ်းယူပေးလို့ ရမလား။" },
+      { "en": "I'm struggling with this heavy bag.", "my": "ဒီအိတ်ကြီးက လေးလွန်းလို့ မနိုင်မနင်း ဖြစ်နေတယ်။" },
+      { "en": "Let me help you with those groceries.", "my": "ဟိုကုန်စုံပစ္စည်းတွေကို ငါ ကူသယ်ပေးပါရစေ။" },
+      { "en": "Do you need a hand with the dishes?", "my": "ပန်းကန်ဆေးတာ ကူပေးရမလား။" },
+      { "en": "I could use some help cleaning up.", "my": "သန့်ရှင်းရေးလုပ်ဖို့ အကူအညီ လိုအပ်နေပါတယ်။" },
+      { "en": "Thanks for the heavy lifting!", "my": "အလေးအပင် သယ်ပေးတဲ့အတွက် ကျေးဇူးပါ!" }
+    ]
+  },
+  {
+    "id": 39,
+    "type": "speaking",
+    "topic": "Lesson 33: Requesting Favors",
+    "icon": "🙏",
+    "phrases": [
+      { "en": "Could you do me a big favor?", "my": "အကူအညီကြီးတစ်ခုလောက် ပေးနိုင်မလား။" },
+      { "en": "Would you mind watering my plants while I'm away?", "my": "ကျွန်တော် မရှိတုန်း အပင်လေးတွေကို ရေလောင်းပေးလို့ ရမလား။" },
+      { "en": "Can I ask you for a favor?", "my": "အကူအညီတစ်ခုလောက် တောင်းလို့ ရမလား။" },
+      { "en": "Could you possibly pick me up from the airport?", "my": "ကျွန်တော့်ကို လေဆိပ်ကနေ လာကြိုပေးလို့ ရနိုင်မလား။" },
+      { "en": "I was wondering if you could lend me some money.", "my": "ပိုက်ဆံလေး နည်းနည်းလောက် ချေးပေးနိုင်မလားလို့ သိချင်လို့ပါ။" },
+      { "en": "Would it be okay if I borrowed your car?", "my": "မင်းရဲ့ ကားကို ခဏလောက် ငှားသုံးလို့ ရမလား။" },
+      { "en": "Can you keep an eye on my bag for a second?", "my": "ကျွန်တော့်အိတ်ကို ခဏလောက် ကြည့်ပေးထားပါဦး။" },
+      { "en": "Could you help me out with this problem?", "my": "ဒီပြဿနာကို ကူညီဖြေရှင်းပေးနိုင်မလား။" },
+      { "en": "I'd really appreciate it if you could help.", "my": "မင်း ကူညီပေးနိုင်ရင် တကယ်ကို ကျေးဇူးတင်မိမှာပါ။" },
+      { "en": "Sorry to bother you, but I need a hand.", "my": "နှောင့်ယှက်မိတာ အားနာပါတယ်၊ အကူအညီ လိုအပ်လို့ပါ။" }
+    ]
+  },
+  {
+    "id": 40,
+    "type": "speaking",
+    "topic": "Lesson 34: Politeness in Interruption",
+    "icon": "✋",
+    "phrases": [
+      { "en": "Sorry to interrupt, but I have a quick point.", "my": "ကြားဖြတ်ပြောရတာ အားနာပါတယ်၊ အချက်လေးတစ်ခု ပြောချင်လို့ပါ။" },
+      { "en": "Could I just jump in here for a moment?", "my": "ဒီနေရာမှာ ခဏလောက် ဝင်ပြောလို့ ရမလား။" },
+      { "en": "I'm sorry, I didn't mean to cut you off.", "my": "တောင်းပန်ပါတယ်၊ စကားဖြတ်ပြောဖို့ ရည်ရွယ်ချက် မရှိပါဘူး။" },
+      { "en": "May I add something to that?", "my": "အဲဒီအပေါ်မှာ တစ်ခုခု ထပ်ဖြည့်ပြောလို့ ရမလား။" },
+      { "en": "If I could just interrupt for a second...", "my": "ခဏလောက် ကြားဖြတ်ပြောပါရစေ..." },
+      { "en": "Excuse me, I just wanted to say one thing.", "my": "တစ်ဆိတ်လောက်ဗျာ၊ တစ်ခုလောက်ပဲ ပြောချင်လို့ပါ။" },
+      { "en": "Sorry, can I just clarify something?", "my": "တောင်းပန်ပါတယ်၊ တစ်ခုခုကို ရှင်းပြပါရစေ။" },
+      { "en": "I'd like to say something about that.", "my": "အဲဒါနဲ့ ပတ်သက်ပြီး တစ်ခုခု ပြောချင်ပါတယ်။" },
+      { "en": "Sorry, go ahead, finish what you were saying.", "my": "တောင်းပန်ပါတယ်၊ ဆက်ပြောပါ၊ ပြောလက်စကို အဆုံးသတ်လိုက်ပါ။" },
+      { "en": "Wait, before we move on, I have a question.", "my": "နေပါဦး၊ ရှေ့မဆက်ခင် မေးစရာလေး တစ်ခု ရှိလို့ပါ။" }
+    ]
+  },
+  {
+    "id": 41,
+    "type": "speaking",
+    "topic": "Lesson 35: Encouraging Others",
+    "icon": "💪",
+    "phrases": [
+      { "en": "Hang in there, you're doing a great job!", "my": "အားတင်းထားပါ၊ မင်း တကယ် ကောင်းကောင်း လုပ်နေတာပါ။" },
+      { "en": "Don't give up, you're almost there!", "my": "အရှုံးမပေးပါနဲ့၊ ရောက်ခါနီးနေပြီ!" },
+      { "en": "Give it your best shot!", "my": "မင်းရဲ့ အစွမ်းကုန် ကြိုးစားလိုက်စမ်းပါ!" },
+      { "en": "I'm sure you'll do fine.", "my": "မင်း အဆင်ပြေသွားမှာပါလို့ ငါ သေချာပေါက် ယုံကြည်ပါတယ်။" },
+      { "en": "Keep it up, you've got this!", "my": "ဒီအတိုင်း ဆက်လုပ်ပါ၊ မင်း လုပ်နိုင်ပါတယ်!" },
+      { "en": "Believe in yourself, you can do it!", "my": "ကိုယ့်ကိုယ်ကိုယ် ယုံကြည်ပါ၊ မင်း လုပ်နိုင်ပါတယ်။" },
+      { "en": "You're making great progress!", "my": "မင်း တော်တော်လေး တိုးတက်လာပြီနော်!" },
+      { "en": "Don't let it get you down.", "my": "ဒါကို စိတ်ထဲ ထားမနေပါနဲ့ (စိတ်ဓာတ်မကျပါနဲ့)။" },
+      { "en": "Everything will work out in the end.", "my": "နောက်ဆုံးတော့ အားလုံး အဆင်ပြေသွားမှာပါ။" },
+      { "en": "I'm rooting for you!", "my": "ငါ မင်းဘက်က အားပေးနေပါတယ်!" }
+    ]
+  },
+  {
+    "id": 42,
+    "type": "test",
+    "topic": "🔴 Test 7: The 'Supportive Peer'",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "Give it your best shot!", "my": "မင်းရဲ့ အစွမ်းကုန် ကြိုးစားလိုက်စမ်းပါ!" },
+      { "en": "Hang in there, things will get better.", "my": "အားတင်းထားပါ၊ အဆင်ပြေသွားမှာပါ။" },
+      { "en": "Could you give me a hand?", "my": "ကျွန်တော့်ကို ကူညီပါဦး။" },
+      { "en": "Sorry to interrupt, but I have a question.", "my": "ကြားဖြတ်ပြောရတာ အားနာပါတယ်၊ မေးစရာ ရှိလို့ပါ။" },
+      { "en": "Am I making myself clear?", "my": "ကျွန်တော် ပြောတာ ရှင်းရှင်းလင်းလင်း ဖြစ်ရဲ့လား။" },
+      { "en": "You're doing great, keep it up!", "my": "မင်း တကယ် တော်ပါတယ်၊ ဆက်လုပ်ပါ!" },
+      { "en": "Let me know if you need help.", "my": "အကူအညီ လိုရင် ပြောနော်။" },
+      { "en": "I'm sure you'll pass the test.", "my": "မင်း စာမေးပွဲ အောင်မှာ သေချာပါတယ်။" },
+      { "en": "Don't worry, everyone makes mistakes.", "my": "စိတ်မပူပါနဲ့၊ လူတိုင်း အမှားလုပ်တတ်ကြတာပဲ။" },
+      { "en": "I'm right behind you all the way.", "my": "ငါ အမြဲတမ်း မင်းဘက်မှာ ရှိနေပါတယ်။" }
+    ]
+  },
+  {
+    "id": 43,
+    "type": "speaking",
+    "topic": "Lesson 36: Complaining Politely",
+    "icon": "😤",
+    "phrases": [
+      { "en": "Excuse me, I'm afraid there's a problem with my order.", "my": "တစ်ဆိတ်လောက်ဗျာ၊ ကျွန်တော့်ရဲ့ မှာယူမှုမှာ ပြဿနာရှိနေလို့ပါ။" },
+      { "en": "I'm sorry to bother you, but the food is cold.", "my": "နှောင့်ယှက်မိတာ အားနာပါတယ်၊ အစားအသောက်တွေက အေးနေလို့ပါ။" },
+      { "en": "I'm not quite satisfied with this product.", "my": "ဒီပစ္စည်းကို ကျွန်တော် သိပ်ပြီး စိတ်မကျေနပ်ဘူး ဖြစ်နေတယ်။" },
+      { "en": "Is there someone else I can speak to about this?", "my": "ဒါနဲ့ ပတ်သက်ပြီး ပြောလို့ရမယ့် တခြား တစ်ယောက်ယောက် ရှိလား။" },
+      { "en": "This isn't what I expected, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် ဒါက ကျွန်တော် မျှော်လင့်ထားတဲ့အတိုင်း မဟုတ်ပါဘူး။" },
+      { "en": "Could you look into this for me, please?", "my": "ဒါကို ကျွန်တော့်အတွက် နည်းနည်းလောက် စစ်ဆေးပေးမလား။" },
+      { "en": "I've been waiting for over thirty minutes.", "my": "ကျွန်တော် စောင့်နေတာ မိနစ် ၃၀ ကျော်ပါပြီ။" },
+      { "en": "I'd like a refund, if possible.", "my": "ဖြစ်နိုင်ရင် ပိုက်ဆံ ပြန်အမ်းပေးစေချင်ပါတယ်။" },
+      { "en": "There seems to be a mistake on the bill.", "my": "ဘေလ်မှာ အမှားတစ်ခုခု ရှိနေပုံပဲ။" },
+      { "en": "I hope you can resolve this issue quickly.", "my": "ဒီပြဿနာကို အမြန်ဆုံး ဖြေရှင်းပေးနိုင်မယ်လို့ မျှော်လင့်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 44,
+    "type": "speaking",
+    "topic": "Lesson 37: Remembering & Recalling",
+    "icon": "🧠",
+    "phrases": [
+      { "en": "It rings a bell, but I can't quite place it.", "my": "ကြားဖူးသလိုလိုတော့ ရှိတယ်၊ ဒါပေမဲ့ ဘာလဲဆိုတာ သေချာ မမှတ်မိဘူး။" },
+      { "en": "I remember meeting him at the conference.", "my": "သူ့ကို ကွန်ဖရင့်မှာ တွေ့ခဲ့တာ မှတ်မိပါတယ်။" },
+      { "en": "If I recall correctly, we met last year.", "my": "ငါ မှတ်မိသလောက်ဆိုရင် တို့တွေ မနှစ်က တွေ့ခဲ့ကြတာ။" },
+      { "en": "The name escapes me at the moment.", "my": "နာမည်က လောလောဆယ် စဉ်းစားလို့ မရဘူး ဖြစ်နေတယ်။" },
+      { "en": "It's on the tip of my tongue!", "my": "ပြောခါနီးလေး တင် ပျောက်သွားတာ (လျှာဖျားလေး တင် ရှိနေတာ)။" },
+      { "en": "Now that you mention it, I do remember.", "my": "မင်းပြောမှပဲ ငါ တကယ် မှတ်မိတော့တယ်။" },
+      { "en": "Remind me, what was the date again?", "my": "ငါ့ကို ပြန်ပြောပါဦး၊ နေ့စွဲက ဘယ်နေ့လဲနော်။" },
+      { "en": "I'll never forget that experience.", "my": "အဲဒီ အတွေ့အကြုံကို ဘယ်တော့မှ မေ့မှာ မဟုတ်ဘူး။" },
+      { "en": "It all came flooding back to me.", "my": "အရာအားလုံးကို ရုတ်တရက် ပြန်ပြီး မှတ်မိသွားတယ်။" },
+      { "en": "I have a vague memory of that place.", "my": "အဲဒီနေရာနဲ့ ပတ်သက်ပြီး ဝေဝေဝါးဝါး မှတ်မိနေတယ်။" }
+    ]
+  },
+  {
+    "id": 45,
+    "type": "speaking",
+    "topic": "Lesson 38: Forgetting",
+    "icon": "💨",
+    "phrases": [
+      { "en": "I'm sorry, my mind went completely blank.", "my": "တောင်းပန်ပါတယ်၊ ဘာမှ စဉ်းစားလို့ မရတော့ဘူး ဖြစ်သွားလို့ပါ။" },
+      { "en": "It completely slipped my mind!", "my": "ဒါကို လုံးဝ မေ့သွားတာပဲ!" },
+      { "en": "I've forgotten where I put my keys.", "my": "သော့တွေကို ဘယ်မှာ ထားခဲ့မိလဲ မသိတော့ဘူး။" },
+      { "en": "I'm so sorry, I forgot to call you back.", "my": "တောင်းပန်ပါတယ်၊ ဖုန်းပြန်ဆက်ဖို့ မေ့သွားလို့ပါ။" },
+      { "en": "The details are a bit fuzzy now.", "my": "အသေးစိတ်တွေကို အခုတော့ သိပ်မမှတ်မိတော့ဘူး။" },
+      { "en": "I can't for the life of me remember his name.", "my": "သူ့နာမည်ကို ဘယ်လိုမှ စဉ်းစားလို့ မရတော့ဘူး။" },
+      { "en": "It's gone clean out of my head.", "my": "ခေါင်းထဲကနေ လုံးဝ ထွက်သွားပြီ။" },
+      { "en": "I'm getting so forgetful lately.", "my": "နောက်ပိုင်း ငါ တော်တော်လေး မေ့တတ်နေပြီ။" },
+      { "en": "I lost my train of thought.", "my": "ဘာပြောမလို့လဲဆိုတာ မေ့သွားပြီ။" },
+      { "en": "Did I tell you about that? I forget.", "my": "အဲဒါကို မင်းကို ပြောပြီးပြီလား။ မေ့သွားလို့။" }
+    ]
+  },
+  {
+    "id": 46,
+    "type": "speaking",
+    "topic": "Lesson 39: Easy Tasks",
+    "icon": "🍰",
+    "phrases": [
+      { "en": "Don't worry, it's a piece of cake!", "my": "စိတ်မပူပါနဲ့၊ ဒါက အလွန်လွယ်တဲ့ အလုပ်ပါ။" },
+      { "en": "I can do that with my eyes closed.", "my": "မျက်စိမှိတ်တောင် လုပ်နိုင်ပါတယ်။" },
+      { "en": "It's as easy as ABC.", "my": "အရမ်းလွယ်ပါတယ်။" },
+      { "en": "No problem, it's child's play.", "my": "ဘာမှ မဟုတ်ပါဘူး၊ ကလေးကစားသလိုပါပဲ။" },
+      { "en": "It's not rocket science!", "my": "ဒါက ခက်ခဲတဲ့အရာ မဟုတ်ပါဘူး!" },
+      { "en": "I'll have it done in no time.", "my": "ခဏလေးအတွင်း အပြီးလုပ်ပေးမယ်။" },
+      { "en": "That's a walk in the park.", "my": "အလွန်လွယ်ကူတဲ့ အလုပ်ပါ။" },
+      { "en": "Simple enough, I'll get on it.", "my": "လွယ်ပါတယ်၊ ကျွန်တော် လုပ်လိုက်ပါ့မယ်။" },
+      { "en": "Piece of cake, I've done it many times.", "my": "လွယ်ပါတယ်၊ အခါပေါင်းများစွာ လုပ်ဖူးပါတယ်။" },
+      { "en": "It's easy-peasy!", "my": "အရမ်းအရမ်းကို လွယ်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 47,
+    "type": "speaking",
+    "topic": "Lesson 40: Difficult Tasks",
+    "icon": "🧗",
+    "phrases": [
+      { "en": "This project is proving to be a bit tricky.", "my": "ဒီပရောဂျက်က နည်းနည်းတော့ ခက်ခဲနေပုံပဲ။" },
+      { "en": "It's a tough nut to crack.", "my": "ဒါက ဥာဏ်စမ်းတစ်ခုလို ဖြေရှင်းရ ခက်တဲ့ အလုပ်ပါ။" },
+      { "en": "I'm finding it quite challenging, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် ဒါက တော်တော်လေး စိန်ခေါ်မှု ရှိနေတယ်။" },
+      { "en": "It's an uphill struggle from here.", "my": "ဒီကနေ ရှေ့ဆက်ဖို့က တော်တော်လေး ခက်ခဲပါလိမ့်မယ်။" },
+      { "en": "I'm in over my head with this work.", "my": "ဒီအလုပ်နဲ့ ကျွန်တော် မနိုင်မနင်း ဖြစ်နေပြီ။" },
+      { "en": "It's more difficult than it looks.", "my": "ကြည့်ရတာထက် ပိုခက်ပါတယ်။" },
+      { "en": "We've got our work cut out for us.", "my": "တို့တွေမှာ လုပ်စရာတွေ အများကြီး ရှိနေပြီ။" },
+      { "en": "I'm struggling to get it right.", "my": "မှန်အောင်လုပ်ဖို့ တော်တော်လေး ကြိုးစားနေရတယ်။" },
+      { "en": "It's been a real struggle lately.", "my": "နောက်ပိုင်းမှာ တကယ်ကို ခက်ခဲနေခဲ့တာပါ။" },
+      { "en": "This is much harder than I anticipated.", "my": "ဒါက ကျွန်တော် ထင်ထားတာထက် ပိုခက်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 48,
+    "type": "test",
+    "topic": "🔴 Test 8: Memory & Mastery",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "It's on the tip of my tongue.", "my": "ပြောခါနီးလေး တင် မေ့နေတာ (လျှာဖျားလေး တင် ရှိနေတာ)။" },
+      { "en": "It's a piece of cake!", "my": "အလွန်လွယ်တဲ့ အလုပ်ပါ။" },
+      { "en": "I completely forgot about it.", "my": "အဲဒါကို လုံးဝ မေ့သွားပါတယ်။" },
+      { "en": "That rings a bell.", "my": "ကြားဖူးသလိုလို ရှိတယ်။" },
+      { "en": "My mind went blank.", "my": "ဘာမှ စဉ်းစားလို့ မရတော့ဘူး။" },
+      { "en": "It's a bit tricky, isn't it?", "my": "ဒါက နည်းနည်း ခက်တယ်နော်၊ မဟုတ်ဘူးလား။" },
+      { "en": "I'll never forget your kindness.", "my": "မင်းရဲ့ ကြင်နာမှုကို ဘယ်တော့မှ မေ့မှာ မဟုတ်ဘူး။" },
+      { "en": "If I recall correctly, he said no.", "my": "ငါ မှတ်မိသလောက်တော့ သူ ငြင်းလိုက်တာ။" },
+      { "en": "I've got it covered, don't worry.", "my": "ဒါကို ငါ တာဝန်ယူထားပါတယ်၊ စိတ်မပူနဲ့။" },
+      { "en": "Practice makes perfect!", "my": "လေ့ကျင့်မှုက အကောင်းဆုံး ဖြစ်စေပါတယ်။" }
+    ]
+  },
+  {
+    "id": 49,
+    "type": "speaking",
+    "topic": "Lesson 41: Describing Age Ranges",
+    "icon": "🎂",
+    "phrases": [
+      { "en": "She's in her early twenties.", "my": "သူက အသက် ၂၀ ကျော် အစပိုင်းမှာ ရှိပါတယ်။" },
+      { "en": "He's middle-aged now, I suppose.", "my": "သူက အခု လူလတ်ပိုင်းအရွယ် ရောက်နေပြီ ထင်တာပဲ။" },
+      { "en": "My grandfather is in his late eighties.", "my": "ကျွန်တော့်အဖိုးက အသက် ၈၀ ကျော် နှောင်းပိုင်းမှာ ရှိပါတယ်။" },
+      { "en": "They're just toddlers, running around everywhere.", "my": "သူတို့က လမ်းလျှောက်တတ်စ ကလေးလေးတွေပါ၊ နေရာအနှံ့ လျှောက်ပြေးနေကြတာ။" },
+      { "en": "She looks young for her age, doesn't she?", "my": "သူက သူ့အသက်ထက် ပိုနုတယ်နော်၊ မဟုတ်ဘူးလား။" },
+      { "en": "He's a teenager, always on his phone.", "my": "သူက ဆယ်ကျော်သက်အရွယ်ပါ၊ အမြဲတမ်း ဖုန်းပဲ သုံးနေတာ။" },
+      { "en": "I'm in my prime!", "my": "ငါက အကောင်းဆုံးအရွယ် (လူပျိုပေါက်/အပျိုပေါက်) မှာပဲ ရှိသေးတာ!" },
+      { "en": "She's just a newborn baby.", "my": "သူက မွေးကင်းစ ကလေးလေးပဲ ရှိပါသေးတယ်။" },
+      { "en": "Most of the students are in their late teens.", "my": "ကျောင်းသား အများစုက ဆယ်ကျော်သက် နှောင်းပိုင်းအရွယ်တွေပါ။" },
+      { "en": "He's pushing forty, I think.", "my": "သူ ၄၀ ထဲ ရောက်တော့မယ် ထင်တယ်။" }
+    ]
+  },
+  {
+    "id": 50,
+    "type": "speaking",
+    "topic": "Lesson 42: Aging Humor & Wisdom",
+    "icon": "👴",
+    "phrases": [
+      { "en": "I'm not as young as I used to be.", "my": "အရင်လောက် မငယ်တော့ပါဘူး။" },
+      { "en": "Age is just a number, right?", "my": "အသက်ဆိုတာ ကိန်းဂဏန်းတစ်ခုပဲလေ၊ ဟုတ်တယ်မလား။" },
+      { "en": "I'm getting better with age, like a fine wine.", "my": "အသက်ကြီးလာလေ ပိုကောင်းလာလေပါပဲ။" },
+      { "en": "I'm having a senior moment!", "my": "အသက်ကြီးလို့ မေ့မေ့လျော့လျော့ ဖြစ်နေတာ!" },
+      { "en": "You're only as old as you feel.", "my": "စိတ်က ငယ်ရင် ငယ်တာပါပဲ။" },
+      { "en": "I'm wise beyond my years.", "my": "ငါက အသက်ထက် ပိုပြီး အမြော်အမြင် ရှိပါတယ်။" },
+      { "en": "Another year older, another year wiser.", "my": "တစ်နှစ်ကြီးလာလေ တစ်နှစ် ပိုသိလာလေပါပဲ။" },
+      { "en": "I'm over the hill now!", "my": "ငါ အသက်ကြီးသွားပါပြီ!" },
+      { "en": "You don't look a day over twenty!", "my": "မင်း ကြည့်ရတာ အသက် ၂၀ ကျော်တယ်လို့တောင် မထင်ရဘူး!" },
+      { "en": "Growing old is mandatory, growing up is optional.", "my": "အသက်ကြီးလာတာကတော့ ရှောင်လွှဲလို့ မရပေမဲ့ လူကြီးဆန်ဖို့ကတော့ ကိုယ့်အပေါ်မှာပဲ မူတည်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 51,
+    "type": "speaking",
+    "topic": "Lesson 43: Finding Items",
+    "icon": "🔍",
+    "phrases": [
+      { "en": "Excuse me, where can I find the milk?", "my": "တစ်ဆိတ်လောက်၊ နွားနို့ ဘယ်မှာ ရှာလို့ရမလဲ။" },
+      { "en": "I'm looking for a blue sweater in size medium.", "my": "အပြာရောင် ဆွယ်တာအင်္ကျီ ဆိုဒ်အလတ် ရှာနေတာပါ။" },
+      { "en": "Do you have these shoes in a smaller size?", "my": "ဒီဖိနပ် ဆိုဒ်အသေး ရှိလား။" },
+      { "en": "Is this item currently in stock?", "my": "ဒီပစ္စည်းက အခု လောလောဆယ် ပစ္စည်းရှိလား။" },
+      { "en": "Where's the fitting room, please?", "my": "အင်္ကျီ စမ်းဝတ်ကြည့်တဲ့ အခန်း ဘယ်မှာလဲ။" },
+      { "en": "I'm just browsing, thank you.", "my": "အေးဆေး ကြည့်နေတာပါ၊ ကျေးဇူးပါ။" },
+      { "en": "Do you sell any organic vegetables?", "my": "သဘာဝ ဟင်းသီးဟင်းရွက်တွေ ရောင်းလား။" },
+      { "en": "I can't seem to find the bread aisle.", "my": "ပေါင်မုန့်စင်တွေကို ရှာမတွေ့ဘူး ဖြစ်နေတယ်။" },
+      { "en": "Is there a pharmacy inside this mall?", "my": "ဒီကုန်တိုက်ထဲမှာ ဆေးဆိုင် ရှိလား။" },
+      { "en": "Thank you, I'll take this one.", "my": "ကျေးဇူးပါ၊ ဒါလေးပဲ ယူလိုက်မယ်။" }
+    ]
+  },
+  {
+    "id": 52,
+    "type": "speaking",
+    "topic": "Lesson 44: Price & Payment",
+    "icon": "💳",
+    "phrases": [
+      { "en": "How much is this, please?", "my": "ဒါ ဘယ်လောက်လဲဗျ။" },
+      { "en": "That's a bit expensive, don't you think?", "my": "ဒါက နည်းနည်း ဈေးကြီးတယ်နော်၊ မထင်ဘူးလား။" },
+      { "en": "Do you accept credit cards?", "my": "ကတ်နဲ့ ပေးလို့ ရမလား။" },
+      { "en": "Is there a discount on this item?", "my": "ဒီပစ္စည်းက လျှော့ဈေး ရှိလား။" },
+      { "en": "I'll pay in cash.", "my": "လက်ငင်း ပိုက်ဆံနဲ့ ပေးပါ့မယ်။" },
+      { "en": "Can I have a receipt, please?", "my": "ဘေလ် (ပြေစာ) လေး ပေးလို့ ရမလား။" },
+      { "en": "Do you have change for twenty dollars?", "my": "ဒေါ်လာ ၂၀ တန်ကို အကြွေ လဲပေးနိုင်မလား။" },
+      { "en": "It's a bargain at that price!", "my": "ဒီဈေးနဲ့ဆိုရင် တကယ် တန်ပါတယ်။" },
+      { "en": "Is tax included in the price?", "my": "ဒီဈေးထဲမှာ အခွန် ပါပြီးသားလား။" },
+      { "en": "I'm afraid I've reached my limit on this card.", "my": "ဒီကတ်က ကန့်သတ်ချက် ပြည့်သွားပြီ ထင်တယ်။" }
+    ]
+  },
+  {
+    "id": 53,
+    "type": "speaking",
+    "topic": "Lesson 45: Returns & Exchanges",
+    "icon": "🔄",
+    "phrases": [
+      { "en": "I'd like to return this, please.", "my": "ဒါလေး ပြန်ပေးချင်လို့ပါ။" },
+      { "en": "It's defective, look at this crack.", "my": "ဒါက ချို့ယွင်းနေတယ်၊ ဒီအက်ကြောင်းကို ကြည့်ပါ။" },
+      { "en": "Can I exchange this for a different color?", "my": "ဒါကို တခြား အရောင်တစ်ခုနဲ့ လဲလို့ ရမလား။" },
+      { "en": "I have the receipt right here.", "my": "ဒီမှာ ပြေစာ ပါပါတယ်။" },
+      { "en": "It doesn't fit me properly.", "my": "ဒါက ကျွန်တော်နဲ့ မတော်ဘူး ဖြစ်နေတယ်။" },
+      { "en": "Is it possible to get a full refund?", "my": "ပိုက်ဆံ အပြည့် ပြန်အမ်းပေးလို့ ရမလား။" },
+      { "en": "How long do I have to return an item?", "my": "ပစ္စည်းပြန်ပေးဖို့ အချိန် ဘယ်လောက် ရမလဲ။" },
+      { "en": "I bought this yesterday and it's broken.", "my": "ဒါကို မနေ့ကမှ ဝယ်တာ၊ ပျက်နေလို့ပါ။" },
+      { "en": "I'm sorry, we don't accept returns without a tag.", "my": "တောင်းပန်ပါတယ်၊ တံဆိပ်မပါရင် ပြန်လက်မခံပါဘူး။" },
+      { "en": "The manager will be with you in a moment.", "my": "မန်နေဂျာက အခုပဲ မင်းဆီ လာပါလိမ့်မယ်။" }
+    ]
+  },
+  {
+    "id": 54,
+    "type": "test",
+    "topic": "🔴 Test 9: The 'Savvy Shopper'",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "I'm just browsing, thank you.", "my": "အေးဆေး ကြည့်နေတာပါ၊ ကျေးဇူးပါ။" },
+      { "en": "How much does this cost?", "my": "ဒါ ဘယ်လောက်လဲ။" },
+      { "en": "Do you have this in a larger size?", "my": "ဒါ ဆိုဒ်အကြီး ရှိလား။" },
+      { "en": "I'd like to pay by card.", "my": "ကတ်နဲ့ ပေးချင်ပါတယ်။" },
+      { "en": "Is this on sale?", "my": "ဒါ လျှော့ဈေးနဲ့လား။" },
+      { "en": "Where can I find the fitting rooms?", "my": "အင်္ကျီ စမ်းဝတ်တဲ့ အခန်း ဘယ်မှာလဲ။" },
+      { "en": "I'd like to return this, it's broken.", "my": "ဒါ ပျက်နေလို့ ပြန်ပေးချင်ပါတယ်။" },
+      { "en": "Can I have a bag, please?", "my": "အိတ်လေး တစ်လုံးလောက် ပေးမလား။" },
+      { "en": "That's a real bargain!", "my": "တကယ့်ကို တန်တာပဲ!" },
+      { "en": "Keep the change.", "my": "အကြွေ ထားလိုက်ပါ။" }
+    ]
+  },
+  {
+    "id": 55,
+    "type": "speaking",
+    "topic": "Lesson 46: Hunger & Dining Out",
+    "icon": "🍔",
+    "phrases": [
+      { "en": "I'm starving! Let's go grab something to eat.", "my": "ဗိုက်အရမ်းဆာနေပြီ! တစ်ခုခု သွားစားကြစို့။" },
+      { "en": "Do you feel like having Chinese food tonight?", "my": "ဒီည တရုတ်စာ စားချင်လား။" },
+      { "en": "I'm in the mood for some pizza.", "my": "ပီဇာ စားချင်စိတ် ဖြစ်နေတယ်။" },
+      { "en": "Where would you like to go for lunch?", "my": "နေ့လည်စာကို ဘယ်မှာ သွားစားချင်လဲ။" },
+      { "en": "Is there a good cafe near here?", "my": "ဒီနားမှာ ကောင်းတဲ့ ကဖေး ရှိလား။" },
+      { "en": "I've heard great reviews about that new bistro.", "my": "ဟို စားသောက်ဆိုင်အသစ်အကြောင်း ကောင်းတာတွေ အများကြီး ကြားထားတယ်။" },
+      { "en": "I could really go for a burger right now.", "my": "အခုချက်ချင်း ဘာဂါတစ်လုံးလောက် စားလိုက်ရရင် ကောင်းမှာပဲ။" },
+      { "en": "I'm not that hungry, actually.", "my": "အမှန်တော့ သိပ်မဆာသေးပါဘူး။" },
+      { "en": "Let's try that place on the corner.", "my": "ထောင့်က ဆိုင်ကို သွားကြည့်ကြရအောင်။" },
+      { "en": "Shall we make a reservation first?", "my": "အရင်ဆုံး ကြိုတင်မှာထား (Booking လုပ်ထား) ကြမလား။" }
+    ]
+  },
+  {
+    "id": 56,
+    "type": "speaking",
+    "topic": "Lesson 47: Restaurant Etiquette",
+    "icon": "🍽️",
+    "phrases": [
+      { "en": "A table for two, please.", "my": "လူနှစ်ယောက်စာ စားပွဲတစ်ခု ပေးပါ။" },
+      { "en": "Could we see the menu, please?", "my": "မီနူးလေး ကြည့်လို့ ရမလား။" },
+      { "en": "I'll have the grilled salmon.", "my": "ဆော်လမွန်ငါးကင်ပဲ ယူပါ့မယ်။" },
+      { "en": "Are there any vegetarian options?", "my": "သက်သက်လွတ် ဟင်းလျာတွေ ရှိလား။" },
+      { "en": "Could I have some water, please?", "my": "ရေလေး နည်းနည်း ပေးလို့ ရမလား။" },
+      { "en": "Everything was delicious, thank you.", "my": "အားလုံး စားလို့ အရမ်းကောင်းပါတယ်၊ ကျေးဇူးပါ။" },
+      { "en": "Could we have the check, please?", "my": "ဘေလ်လေး ပေးလို့ ရမလား။" },
+      { "en": "Is service included?", "my": "ဝန်ဆောင်ခ ပါပြီးသားလား။" },
+      { "en": "Excuse me, I'm still waiting for my drink.", "my": "တစ်ဆိတ်လောက်ဗျာ၊ ကျွန်တော့် သောက်စရာ မရောက်သေးလို့ပါ။" },
+      { "en": "Compliments to the chef!", "my": "စားဖိုမှူးကို ချီးကျူးပေးပါဦး!" }
+    ]
+  },
+  {
+    "id": 57,
+    "type": "speaking",
+    "topic": "Lesson 48: TV & The Remote",
+    "icon": "📺",
+    "phrases": [
+      { "en": "Where's the remote? I want to change the channel.", "my": "ရီမု ဘယ်မှာလဲ။ ချန်နယ် ပြောင်းချင်လို့။" },
+      { "en": "Is there anything good on TV tonight?", "my": "ဒီည တီဗွီမှာ ကောင်းတာ ဘာပါလဲ။" },
+      { "en": "Stop channel surfing and pick something!", "my": "ချန်နယ်တွေ လျှောက်မပြောင်းနေနဲ့တော့၊ တစ်ခုခု ရွေးလိုက်တော့!" },
+      { "en": "I can't believe there are so many commercials.", "my": "ကြော်ငြာတွေ ဒီလောက်တောင် များနေတာ မယုံနိုင်ဘူး။" },
+      { "en": "Turn up the volume, I can't hear anything.", "my": "အသံချဲ့ပါဦး၊ ဘာမှ မကြားရဘူး။" },
+      { "en": "Can you record this show for me?", "my": "ဒီအစီအစဉ်ကို ကျွန်တော့်အတွက် အသံသွင်း (Record လုပ်) ပေးလို့ ရမလား။" },
+      { "en": "I'm addicted to this new drama series.", "my": "ဒီဒရာမာ ဇာတ်လမ်းတွဲအသစ်ကို ငါ စွဲနေပြီ။" },
+      { "en": "The news is about to start.", "my": "သတင်း စတော့မယ်။" },
+      { "en": "I missed the beginning of the movie.", "my": "ရုပ်ရှင် အစပိုင်းကို လွတ်သွားတယ်။" },
+      { "en": "Put it on mute for a second, please.", "my": "ခဏလောက် အသံပိတ်ထားပေးပါ။" }
+    ]
+  },
+  {
+    "id": 58,
+    "type": "speaking",
+    "topic": "Lesson 49: Reruns & Finales",
+    "icon": "🔄",
+    "phrases": [
+      { "en": "Oh no, it's just a rerun of last week's episode.", "my": "ဟာ၊ ဒါက ပြီးခဲ့တဲ့ အပတ်က အပိုင်းကို ပြန်ပြနေတာပဲ။" },
+      { "en": "I can't wait for the season finale!", "my": "ဇာတ်လမ်းတွဲ အဆုံးသတ်ကို စောင့်ရတာ တကယ် စိတ်လှုပ်ရှားနေပြီ!" },
+      { "en": "No spoilers, please! I haven't seen it yet.", "my": "ဇာတ်လမ်းကို ကြိုမပြောပါနဲ့ဦး! ငါ မကြည့်ရသေးလို့။" },
+      { "en": "The ending was so disappointing.", "my": "ဇာတ်သိမ်းက တကယ်ကို စိတ်ပျက်ဖို့ ကောင်းတယ်။" },
+      { "en": "I've seen this episode a dozen times already.", "my": "ဒီအပိုင်းကို အကြိမ်ပေါင်းများစွာ ကြည့်ပြီးပြီ။" },
+      { "en": "They're showing a marathon of my favorite show.", "my": "ငါ အကြိုက်ဆုံး အစီအစဉ်ကို ဆက်တိုက် ပြနေကြတာ။" },
+      { "en": "Who's your favorite character in the series?", "my": "ဒီဇာတ်လမ်းတွဲမှာ မင်း အကြိုက်ဆုံး ဇာတ်ကောင်က ဘယ်သူလဲ။" },
+      { "en": "I think the show has gone downhill recently.", "my": "ဒီအစီအစဉ်က နောက်ပိုင်းမှာ အရည်အသွေး ကျလာတယ်လို့ ထင်ပါတယ်။" },
+      { "en": "I'm going to binge-watch the whole season today.", "my": "ဒီနေ့ တစ်ရာသီစာလုံးကို အကုန် ဆက်တိုက် ကြည့်ပစ်မယ်။" },
+      { "en": "It's a cliffhanger! I need to know what happens next.", "my": "စိတ်လှုပ်ရှားစရာနဲ့ ဇာတ်အိမ် တည်ထားတာပဲ! နောက်ဘာဖြစ်မလဲဆိုတာ သိချင်နေပြီ။" }
+    ]
+  },
+  {
+    "id": 59,
+    "type": "speaking",
+    "topic": "Lesson 50: Late Excuses",
+    "icon": "⏰",
+    "phrases": [
+      { "en": "I'm so sorry I'm late, I overslept.", "my": "နောက်ကျသွားတဲ့အတွက် တောင်းပန်ပါတယ်၊ အိပ်ပျော်သွားလို့ပါ။" },
+      { "en": "The traffic was absolute murder today.", "my": "ဒီနေ့ လမ်းပိတ်တာ တကယ့်ကို ဆိုးဆိုးရွားရွားပါပဲ။" },
+      { "en": "I lost track of time, my apologies.", "my": "အချိန်ကို သတိမထားလိုက်မိလို့ပါ၊ တောင်းပန်ပါတယ်။" },
+      { "en": "My alarm clock didn't go off this morning.", "my": "ဒီမနက် နာရီနှိုးစက် မမြည်လို့ပါ။" },
+      { "en": "I missed my usual bus.", "my": "စီးနေကျ ဘတ်စ်ကားကို လွတ်သွားလို့ပါ။" },
+      { "en": "Something urgent came up at the last minute.", "my": "နောက်ဆုံး မိနစ်မှာ အရေးကြီးကိစ္စ ပေါ်လာလို့ပါ။" },
+      { "en": "I couldn't find a parking spot anywhere.", "my": "ကားပါကင်နေရာ လုံးဝ ရှာမတွေ့လို့ပါ။" },
+      { "en": "I'm sorry for keeping you waiting.", "my": "စောင့်ခိုင်းမိတဲ့အတွက် တောင်းပန်ပါတယ်။" },
+      { "en": "I'll be there in ten minutes, I promise.", "my": "၁၀ မိနစ်နေရင် အဲကို ရောက်မယ်၊ ကတိပေးပါတယ်။" },
+      { "en": "I got held up at the office.", "my": "ရုံးမှာ အလုပ်တွေနဲ့ တန်းနေလို့ပါ။" }
+    ]
+  },
+  {
+    "id": 60,
+    "type": "test",
+    "topic": "🔴 Test 10: Leisure & Responsibility",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "I just lost track of time.", "my": "အချိန်ကို သတိမထားလိုက်မိလို့ပါ။" },
+      { "en": "I'm so sorry for being late.", "my": "နောက်ကျတဲ့အတွက် တောင်းပန်ပါတယ်။" },
+      { "en": "What's on TV tonight?", "my": "ဒီည တီဗွီမှာ ဘာပါလဲ။" },
+      { "en": "Everything was delicious, thank you.", "my": "အားလုံး စားလို့ ကောင်းပါတယ်၊ ကျေးဇူးပါ။" },
+      { "en": "Could we have the check, please?", "my": "ဘေလ်လေး ပေးလို့ ရမလား။" },
+      { "en": "I'm starving, let's eat!", "my": "ဗိုက်အရမ်းဆာနေပြီ၊ စားကြစို့!" },
+      { "en": "No spoilers, please!", "my": "ဇာတ်လမ်းကို ကြိုမပြောပါနဲ့ဦး!" },
+      { "en": "I'll be there in a jiffy.", "my": "ချက်ချင်း ရောက်လာခဲ့မယ်။" },
+      { "en": "I missed my alarm this morning.", "my": "ဒီမနက် နှိုးစက် မကြားလိုက်ဘူး။" },
+      { "en": "It's just a rerun.", "my": "ဒါက အဟောင်းကို ပြန်ပြနေတာပါ။" }
+    ]
+  },
+  {
+    "id": 61,
+    "type": "speaking",
+    "topic": "Lesson 51: At the Check-in Counter",
+    "icon": "🛫",
+    "phrases": [
+      { "en": "I'd like to check in for my flight to London, please.", "my": "လန်ဒန်သွားမယ့် လေယာဉ်အတွက် ချက်အင် (Check-in) လုပ်ချင်လို့ပါ။" },
+      { "en": "Can I have an aisle seat, if possible?", "my": "ဖြစ်နိုင်ရင် လမ်းဘေးက ခုံလေး ရမလား။" },
+      { "en": "How many bags are you checking in today?", "my": "ဒီနေ့ အိတ် ဘယ်နှလုံး ချက်အင် လုပ်မှာလဲ။" },
+      { "en": "I only have this carry-on bag.", "my": "ကျွန်တော့်မှာ ဒီလက်ဆွဲအိတ်လေး တစ်လုံးပဲ ရှိပါတယ်။" },
+      { "en": "Is my flight on time?", "my": "ကျွန်တောဉ် လိုက်မယ့် လေယာဉ် အချိန်မှန်ရဲ့လား။" },
+      { "en": "I'm afraid your suitcase is slightly overweight.", "my": "မင်းရဲ့ အိတ်က အလေးချိန် နည်းနည်း ကျော်နေတယ် ထင်တယ်။" },
+      { "en": "Here is your boarding pass and passport.", "my": "ဒါက မင်းရဲ့ လေယာဉ်တက်ခွင့် လက်မှတ်နဲ့ ပတ်စပို့ပါ။" },
+      { "en": "Which gate should I go to?", "my": "ဘယ်ဂိတ်ကို သွားရမလဲ။" },
+      { "en": "Do I need to take my laptop out of the bag?", "my": "လက်ပ်တော့ကို အိတ်ထဲကနေ ထုတ်ရမလား။" },
+      { "en": "Have a pleasant flight!", "my": "ကောင်းမွန်တဲ့ ခရီးစဉ်လေး ဖြစ်ပါစေ!" }
+    ]
+  },
+  {
+    "id": 62,
+    "type": "speaking",
+    "topic": "Lesson 52: Boarding & Gates",
+    "icon": "🎫",
+    "phrases": [
+      { "en": "Attention please, there has been a gate change for flight 402.", "my": "သတိပြုပေးပါ၊ လေယာဉ်အမှတ် ၄၀၂ အတွက် ဂိတ်ပြောင်းလဲမှု ရှိပါတယ်။" },
+      { "en": "Now boarding all passengers in rows twenty to thirty.", "my": "ခုံတန်း ၂၀ မှ ၃၀ အထိ ခရီးသည်များ လေယာဉ်ပေါ် တက်နိုင်ပါပြီ။" },
+      { "en": "I need to find gate B-12 quickly.", "my": "ဂိတ် B-12 ကို အမြန်ရှာဖို့ လိုနေတယ်။" },
+      { "en": "Is this the line for priority boarding?", "my": "ဒါက ဦးစားပေးတက်ရမယ့် တန်းလား။" },
+      { "en": "Please have your boarding pass ready for inspection.", "my": "စစ်ဆေးဖို့အတွက် လေယာဉ်တက်ခွင့် လက်မှတ်ကို အဆင်သင့် ပြင်ထားပေးပါ။" },
+      { "en": "I think I've left my headphones at the gate!", "my": "ဂိတ်မှာ နားကြပ်တွေ ထားခဲ့မိပြီ ထင်တယ်!" },
+      { "en": "The final call for flight BA-123 to New York.", "my": "နယူးယောက်သွားမယ့် လေယာဉ် BA-123 အတွက် နောက်ဆုံးခေါ်ဆိုမှုပါ။" },
+      { "en": "Excuse me, can I get past? I'm in a hurry.", "my": "တစ်ဆိတ်လောက်ဗျာ၊ ဖြတ်ပါရစေ။ ကျွန်တော် လောနေလို့ပါ။" },
+      { "en": "Where is the nearest duty-free shop?", "my": "အနီးဆုံး အခွန်လွတ် အရောင်းဆိုင် ဘယ်မှာလဲ။" },
+      { "en": "We're finally boarding, what a relief!", "my": "နောက်ဆုံးတော့ လေယာဉ်ပေါ် တက်ရတော့မယ်၊ တော်သေးတာပေါ့!" }
+    ]
+  },
+  {
+    "id": 63,
+    "type": "speaking",
+    "topic": "Lesson 53: Flight Delays & Cancellations",
+    "icon": "⏳",
+    "phrases": [
+      { "en": "I'm sorry, but your flight has been delayed by two hours.", "my": "တောင်းပန်ပါတယ်၊ မင်းရဲ့ လေယာဉ်က ၂ နာရီ နောက်ကျပါလိမ့်မယ်။" },
+      { "en": "Why was the flight cancelled so suddenly?", "my": "ဘာလို့ လေယာဉ်ကို ဒီလောက် ရုတ်တရက်ကြီး ဖျက်သိမ်းလိုက်တာလဲ။" },
+      { "en": "Will I be able to catch my connecting flight?", "my": "နောက်ထပ် တစ်ဆင့်စီးရမယ့် လေယာဉ်ကို မှီပါဦးမလား။" },
+      { "en": "We're providing meal vouchers for all affected passengers.", "my": "ထိခိုက်သွားတဲ့ ခရီးသည်အားလုံးအတွက် အစားအသောက် ဘောက်ချာတွေ ပေးနေပါတယ်။" },
+      { "en": "The delay is due to severe weather conditions.", "my": "ရာသီဥတု ဆိုးရွားလွန်းလို့ နောက်ကျနေတာပါ။" },
+      { "en": "How can I rebook my ticket for tomorrow?", "my": "မနက်ဖြန်အတွက် လက်မှတ်ကို ဘယ်လို ပြန်ပြီး မှာယူ (Rebook) လို့ ရမလဲ။" },
+      { "en": "Is there any compensation for this delay?", "my": "ဒီလို နောက်ကျတဲ့အတွက် လျော်ကြေး တစ်ခုခု ရနိုင်မလား။" },
+      { "en": "I've been waiting at the airport all day!", "my": "လေဆိပ်မှာ တစ်နေ့လုံး စောင့်နေရတာ!" },
+      { "en": "This is so frustrating, I have an important meeting.", "my": "ဒါက တကယ်ကို စိတ်ပျက်ဖို့ ကောင်းတယ်၊ ကျွန်တော့်မှာ အရေးကြီးတဲ့ အစည်းအဝေး ရှိတယ်။" },
+      { "en": "The airline is arranging a hotel for the night.", "my": "လေကြောင်းလိုင်းက ဒီညအတွက် ဟိုတယ် စီစဉ်ပေးနေပါတယ်။" }
+    ]
+  },
+  {
+    "id": 64,
+    "type": "speaking",
+    "topic": "Lesson 54: Customs & Immigration",
+    "icon": "🛂",
+    "phrases": [
+      { "en": "What is the purpose of your visit today?", "my": "ဒီနေ့ ဘာကိစ္စနဲ့ လာတာလဲခင်ဗျ။" },
+      { "en": "I'm here for a two-week vacation.", "my": "၂ ပတ်ကြာ အားလပ်ရက် အပန်းဖြေဖို့ လာတာပါ။" },
+      { "en": "Do you have anything to declare?", "my": "အကောက်ခွန် ကြေညာစရာ တစ်ခုခု ရှိပါသလား။" },
+      { "en": "How long do you intend to stay in the country?", "my": "ဒီနိုင်ငံမှာ ဘယ်လောက်ကြာကြာ နေဖို့ ရည်ရွယ်ထားလဲ။" },
+      { "en": "I'm staying at the Grand Hotel in the city center.", "my": "မြို့ထဲက Grand Hotel မှာ တည်းမှာပါ။" },
+      { "en": "Is this your first time visiting Japan?", "my": "ဂျပန်ကို ဒါ ပထမဆုံးအကြိမ် လာတာလား။" },
+      { "en": "I have some gifts for my friends in my luggage.", "my": "ကျွန်တော့်အိတ်ထဲမှာ သူငယ်ချင်းတွေအတွက် လက်ဆောင်တွေ ပါပါတယ်။" },
+      { "en": "Please step this way for a quick inspection.", "my": "ခဏလောက် စစ်ဆေးဖို့ ဒီဘက်ကို ကြွပေးပါ။" },
+      { "en": "Enjoy your stay and welcome to the country!", "my": "ဒီမှာ ပျော်ရွှင်ပါစေ၊ နိုင်ငံကို ကြိုဆိုပါတယ်။" },
+      { "en": "Make sure you have all your documents ready.", "my": "စာရွက်စာတမ်းတွေ အားလုံး အဆင်သင့် ဖြစ်နေပါစေ။" }
+    ]
+  },
+  {
+    "id": 65,
+    "type": "speaking",
+    "topic": "Lesson 55: Travel Nightmares",
+    "icon": "😱",
+    "phrases": [
+      { "en": "I'm so jet-lagged, I don't know what day it is.", "my": "အချိန်ကွာဟမှုကြောင့် တော်တော်လေး မူးနောက်နေပြီ၊ ဘယ်နေ့လဲတောင် မသိတော့ဘူး။" },
+      { "en": "I think I've been mugged in that tourist trap!", "my": "ဟို လူလည်ကျတဲ့ နေရာမှာ ကျွန်တော် အလုခံလိုက်ရပြီ ထင်တယ်!" },
+      { "en": "The hotel was nothing like the pictures online.", "my": "ဟိုတယ်က အွန်လိုင်းက ပုံတွေနဲ့ လုံးဝ မတူဘူး။" },
+      { "en": "My luggage has been lost by the airline.", "my": "လေကြောင်းလိုင်းက ကျွန်တော့်အိတ်တွေကို ပျောက်အောင် လုပ်လိုက်ပြီ။" },
+      { "en": "I've lost my passport, what should I do?", "my": "ကျွန်တော့် ပတ်စပို့ ပျောက်သွားပြီ၊ ဘာလုပ်ရမလဲ။" },
+      { "en": "The room was tiny and very noisy.", "my": "အခန်းက သေးသေးလေးတင်မကဘူး၊ အရမ်းလည်း ဆူညံတယ်။" },
+      { "en": "I got food poisoning from the street market.", "my": "လမ်းဘေးဈေးက အစားအသောက်စားပြီး အစာဆိပ်သင့်သွားတယ်။" },
+      { "en": "Everything is so overpriced here!", "my": "ဒီမှာ အရာအားလုံးက ဈေးတွေ အရမ်းကြီးနေတာပဲ!" },
+      { "en": "I missed my train and the next one is tomorrow.", "my": "ရထားလွတ်သွားပြီ၊ နောက်တစ်စီးက မနက်ဖြန်မှ ရှိတာ။" },
+      { "en": "It's been a total disaster from start to finish.", "my": "အစကနေ အဆုံးအထိ အကုန်လွဲချော်နေတာပဲ။" }
+    ]
+  },
+  {
+    "id": 66,
+    "type": "test",
+    "topic": "🔴 Test 11: The 'Global Traveler'",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "I'd like to check in, please.", "my": "ချက်အင် (Check-in) လုပ်ချင်လို့ပါ။" },
+      { "en": "Is my flight on time?", "my": "လေယာဉ် အချိန်မှန်ရဲ့လား။" },
+      { "en": "What is the purpose of your visit?", "my": "ဘာကိစ္စနဲ့ လာတာလဲ။" },
+      { "en": "I have nothing to declare.", "my": "ကြေညာစရာ ဘာမှ မရှိပါဘူး။" },
+      { "en": "My flight has been cancelled.", "my": "ကျွန်တော် လိုက်မယ့် လေယာဉ် ဖျက်သိမ်းခံလိုက်ရပြီ။" },
+      { "en": "I'm suffering from jet lag.", "my": "အချိန်ကွာဟမှုကြောင့် မူးနောက်နေပါတယ်။" },
+      { "en": "Where is the baggage claim area?", "my": "အိတ်တွေ ပြန်ထုတ်ရမယ့် နေရာ ဘယ်မှာလဲ။" },
+      { "en": "Can I have a window seat?", "my": "ပြတင်းပေါက်ဘေးက ခုံ ရမလား။" },
+      { "en": "I've lost my boarding pass!", "my": "ကျွန်တော့် လက်မှတ် ပျောက်သွားပြီ!" },
+      { "en": "Have a safe and pleasant journey.", "my": "ဘေးကင်းပြီး ပျော်ရွှင်စရာ ခရီးစဉ် ဖြစ်ပါစေ။" }
+    ]
+  },
+  {
+    "id": 67,
+    "type": "speaking",
+    "topic": "Lesson 56: Scorching Heat",
+    "icon": "☀️",
+    "phrases": [
+      { "en": "It's scorching hot today, isn't it?", "my": "ဒီနေ့ ရာသီဥတုက တကယ်ကို ပူပြင်းတယ်နော်၊ မဟုတ်ဘူးလား။" },
+      { "en": "We're right in the middle of a heat wave.", "my": "အခုက အပူလှိုင်း ဖြတ်နေတဲ့ အချိန်ပဲ။" },
+      { "en": "I'm boiling! I need some air conditioning.", "my": "ပူလွန်းလို့ ပြုတ်ထွက်တော့မယ်! အဲကွန်း လိုအပ်နေပြီ။" },
+      { "en": "Make sure to stay hydrated and drink plenty of water.", "my": "ရေများများသောက်ပြီး ရေဓာတ်ပြည့်ဝအောင် နေပါနော်။" },
+      { "en": "It's like an oven outside!", "my": "အပြင်မှာ ပေါင်းအိုးထဲ ရောက်နေသလိုပဲ!" },
+      { "en": "I can't stop sweating in this humidity.", "my": "ဒီလို အစိုဓာတ်များတဲ့ အပူထဲမှာ ချွေးတွေ ထွက်တာ မရပ်တော့ဘူး။" },
+      { "en": "The sun is really beating down on us.", "my": "နေက တကယ်ကို အရှိန်ပြင်းပြင်း ပူနေတာ။" },
+      { "en": "Let's find some shade and rest for a bit.", "my": "အရိပ်လေးတစ်ခု ရှာပြီး ခဏလောက် နားကြရအောင်။" },
+      { "en": "I'm not used to this kind of extreme heat.", "my": "ဒီလောက် ပြင်းထန်တဲ့ အပူဒဏ်ကို ကျွန်တော် မကျင့်သားရသေးဘူး။" },
+      { "en": "The temperature is set to reach forty degrees today.", "my": "ဒီနေ့ အပူချိန်က ၄၀ ဒီဂရီအထိ ရှိနိုင်တယ်လို့ ပြောတယ်။" }
+    ]
+  },
+  {
+    "id": 68,
+    "type": "speaking",
+    "topic": "Lesson 57: Winter Chills",
+    "icon": "❄️",
+    "phrases": [
+      { "en": "It's freezing out there, make sure to bundle up!", "my": "အပြင်မှာ အရမ်းအေးတယ်၊ အနွေးထည်တွေ အထပ်ထပ် ဝတ်သွားဦးနော်!" },
+      { "en": "There's a real nip in the air this morning.", "my": "ဒီမနက် ရာသီဥတုက တကယ်ကို အေးစိမ့်နေတာပဲ။" },
+      { "en": "I'm shivering! My hands are like blocks of ice.", "my": "အေးလွန်းလို့ တုန်နေပြီ! လက်တွေဆိုရင် ရေခဲတုံးတွေ ဖြစ်နေသလိုပဲ။" },
+      { "en": "The ground is covered in a thick layer of frost.", "my": "မြေပြင်မှာ နှင်းတွေ အထူကြီး ဖုံးနေတယ်။" },
+      { "en": "It's supposed to snow later this afternoon.", "my": "ဒီနေ့ နေ့လည်ပိုင်းမှာ နှင်းကျမယ်လို့ ပြောကြတယ်။" },
+      { "en": "I love sitting by the fireplace on a cold night.", "my": "အေးတဲ့ညတွေမှာ မီးဖိုဘေးမှာ ထိုင်ရတာကို သဘောကျပါတယ်။" },
+      { "en": "The wind chill makes it feel much colder.", "my": "လေအေးကြောင့် ပိုပြီးတော့တောင် အေးသလို ခံစားရတယ်။" },
+      { "en": "Don't forget your gloves and scarf!", "my": "လက်အိတ်နဲ့ ပုဝါ ယူဖို့ မမေ့နဲ့ဦးနော်!" },
+      { "en": "The pipes froze during the night.", "my": "ညတုန်းက ရေပိုက်တွေ ခဲသွားတယ်။" },
+      { "en": "It's a beautiful winter wonderland outside.", "my": "အပြင်မှာ ဆောင်းရာသီ ရှုခင်းက တကယ်ကို လှပပါတယ်။" }
+    ]
+  },
+  {
+    "id": 69,
+    "type": "speaking",
+    "topic": "Lesson 58: Rain & Downpours",
+    "icon": "☔",
+    "phrases": [
+      { "en": "It's drizzling, but I think it will clear up soon.", "my": "မိုးဖွဲဖွဲလေး ရွာနေတာပါ၊ မကြာခင် စဲသွားမှာပါ။" },
+      { "en": "It's absolutely pouring with rain outside!", "my": "အပြင်မှာ မိုးတွေ တကယ်ကို သည်းသည်းမည်းမည်း ရွာနေတာ!" },
+      { "en": "It's raining cats and dogs today.", "my": "ဒီနေ့ မိုးကတော့ အသည်းအသန် ရွာနေတာပဲ။" },
+      { "en": "I got completely soaked on my way home.", "my": "အိမ်အပြန်လမ်းမှာ မိုးရေတွေ လုံးဝ စိုရွှဲသွားတာပဲ။" },
+      { "en": "There's a storm brewing, look at those clouds.", "my": "မုန်တိုင်းလာတော့မယ် ထင်တယ်၊ ဟို တိမ်တွေကို ကြည့်လိုက်ဦး။" },
+      { "en": "Don't forget to take an umbrella with you.", "my": "ထီးယူသွားဖို့ မမေ့နဲ့ဦးနော်။" },
+      { "en": "I love the smell of rain on the pavement.", "my": "မြေကြီးပေါ် မိုးကျတဲ့ အနံ့လေးကို သဘောကျပါတယ်။" },
+      { "en": "The streets are starting to flood.", "my": "လမ်းတွေပေါ်မှာ ရေကြီးနေပြီ။" },
+      { "en": "It's just a light shower, it won't last long.", "my": "မိုးခဏ ရွာတာပါ၊ သိပ်မကြာပါဘူး။" },
+      { "en": "We'd better stay inside until the rain stops.", "my": "မိုးစဲတဲ့အထိ အထဲမှာပဲ နေကြတာ ပိုကောင်းမယ်။" }
+    ]
+  },
+  {
+    "id": 70,
+    "type": "speaking",
+    "topic": "Lesson 59: Total Exhaustion",
+    "icon": "😫",
+    "phrases": [
+      { "en": "I'm absolutely exhausted after that long shift.", "my": "အလုပ်ချိန် အကြာကြီးပြီးတော့ ကျွန်တော် တကယ်ကို ပင်ပန်းနေပြီ။" },
+      { "en": "I'm running on fumes right now, I need sleep.", "my": "အခု ကျွန်တော် အစွမ်းကုန် ကုန်နေပြီ၊ အိပ်ဖို့ လိုအပ်နေပြီ။" },
+      { "en": "I'm worn out from all this travelling.", "my": "ခရီးတွေ အများကြီး သွားရလို့ တော်တော်လေး နွမ်းနယ်နေပြီ။" },
+      { "en": "I'm completely drained of energy.", "my": "အားအင်တွေ လုံးဝ ကုန်ခမ်းနေပါပြီ။" },
+      { "en": "I've been working like a dog all week.", "my": "ဒီတစ်ပတ်လုံး ခွေးလို (အရမ်းကို) အလုပ်လုပ်နေရတာ။" },
+      { "en": "I can barely keep my eyes open.", "my": "မျက်လုံးတောင် မနည်း ဖွင့်ထားရတယ်။" },
+      { "en": "I'm ready to collapse on the sofa.", "my": "ဆိုဖာပေါ် လှဲချပစ်လိုက်ချင်ပြီ။" },
+      { "en": "That hike really took it out of me.", "my": "ဟိုတောင်တက်ခရီးက ငါ့ကို တကယ်ကို ပင်ပန်းစေခဲ့တာ။" },
+      { "en": "I'm dead tired, let's call it a day.", "my": "သေမတတ် ပင်ပန်းနေပြီ၊ ဒီနေ့အတွက်တော့ ဒီမှာပဲ နားကြစို့။" },
+      { "en": "I need a long vacation to recover.", "my": "ပြန်ပြီး အားပြည့်လာဖို့ အားလပ်ရက် အကြာကြီး လိုအပ်နေတယ်။" }
+    ]
+  },
+  {
+    "id": 71,
+    "type": "speaking",
+    "topic": "Lesson 60: Sleepy Slang",
+    "icon": "😴",
+    "phrases": [
+      { "en": "I'm going to hit the sack now, goodnight!", "my": "အိပ်တော့မယ်နော်၊ ဂွတ်နိုက်!" },
+      { "en": "I think it's time for me to turn in.", "my": "အိပ်ရာဝင်ဖို့ အချိန်ရောက်ပြီ ထင်တယ်။" },
+      { "en": "I'm going to catch some Z's.", "my": "ခဏလောက် မှေးလိုက်ဦးမယ်။" },
+      { "en": "I slept like a log last night.", "my": "မနေ့ညက တကယ်ကို နှစ်နှစ်ခြိုက်ခြိုက် အိပ်ပျော်သွားတယ်။" },
+      { "en": "I'm out like a light as soon as my head hits the pillow.", "my": "ခေါင်းနဲ့ ခေါင်းအုံး ထိတာနဲ့ ချက်ချင်း အိပ်ပျော်သွားတာပဲ။" },
+      { "en": "I've been tossing and turning all night.", "my": "တစ်ညလုံး လူးလှိမ့်နေပြီး အိပ်မပျော်ဘူး ဖြစ်နေတယ်။" },
+      { "en": "I'm a heavy sleeper, nothing wakes me up.", "my": "ကျွန်တော်က အိပ်ပုတ်ကြီးတယ်၊ ဘာကမှ နှိုးလို့မရဘူး။" },
+      { "en": "She's a light sleeper, any small noise wakes her.", "my": "သူက အအိပ်နိုးလွယ်တယ်၊ အသံသေးသေးလေး ကြားရင်တောင် နိုးသွားတတ်တယ်။" },
+      { "en": "I need to get some beauty sleep.", "my": "အသားအရေ လှပအောင် အိပ်စက်ဖို့ လိုအပ်နေပြီ။" },
+      { "en": "I'm going to take a quick nap this afternoon.", "my": "ဒီနေ့ နေ့လည်ပိုင်း ခဏလောက် တစ်ရေးတမော အိပ်လိုက်ဦးမယ်။" }
+    ]
+  },
+  {
+    "id": 72,
+    "type": "test",
+    "topic": "🔴 Test 12: Environmental Descriptions",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "It's boiling hot today!", "my": "ဒီနေ့ တကယ်ကို ပူပြင်းတာပဲ!" },
+      { "en": "It's freezing, make sure to bundle up.", "my": "အေးစိမ့်နေတာပဲ၊ အနွေးထည်တွေ ဝတ်သွားဦးနော်။" },
+      { "en": "It's raining cats and dogs.", "my": "မိုးကတော့ သည်းသည်းမည်းမည်း ရွာနေတာပဲ။" },
+      { "en": "I'm absolutely exhausted.", "my": "ကျွန်တော် တကယ်ကို ပင်ပန်းနေပြီ။" },
+      { "en": "I'm going to hit the sack.", "my": "အိပ်တော့မယ်။" },
+      { "en": "The weather is very humid.", "my": "ရာသီဥတုက တော်တော်လေး အိုက်စပ်စပ် ဖြစ်နေတယ်။" },
+      { "en": "There's a thick frost on the ground.", "my": "မြေပြင်မှာ နှင်းတွေ အထူကြီး ဖုံးနေတယ်။" },
+      { "en": "I'm running on fumes.", "my": "ကျွန်တော် အစွမ်းကုန် ကုန်နေပြီ။" },
+      { "en": "It's just a light drizzle.", "my": "မိုးဖွဲဖွဲလေး ရွာနေတာပါ။" },
+      { "en": "I slept like a log.", "my": "နှစ်နှစ်ခြိုက်ခြိုက် အိပ်ပျော်သွားတယ်။" }
+    ]
+  },
+  {
+    "id": 73,
+    "type": "speaking",
+    "topic": "Lesson 61: Strong Promises",
+    "icon": "🤝",
+    "phrases": [
+      { "en": "I'll be there, come hell or high water!", "my": "ဘာပဲဖြစ်ဖြစ် ငါ အဲမှာ ရှိနေမယ်!" },
+      { "en": "You have my word, I won't let you down.", "my": "ငါ့စကားကို ယုံပါ၊ မင်းကို စိတ်ပျက်အောင် မလုပ်ပါဘူး။" },
+      { "en": "I cross my heart and hope to die!", "my": "ကျိန်ဆိုပြီး ကတိပေးပါတယ်!" },
+      { "en": "I'm fully committed to making this work.", "my": "ဒါကို အောင်မြင်အောင်လုပ်ဖို့ အပြည့်အဝ အာရုံစိုက်ထားပါတယ်။" },
+      { "en": "You can count on me, no matter what.", "my": "ဘာပဲဖြစ်ဖြစ် ငါ့ကို ယုံကြည်လို့ ရပါတယ်။" },
+      { "en": "I promise I'll make it up to you.", "my": "မင်းကို ပြန်ပြီး အစားထိုး ပေးပါ့မယ်လို့ ကတိပေးပါတယ်။" },
+      { "en": "I'll stand by you through thick and thin.", "my": "အခက်အခဲတွေကြားထဲမှာလည်း မင်းဘက်က အမြဲတမ်း ရှိနေပါ့မယ်။" },
+      { "en": "I'll give it my all, I swear.", "my": "ငါ့ရဲ့ အစွမ်းကုန် ကြိုးစားပါ့မယ်လို့ ကျိန်ပြောပါတယ်။" },
+      { "en": "Consider it done!", "my": "ပြီးသွားပြီလို့သာ မှတ်လိုက်တော့!" },
+      { "en": "I won't rest until the job is finished.", "my": "အလုပ်မပြီးမချင်း ငါ အနားယူမှာ မဟုတ်ဘူး။" }
+    ]
+  },
+  {
+    "id": 74,
+    "type": "speaking",
+    "topic": "Lesson 62: Validating Others",
+    "icon": "✔️",
+    "phrases": [
+      { "en": "You hit the nail on the head with that comment!", "my": "မင်းပြောလိုက်တာက တကယ်ကို ကွက်တိပါပဲ!" },
+      { "en": "That's a very valid point, I agree.", "my": "ဒါက တကယ်ကို မှန်ကန်တဲ့ အချက်ပါ၊ ကျွန်တော် သဘောတူပါတယ်။" },
+      { "en": "I think you're absolutely right about this.", "my": "ဒါနဲ့ ပတ်သက်ရင် မင်းပြောတာ လုံးဝ မှန်တယ်လို့ ထင်ပါတယ်။" },
+      { "en": "Your analysis is spot on.", "my": "မင်းရဲ့ ဆန်းစစ်ချက်က အတိအကျပါပဲ။" },
+      { "en": "I couldn't have said it better myself.", "my": "ငါကိုယ်တိုင်တောင် ဒီထက်ပိုပြီး ကောင်းအောင် မပြောနိုင်ဘူး။" },
+      { "en": "I see exactly what you're saying.", "my": "မင်းပြောတာကို ငါ အတိအကျ နားလည်ပါတယ်။" },
+      { "en": "You've got a real knack for explaining things.", "my": "မင်းမှာ အရာရာကို ရှင်းပြနိုင်တဲ့ အရည်အချင်း ရှိတာပဲ။" },
+      { "en": "That's a brilliant insight!", "my": "ဒါက တကယ်ကို ထူးခြားပြောင်မြောက်တဲ့ အမြင်ပါပဲ!" },
+      { "en": "I value your perspective on this matter.", "my": "ဒီကိစ္စအပေါ် မင်းရဲ့ အမြင်ကို ငါ တန်ဖိုးထားပါတယ်။" },
+      { "en": "You're definitely onto something there.", "my": "မင်းမှာ တစ်ခုခုတော့ ရှိနေပြီ (မင်းရဲ့ အကြံက ဟုတ်နေပြီ)။" }
+    ]
+  },
+  {
+    "id": 75,
+    "type": "speaking",
+    "topic": "Lesson 63: Correcting Mistakes",
+    "icon": "✏️",
+    "phrases": [
+      { "en": "I'm afraid you're mistaken about the date.", "my": "ရက်စွဲနဲ့ ပတ်သက်ရင် မင်း မှားနေတယ် ထင်တယ်။" },
+      { "en": "Actually, that's not quite how it works.", "my": "တကယ်တော့ ဒါက အဲလိုမျိုး မဟုတ်ပါဘူး။" },
+      { "en": "If I may correct you, the meeting is at noon.", "my": "ကျွန်တော် ပြင်ပေးပါရစေ၊ အစည်းအဝေးက မွန်းတည့်မှာပါ။" },
+      { "en": "There's a small error in the first paragraph.", "my": "ပထမ စာပိုဒ်မှာ အမှားလေး တစ်ခု ရှိနေပါတယ်။" },
+      { "en": "I think you might have misunderstood me.", "my": "မင်း ငါ့ကို နားလည်မှု လွဲသွားတာ ဖြစ်နိုင်ပါတယ်။" },
+      { "en": "Just a small correction, it's spelled with two 'L's.", "my": "ပြင်စရာလေး တစ်ခုပါ၊ 'L' နှစ်လုံးနဲ့ ပေါင်းရတာပါ။" },
+      { "en": "I'm sorry, but that's incorrect information.", "my": "တောင်းပန်ပါတယ်၊ အဲဒါက မှားယွင်းနေတဲ့ အချက်အလက်ပါ။" },
+      { "en": "Let me set the record straight on this.", "my": "ဒါနဲ့ ပတ်သက်ပြီး အမှန်ကို ကျွန်တော် ရှင်းပြပါရစေ။" },
+      { "en": "Actually, the opposite is true.", "my": "တကယ်တော့ ဆန့်ကျင်ဘက်ကမှ အမှန်ပါ။" },
+      { "en": "I'd like to point out a slight discrepancy.", "my": "ကွဲလွဲနေတဲ့ အချက်လေး တစ်ခုကို ကျွန်တော် ပြောပြချင်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 76,
+    "type": "speaking",
+    "topic": "Lesson 64: Intelligence & Wit",
+    "icon": "💡",
+    "phrases": [
+      { "en": "He's a real smart cookie, that one.", "my": "သူက တကယ်ကို ဥာဏ်ကောင်းတဲ့သူပါ။" },
+      { "en": "She's as sharp as a needle.", "my": "သူက တကယ်ကို ထက်မြက်ပါတယ်။" },
+      { "en": "That was a very clever solution to the problem.", "my": "ဒါက ပြဿနာကို ဖြေရှင်းတဲ့ တကယ့်ကို ပါးနပ်တဲ့ နည်းလမ်းပဲ။" },
+      { "en": "He has a very quick wit.", "my": "သူ့မှာ တကယ်ကို လျင်မြန်တဲ့ ဥာဏ် ရှိပါတယ်။" },
+      { "en": "She's got a good head on her shoulders.", "my": "သူက တကယ်ကို စဉ်းစားဆင်ခြင်ဥာဏ် ရှိပါတယ်။" },
+      { "en": "He's the brains behind the whole operation.", "my": "ဒီလုပ်ငန်းတစ်ခုလုံးရဲ့ နောက်ကွယ်က ဦးနှောက်က သူပါပဲ။" },
+      { "en": "That was a stroke of genius!", "my": "ဒါက တကယ့်ကို ပါရမီရှင်တစ်ယောက်ရဲ့ လက်ရာပဲ!" },
+      { "en": "She's incredibly bright for her age.", "my": "သူက သူ့အသက်အရွယ်နဲ့ ယှဉ်ရင် တကယ်ကို ထူးချွန်ပါတယ်။" },
+      { "en": "He's a walking encyclopedia.", "my": "သူက လမ်းလျှောက်နေတဲ့ စွယ်စုံကျမ်းကြီး တစ်ခုလိုပါပဲ။" },
+      { "en": "I'm impressed by your mental agility.", "my": "မင်းရဲ့ ဥာဏ်ရည်ထက်မြက်မှုကို ငါ အထင်ကြီးမိပါတယ်။" }
+    ]
+  },
+  {
+    "id": 77,
+    "type": "speaking",
+    "topic": "Lesson 65: Insults (Intelligence)",
+    "icon": "😶",
+    "phrases": [
+      { "en": "He's not the sharpest tool in the shed.", "my": "သူက သိပ်ပြီး ဥာဏ်ကောင်းတဲ့သူ မဟုတ်ပါဘူး။" },
+      { "en": "I'm afraid he's a bit slow on the uptake.", "my": "သူက နားလည်ဖို့ နည်းနည်း နှေးတယ် ထင်တယ်။" },
+      { "en": "That was a bit of a dim-witted move, wasn't it?", "my": "ဒါက နည်းနည်းတော့ ထုံထုံအအ လုပ်ရပ်ပဲနော်၊ မဟုတ်ဘူးလား။" },
+      { "en": "He doesn't have a clue what's going on.", "my": "ဘာတွေ ဖြစ်နေလဲဆိုတာ သူ ဘာမှ မသိပါဘူး။" },
+      { "en": "She's a bit of a space cadet sometimes.", "my": "သူက တစ်ခါတလေကျရင် စိတ်က လွင့်နေတတ်တယ်။" },
+      { "en": "It's not exactly rocket science, you know?", "my": "ဒါက အဲလောက်ကြီး ခက်တဲ့အရာ မဟုတ်ဘူးလေ၊ သိတယ်မလား။" },
+      { "en": "He's as thick as two short planks.", "my": "သူက တကယ်ကို ထုံအတဲ့သူပါ။" },
+      { "en": "I think the lights are on, but nobody's home.", "my": "သူ့ကိုကြည့်ရတာ ကြောင်တောင်တောင် ဖြစ်နေတယ်။" },
+      { "en": "That was a complete no-brainer.", "my": "ဒါက ဘာမှ စဉ်းစားနေစရာ မလိုတဲ့ အရာပါ။" },
+      { "en": "He's not exactly a rocket scientist.", "my": "သူက အဲလောက်ကြီး ဥာဏ်ကြီးရှင် မဟုတ်ပါဘူး။" }
+    ]
+  },
+  {
+    "id": 78,
+    "type": "test",
+    "topic": "🔴 Test 13: Truth & Wit",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "Baloney! I don't believe a word of it.", "my": "အဓိပ္ပာယ်မရှိတာ! တစ်ခွန်းမှ မယုံဘူး။" },
+      { "en": "You hit the nail on the head.", "my": "မင်းပြောတာ ကွက်တိပဲ။" },
+      { "en": "I'm afraid you're mistaken.", "my": "မင်း မှားနေတယ် ထင်တယ်။" },
+      { "en": "He's a sharp cookie.", "my": "သူက ဥာဏ်ကောင်းတဲ့သူပါ။" },
+      { "en": "I give you my word.", "my": "ငါ ကတိပေးပါတယ်။" },
+      { "en": "That's a no-brainer.", "my": "ဒါက စဉ်းစားနေစရာ မလိုတဲ့ အရာပါ။" },
+      { "en": "Don't let me down.", "my": "ငါ့ကို စိတ်မပျက်စေနဲ့။" },
+      { "en": "You're absolutely right.", "my": "မင်း လုံးဝ မှန်ပါတယ်။" },
+      { "en": "I beg to differ.", "my": "ကျွန်တော်ကတော့ ကွဲပြားတဲ့ အမြင် ရှိပါတယ်။" },
+      { "en": "He's not the sharpest tool in the shed.", "my": "သူက သိပ်ပြီး ဥာဏ်မကောင်းပါဘူး။" }
+    ]
+  },
+  {
+    "id": 79,
+    "type": "speaking",
+    "topic": "Lesson 66: Refusing to Answer",
+    "icon": "🤐",
+    "phrases": [
+      { "en": "I'm not at liberty to say at this moment.", "my": "လောလောဆယ်တော့ ကျွန်တော် ပြောပိုင်ခွင့် မရှိပါဘူး။" },
+      { "en": "I'd rather not comment on that, if you don't mind.", "my": "အဲဒါနဲ့ ပတ်သက်ပြီး ကျွန်တော် ဘာမှ မှတ်ချက်မပေးချင်ပါဘူး။" },
+      { "en": "That's confidential information.", "my": "ဒါက လျှို့ဝှက်ချက် (Confidential) ပါ။" },
+      { "en": "I'm afraid I can't disclose that details.", "my": "အဲဒီ အသေးစိတ်တွေကို ကျွန်တော် ထုတ်ဖော်လို့ မရပါဘူး။" },
+      { "en": "My lips are sealed!", "my": "ကျွန်တော့် ပါးစပ်ကတော့ ပိတ်ထားပြီးသားပါ (ဘာမှမပြောဘူး)!" },
+      { "en": "No comment.", "my": "မှတ်ချက်မရှိပါ။" },
+      { "en": "I'm not in a position to answer that question.", "my": "အဲဒီမေးခွန်းကို ဖြေဖို့ ကျွန်တော့်မှာ အခွင့်အာဏာ မရှိပါဘူး။" },
+      { "en": "That's between me and the manager.", "my": "ဒါက ကျွန်တော်နဲ့ မန်နေဂျာကြားက ကိစ္စပါ။" },
+      { "en": "I'll have to get back to you on that one.", "my": "အဲဒါကို နောက်မှ ပြန်ပြောပြရပါလိမ့်မယ်။" },
+      { "en": "I'd prefer to keep that private.", "my": "အဲဒါကို သီးသန့်ပဲ ထားချင်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 80,
+    "type": "speaking",
+    "topic": "Lesson 67: Setting Boundaries",
+    "icon": "✋",
+    "phrases": [
+      { "en": "Mind your own business, please.", "my": "ကိုယ့်အလုပ်ကိုယ်ပဲ လုပ်ပါ (သူ့ကိစ္စထဲ ဝင်မပါပါနဲ့)။" },
+      { "en": "That's none of your concern.", "my": "ဒါက မင်းနဲ့ မဆိုင်တဲ့ ကိစ္စပါ။" },
+      { "en": "I'm not comfortable discussing this right now.", "my": "အခုအချိန်မှာ ဒါကို ဆွေးနွေးဖို့ အဆင်မပြေပါဘူး။" },
+      { "en": "Please respect my privacy.", "my": "ကျွန်တော့်ရဲ့ ပုဂ္ဂိုလ်ရေး လွတ်လပ်ခွင့်ကို လေးစားပေးပါ။" },
+      { "en": "Stay out of this, it doesn't involve you.", "my": "ဒီကိစ္စထဲမှာ ဝင်မပါပါနဲ့၊ မင်းနဲ့ မသက်ဆိုင်ပါဘူး။" },
+      { "en": "I need some space to think.", "my": "စဉ်းစားဖို့ ကိုယ်ပိုင် အချိန်လေး နည်းနည်း လိုချင်ပါတယ်။" },
+      { "en": "Let's stick to the topic at hand.", "my": "လက်ရှိ ပြောနေတဲ့ အကြောင်းအရာကိုပဲ အာရုံစိုက်ကြရအောင်။" },
+      { "en": "I don't think that's appropriate to ask.", "my": "ဒါကို မေးဖို့ မသင့်တော်ဘူးလို့ ထင်ပါတယ်။" },
+      { "en": "You're crossing a line here.", "my": "မင်း စည်းကျော်နေပြီနော်။" },
+      { "en": "I've already told you I don't want to talk about it.", "my": "ဒီအကြောင်း မပြောချင်ဘူးလို့ ငါ ပြောပြီးပြီလေ။" }
+    ]
+  },
+  {
+    "id": 81,
+    "type": "speaking",
+    "topic": "Lesson 68: Statistics: Growth",
+    "icon": "📈",
+    "phrases": [
+      { "en": "There has been a sharp increase in sales this quarter.", "my": "ဒီသုံးလပတ်မှာ အရောင်းတွေ သိသိသာသာ တိုးတက်လာပါတယ်။" },
+      { "en": "The numbers have spiked over the last few days.", "my": "ပြီးခဲ့တဲ့ ရက်အနည်းငယ်အတွင်း ကိန်းဂဏန်းတွေ ရုတ်တရက် တက်လာတယ်။" },
+      { "en": "We're seeing a steady growth in our user base.", "my": "အသုံးပြုသူ အရေအတွက် ပုံမှန် တိုးတက်လာတာကို တွေ့နေရပါတယ်။" },
+      { "en": "The market is expanding rapidly.", "my": "ဈေးကွက်က အလျင်အမြန် ကျယ်ပြန့်လာနေတယ်။" },
+      { "en": "Production has reached an all-time high.", "my": "ထုတ်လုပ်မှုက အမြင့်ဆုံး အဆင့်ကို ရောက်ရှိသွားပါပြီ။" },
+      { "en": "There's a positive trend in the latest data.", "my": "နောက်ဆုံး အချက်အလက်တွေမှာ ကောင်းမွန်တဲ့ လမ်းကြောင်း ရှိနေပါတယ်။" },
+      { "en": "We've seen a significant surge in demand.", "my": "ဝယ်လိုအား သိသိသာသာ မြင့်တက်လာတာကို တွေ့ရပါတယ်။" },
+      { "en": "The figures are climbing steadily.", "my": "ကိန်းဂဏန်းတွေက ပုံမှန် တက်နေပါတယ်။" },
+      { "en": "The company has experienced a breakthrough this year.", "my": "ကုမ္ပဏီက ဒီနှစ်မှာ ကြီးမားတဲ့ အောင်မြင်မှုတစ်ခု ရရှိခဲ့ပါတယ်။" },
+      { "en": "Profits have soared since the new launch.", "my": "အသစ်စတင်ပြီးကတည်းက အကျိုးအမြတ်တွေ အများကြီး တက်လာတယ်။" }
+    ]
+  },
+  {
+    "id": 82,
+    "type": "speaking",
+    "topic": "Lesson 69: Statistics: Decline",
+    "icon": "📉",
+    "phrases": [
+      { "en": "The numbers have plummeted since last month.", "my": "ပြီးခဲ့တဲ့ လကတည်းက ကိန်းဂဏန်းတွေ ထိုးဆင်းသွားပါတယ်။" },
+      { "en": "There's been a gradual decline in interest.", "my": "စိတ်ဝင်စားမှုက တဖြည်းဖြည်း လျော့နည်းလာပါတယ်။" },
+      { "en": "The market has reached a plateau.", "my": "ဈေးကွက်က ရပ်တန့်နေတဲ့ အခြေအနေကို ရောက်နေပါတယ်။" },
+      { "en": "Sales have taken a hit recently.", "my": "နောက်ပိုင်းမှာ အရောင်းတွေ တော်တော်လေး ကျသွားတယ်။" },
+      { "en": "There's a downward trend in the economy.", "my": "စီးပွားရေးမှာ ကျဆင်းနေတဲ့ လမ်းကြောင်း ရှိနေပါတယ်။" },
+      { "en": "Production has fallen below expectations.", "my": "ထုတ်လုပ်မှုက မျှော်လင့်ထားတာထက် လျော့နည်းသွားပါတယ်။" },
+      { "en": "The figures are dropping at an alarming rate.", "my": "ကိန်းဂဏန်းတွေက စိုးရိမ်ရတဲ့ နှုန်းနဲ့ ကျနေပါတယ်။" },
+      { "en": "We've seen a slight dip in the second quarter.", "my": "ဒုတိယ သုံးလပတ်မှာ နည်းနည်းလေး ကျသွားတာကို တွေ့ရပါတယ်။" },
+      { "en": "Demand is beginning to tail off.", "my": "ဝယ်လိုအားက စပြီး လျော့နည်းလာပြီ။" },
+      { "en": "The company is facing a period of stagnation.", "my": "ကုမ္ပဏီက ရပ်တန့်နေတဲ့ ကာလတစ်ခုကို ရင်ဆိုင်နေရပါတယ်။" }
+    ]
+  },
+  {
+    "id": 83,
+    "type": "speaking",
+    "topic": "Lesson 70: Natural Talent",
+    "icon": "🌟",
+    "phrases": [
+      { "en": "She was born to dance, truly.", "my": "သူက တကယ်ကို ကဖို့အတွက် မွေးဖွားလာသူပါ။" },
+      { "en": "He's a natural when it comes to music.", "my": "ဂီတနဲ့ ပတ်သက်ရင် သူက တကယ့် ပါရမီရှင်ပါ။" },
+      { "en": "She has a real gift for languages.", "my": "သူ့မှာ ဘာသာစကား သင်ယူဖို့ တကယ့် ပါရမီ ရှိပါတယ်။" },
+      { "en": "He's a chip off the old block.", "my": "သူက သူ့အဖေနဲ့ လုံးဝတူတဲ့ ပါရမီရှင်ပါ။" },
+      { "en": "She's a rising star in the industry.", "my": "သူက ဒီလုပ်ငန်းနယ်ပယ်မှာ ထွန်းသစ်စ ကြယ်ပွင့်လေးပါ။" },
+      { "en": "He has a God-given talent for painting.", "my": "သူ့မှာ ပန်းချီဆွဲဖို့ ဘုရားပေးတဲ့ ပါရမီ ရှိပါတယ်။" },
+      { "en": "She makes it look so easy!", "my": "သူလုပ်တာက တကယ်ကို လွယ်နေသလိုပဲ!" },
+      { "en": "He's got a bright future ahead of him.", "my": "သူ့မှာ တောက်ပတဲ့ အနာဂတ် ရှိပါတယ်။" },
+      { "en": "She's a diamond in the rough.", "my": "သူက သွေးမရသေးတဲ့ စိန်တစ်ပွင့်လိုပါပဲ။" },
+      { "en": "He was destined for greatness.", "my": "သူက ကြီးကျယ်တဲ့သူ ဖြစ်လာဖို့ ကံပါလာပြီးသားပါ။" }
+    ]
+  },
+  {
+    "id": 84,
+    "type": "test",
+    "topic": "🔴 Test 14: Data & Discretion",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "Off the top of my head, I'd say fifty.", "my": "တန်းပြီး ပြောရရင်တော့ ငါးဆယ်လို့ ထင်တယ်။" },
+      { "en": "I'm not at liberty to say.", "my": "ကျွန်တော် ပြောပိုင်ခွင့် မရှိပါဘူး။" },
+      { "en": "There's been a sharp increase in sales.", "my": "အရောင်းတွေ သိသိသာသာ တိုးလာပါတယ်။" },
+      { "en": "Mind your own business!", "my": "ကိုယ့်အလုပ်ကိုယ်ပဲ လုပ်ပါ။" },
+      { "en": "She's a natural talent.", "my": "သူက တကယ့် ပါရမီရှင်ပါ။" },
+      { "en": "The numbers have plummeted.", "my": "ကိန်းဂဏန်းတွေ ထိုးဆင်းသွားပါတယ်။" },
+      { "en": "That's confidential information.", "my": "ဒါက လျှို့ဝှက်ချက်ပါ။" },
+      { "en": "I'm seeing a steady growth.", "my": "ပုံမှန် တိုးတက်လာတာကို တွေ့ရပါတယ်။" },
+      { "en": "Stay out of this, please.", "my": "ကျေးဇူးပြုပြီး ဒီထဲ ဝင်မပါပါနဲ့။" },
+      { "en": "He's got a gift for this.", "my": "သူ့မှာ ဒါအတွက် ပါရမီ ရှိပါတယ်။" }
+    ]
+  },
+  {
+    "id": 85,
+    "type": "speaking",
+    "topic": "Lesson 71: Telling Someone to Wait",
+    "icon": "🐎",
+    "phrases": [
+      { "en": "Hold your horses! Let's think this through.", "my": "နေပါဦး (စိတ်လျှော့ပါဦး)! သေချာ စဉ်းစားကြရအောင်။" },
+      { "en": "Hang on a second, I'm almost ready.", "my": "ခဏလောက် စောင့်ပါဦး၊ ကျွန်တော် ပြီးတော့မယ်။" },
+      { "en": "Just a moment, please.", "my": "ခဏလောက်ပါခင်ဗျ။" },
+      { "en": "Wait your turn, don't be so impatient.", "my": "မင်းအလှည့်ကို စောင့်ပါ၊ စိတ်မလောပါနဲ့။" },
+      { "en": "Give me a minute to finish this.", "my": "ဒါလေး ပြီးအောင် တစ်မိနစ်လောက် အချိန်ပေးပါ။" },
+      { "en": "Stay put, I'll be right back.", "my": "အဲမှာပဲ နေနော်၊ အခုပဲ ပြန်လာခဲ့မယ်။" },
+      { "en": "Bear with me for a little while.", "my": "ကျွန်တော့်ကို ခဏလောက် သည်းခံပြီး စောင့်ပေးပါ။" },
+      { "en": "Cool your heels, there's no rush.", "my": "စိတ်အေးအေးထားပါ၊ အလောတကြီး မဟုတ်ပါဘူး။" },
+      { "en": "Don't jump the gun!", "my": "မစောပါနဲ့ဦး!" },
+      { "en": "We'll get to that in due course.", "my": "အချိန်တန်ရင် အဲဒါကို လုပ်ကြတာပေါ့။" }
+    ]
+  },
+  {
+    "id": 86,
+    "type": "speaking",
+    "topic": "Lesson 72: Estimating Time/Distance",
+    "icon": "⏳",
+    "phrases": [
+      { "en": "It's about a ten-minute walk from here.", "my": "ဒီကနေ လမ်းလျှောက်ရင် ၁၀ မိနစ်လောက် ကြာပါတယ်။" },
+      { "en": "I'll be there around five o'clock.", "my": "ငါ အဲကို ၅ နာရီဝန်းကျင် ရောက်မယ်။" },
+      { "en": "It's roughly two miles away, I think.", "my": "၂ မိုင်လောက် ဝေးမယ် ထင်တာပဲ။" },
+      { "en": "Give or take a few minutes, we're on schedule.", "my": "မိနစ်အနည်းငယ် အတိုးအလျှော့ ရှိနိုင်ပေမယ့် အချိန်မှန်ပါပဲ။" },
+      { "en": "It's just a stone's throw from the station.", "my": "ဘူတာရုံကနေဆိုရင် လှမ်းပစ်လိုက်ရင် ရောက်တဲ့ အကွာအဝေးမှာပါ။" },
+      { "en": "In the ballpark of fifty dollars, I'd say.", "my": "ဒေါ်လာ ၅၀ ဝန်းကျင်လောက် ရှိမယ်လို့ ထင်ပါတယ်။" },
+      { "en": "It won't be long now.", "my": "သိပ်မကြာတော့ပါဘူး။" },
+      { "en": "It's a good hour's drive to the city.", "my": "မြို့ထဲကို ကားမောင်းရင် တစ်နာရီလောက်တော့ ကြာမှာပါ။" },
+      { "en": "Somewhere in the region of three hundred people.", "my": "လူ ၃၀၀ ဝန်းကျင်လောက် ရှိပါတယ်။" },
+      { "en": "It's just around the corner.", "my": "ဒီနားတင်ပါပဲ။" }
+    ]
+  },
+  {
+    "id": 87,
+    "type": "speaking",
+    "topic": "Lesson 73: Instincts & Hunches",
+    "icon": "🔮",
+    "phrases": [
+      { "en": "I have a feeling that something is wrong.", "my": "တစ်ခုခု မှားနေတယ်လို့ ကျွန်တော် ခံစားနေရတယ်။" },
+      { "en": "My gut instinct tells me we should wait.", "my": "ကျွန်တော့်ရဲ့ စိတ်အလိုအရတော့ စောင့်သင့်တယ်လို့ ပြောနေတယ်။" },
+      { "en": "I've got a hunch that they'll say yes.", "my": "သူတို့ ဟုတ်ကဲ့လို့ ပြောမယ်လို့ ငါ ထင်နေတယ်။" },
+      { "en": "Follow your heart, it's usually right.", "my": "မင်းရဲ့ စိတ်နောက်ကိုပဲ လိုက်ပါ၊ များသောအားဖြင့် မှန်တတ်ပါတယ်။" },
+      { "en": "Something tells me this isn't a good idea.", "my": "ဒါက အကြံကောင်း မဟုတ်ဘူးလို့ တစ်ခုခုက ငါ့ကို ပြောနေသလိုပဲ။" },
+      { "en": "I just knew it in my bones.", "my": "ဒါကို ငါ့ရဲ့ အရိုးထဲကနေ သိနေတာ (သေချာပေါက် သိနေတာ)။" },
+      { "en": "Trust your intuition.", "my": "မင်းရဲ့ ပဋိဘာန် (စိတ်သိ) ကို ယုံကြည်ပါ။" },
+      { "en": "I had a premonition about this.", "my": "ဒါနဲ့ ပတ်သက်ပြီး ကြိုတင် နိမိတ် ရထားသလိုပဲ။" },
+      { "en": "Call it a sixth sense, if you will.", "my": "ဒါကို မင်းပြောချင်ရင် ဆဋ္ဌမအာရုံလို့ ခေါ်လို့ ရပါတယ်။" },
+      { "en": "I've got a funny feeling about this place.", "my": "ဒီနေရာကို ကြည့်ရတာ တစ်မျိုးကြီးပဲလို့ ခံစားရတယ်။" }
+    ]
+  },
+  {
+    "id": 88,
+    "type": "speaking",
+    "topic": "Lesson 74: Indecision",
+    "icon": "🤷",
+    "phrases": [
+      { "en": "I'm still on the fence about the whole thing.", "my": "အခုထိတော့ ဘယ်ဘက်ကမှ မပါသေးဘဲ စဉ်းစားနေတုန်းပါ။" },
+      { "en": "I can't make up my mind, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် ဆုံးဖြတ်လို့ မရသေးဘူး။" },
+      { "en": "I'm torn between the two options.", "my": "ရွေးချယ်စရာ နှစ်ခုကြားမှာ ဗျာများနေတယ်။" },
+      { "en": "I'm having second thoughts about moving.", "my": "ပြောင်းဖို့ ကိစ္စမှာ ပြန်ပြီး စဉ်းစားနေမိတယ်။" },
+      { "en": "Let me sleep on it and decide tomorrow.", "my": "ဒီည စဉ်းစားပါရစေဦး၊ မနက်ဖြန်မှ ဆုံးဖြတ်မယ်။" },
+      { "en": "I'm in two minds about what to do next.", "my": "နောက် ဘာလုပ်ရမလဲဆိုတာ စိတ်နှစ်ခွ ဖြစ်နေတယ်။" },
+      { "en": "I'm swaying towards the first proposal.", "my": "ပထမ အဆိုပြုချက်ဘက်ကို ပိုပြီး စိတ်ယိုင်နေတယ်။" },
+      { "en": "It's a tough choice, I need more time.", "my": "ဒါက ရွေးရခက်တဲ့ ကိစ္စပါ၊ အချိန်ပို လိုအပ်ပါတယ်။" },
+      { "en": "I'm going back and forth on this decision.", "my": "ဒီဆုံးဖြတ်ချက်မှာ ဟိုဘက်ဒီဘက် စဉ်းစားနေရတာ။" },
+      { "en": "I'll have to weigh up the pros and cons.", "my": "ကောင်းကျိုး ဆိုးကျိုးတွေကို နှိုင်းယှဉ် ကြည့်ရပါလိမ့်မယ်။" }
+    ]
+  },
+  {
+    "id": 89,
+    "type": "speaking",
+    "topic": "Lesson 75: Changing Your Mind",
+    "icon": "🔄",
+    "phrases": [
+      { "en": "I've had a change of heart, actually.", "my": "အမှန်တော့ ကျွန်တော် စိတ်ပြောင်းသွားပါပြီ။" },
+      { "en": "On second thoughts, I'll have the tea instead.", "my": "ပြန်စဉ်းစားကြည့်တော့ လက်ဖက်ရည်ပဲ သောက်တော့မယ်။" },
+      { "en": "I've changed my mind about the trip.", "my": "ခရီးသွားမယ့် ကိစ္စမှာ စိတ်ပြောင်းသွားပြီ။" },
+      { "en": "I've reconsidered my position on this issue.", "my": "ဒီပြဿနာအပေါ် ငါ့ရဲ့ ရပ်တည်ချက်ကို ပြန်စဉ်းစားလိုက်ပြီ။" },
+      { "en": "I'm having a rethink about the strategy.", "my": "နည်းဗျူဟာကို ပြန်ပြီး သုံးသပ်နေပါတယ်။" },
+      { "en": "Scrub that! Let's start over.", "my": "အဲဒါကို ဖျက်လိုက်! အစကနေ ပြန်စကြရအောင်။" },
+      { "en": "I've done a complete U-turn on my opinion.", "my": "ကျွန်တော့်ရဲ့ အမြင်ကို လုံးဝ ပြောင်းပြန် ပြန်လှည့်လိုက်ပြီ။" },
+      { "en": "Actually, I think you're right after all.", "my": "တကယ်တော့ မင်းပြောတာ မှန်ပါတယ်လေ။" },
+      { "en": "I'm going to take that back, sorry.", "my": "စောစောက ပြောတာကို ပြန်ရုပ်သိမ်းပါတယ်၊ တောင်းပန်ပါတယ်။" },
+      { "en": "Let's go with your idea instead.", "my": "မင်းရဲ့ အကြံအတိုင်းပဲ လုပ်ကြတာပေါ့။" }
+    ]
+  },
+  {
+    "id": 90,
+    "type": "test",
+    "topic": "🔴 Test 15: The 'Deliberator'",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "I'm on the fence.", "my": "ကျွန်တော် ဆုံးဖြတ်လို့ မရသေးပါဘူး။" },
+      { "en": "I have a feeling...", "my": "ကျွန်တော် ခံစားနေရတယ်..." },
+      { "en": "Hold your horses!", "my": "နေပါဦး (စိတ်လျှော့ပါဦး)!" },
+      { "en": "I'll be there around five.", "my": "၅ နာရီဝန်းကျင် ရောက်မယ်။" },
+      { "en": "I've had a change of heart.", "my": "ကျွန်တော် စိတ်ပြောင်းသွားပြီ။" },
+      { "en": "Trust your gut instinct.", "my": "မင်းရဲ့ စိတ်အလိုကို ယုံကြည်ပါ။" },
+      { "en": "Let me sleep on it.", "my": "ဒီည စဉ်းစားပါရစေဦး။" },
+      { "en": "It's about a mile away.", "my": "တစ်မိုင်လောက် ဝေးပါတယ်။" },
+      { "en": "On second thoughts...", "my": "ပြန်စဉ်းစားကြည့်တော့..." },
+      { "en": "Don't jump the gun.", "my": "မစောပါနဲ့ဦး။" }
+    ]
+  },
+  {
+    "id": 91,
+    "type": "speaking",
+    "topic": "Lesson 76: Good & Bad Luck",
+    "icon": "🍀",
+    "phrases": [
+      { "en": "It was just a stroke of luck that I found my keys.", "my": "သော့ပြန်တွေ့တာက တကယ့်ကို ကံကောင်းလို့ပါ။" },
+      { "en": "I've had some rotten luck lately, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် နောက်ပိုင်း ငါ ကံဆိုးနေတာ။" },
+      { "en": "Better luck next time!", "my": "နောက်တစ်ခါတော့ ကံကောင်းပါစေ!" },
+      { "en": "You're in luck, we have one more left.", "my": "မင်း ကံကောင်းတယ်၊ နောက်ဆုံး တစ်ခု ကျန်သေးတယ်။" },
+      { "en": "As luck would have it, it started to rain.", "my": "ကံဆိုးချင်တော့ မိုးက စရွာလာတယ်။" },
+      { "en": "I'm keeping my fingers crossed for you.", "my": "မင်းအတွက် ကံကောင်းပါစေလို့ ဆုတောင်းပေးနေပါတယ်။" },
+      { "en": "It's the luck of the draw, I suppose.", "my": "ဒါကတော့ ကံတရားပေါ့လေ။" },
+      { "en": "He was born under a lucky star.", "my": "သူက ကံကောင်းဖို့ မွေးဖွားလာသူပါ။" },
+      { "en": "Don't push your luck!", "my": "ကံကို သိပ်ပြီး မစမ်းပါနဲ့ဦး!" },
+      { "en": "Third time lucky, right?", "my": "သုံးကြိမ်မြောက်မှာတော့ ကံကောင်းမှာပါ၊ ဟုတ်တယ်မလား။" }
+    ]
+  },
+  {
+    "id": 92,
+    "type": "speaking",
+    "topic": "Lesson 77: Expressing Worry",
+    "icon": "😟",
+    "phrases": [
+      { "en": "I'm worried sick about the exam results.", "my": "စာမေးပွဲရလဒ်တွေအတွက် ကျွန်တော် တကယ်ကို စိတ်ပူနေရတယ်။" },
+      { "en": "It's keeping me up at night, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် ဒါက ကျွန်တော့်ကို ညအိပ်မပျော်အောင် လုပ်နေတာ။" },
+      { "en": "I can't help feeling anxious about the future.", "my": "အနာဂတ်အတွက် စိတ်ပူနေတာကို မတားဆီးနိုင်ဘူး ဖြစ်နေတယ်။" },
+      { "en": "I've got a lot on my mind lately.", "my": "နောက်ပိုင်း ငါ့ခေါင်းထဲမှာ တွေးစရာတွေ အရမ်းများနေတယ်။" },
+      { "en": "Don't worry yourself to death over it.", "my": "ဒါနဲ့ပတ်သက်ပြီး သေမတတ် စိတ်မပူပါနဲ့။" },
+      { "en": "I'm a bit concerned about her health.", "my": "သူ့ရဲ့ ကျန်းမာရေးအတွက် ကျွန်တော် နည်းနည်း စိတ်ပူမိပါတယ်။" },
+      { "en": "Everything is going to be okay, I hope.", "my": "အားလုံး အဆင်ပြေသွားမှာပါလို့ မျှော်လင့်ပါတယ်။" },
+      { "en": "I'm biting my nails waiting for the news.", "my": "သတင်းကို စောင့်ရင်း ရင်တထိတ်ထိတ် ဖြစ်နေရတယ်။" },
+      { "en": "It's a weight on my shoulders.", "my": "ဒါက ကျွန်တော့် ပုခုံးပေါ်က ဝန်ထုပ်ဝန်ပိုး တစ်ခုလိုပါပဲ။" },
+      { "en": "I'm fretful about the upcoming trip.", "my": "လာမယ့် ခရီးစဉ်အတွက် ကျွန်တော် စိတ်မအေးဖြစ်နေတယ်။" }
+    ]
+  },
+  {
+    "id": 93,
+    "type": "speaking",
+    "topic": "Lesson 78: Expressing Relief",
+    "icon": "😌",
+    "phrases": [
+      { "en": "What a relief! I thought I'd lost it.", "my": "တော်သေးတာပေါ့! ပျောက်သွားပြီလို့ ထင်နေတာ။" },
+      { "en": "That's a huge load off my mind.", "my": "ဒါက ကျွန်တော့် စိတ်ထဲက ဝန်ထုပ်ဝန်ပိုးကြီး တစ်ခု ကျသွားသလိုပါပဲ။" },
+      { "en": "Thank goodness everything worked out in the end.", "my": "နောက်ဆုံးတော့ အားလုံး အဆင်ပြေသွားလို့ ကျေးဇူးတင်လိုက်တာ။" },
+      { "en": "I can breathe a sigh of relief now.", "my": "အခုမှပဲ သက်ပြင်းချနိုင်တော့တယ်။" },
+      { "en": "Whew! That was a close call.", "my": "ဟူး! ကံကောင်းလို့ လွတ်သွားတာ (ကပ်သီးလေးပဲ)။" },
+      { "en": "I'm so glad that's over and done with.", "my": "အဲဒါ ပြီးသွားပြီဆိုတော့ တကယ်ကို ဝမ်းသာပါတယ်။" },
+      { "en": "You have no idea how relieved I am.", "my": "ကျွန်တော် ဘယ်လောက် စိတ်အေးသွားလဲဆိုတာ မင်း သိမှာ မဟုတ်ဘူး။" },
+      { "en": "It's like a dream come true.", "my": "အိပ်မက်တွေ တကယ် ဖြစ်လာသလိုပါပဲ။" },
+      { "en": "I'm over the moon about the news!", "my": "သတင်းကြောင့် ကျွန်တော် အရမ်းကို ပျော်နေပါတယ်။" },
+      { "en": "Everything is coming up roses!", "my": "အရာအားလုံးက အကောင်းဘက်ကို ဦးတည်နေပြီ!" }
+    ]
+  },
+  {
+    "id": 94,
+    "type": "speaking",
+    "topic": "Lesson 79: Imminent Future",
+    "icon": "⏳",
+    "phrases": [
+      { "en": "The holidays are right around the corner.", "my": "အားလပ်ရက်တွေက လက်တစ်ကမ်းမှာတင် ရှိနေပါပြီ။" },
+      { "en": "I'm just about to finish my homework.", "my": "အခုပဲ အိမ်စာတွေ အပြီးလုပ်တော့မလို့ပါ။" },
+      { "en": "The train is due to arrive any minute now.", "my": "ရထားက အခုပဲ ရောက်တော့မှာပါ။" },
+      { "en": "I'm on the verge of starting a new project.", "my": "ကျွန်တော် ပရောဂျက်အသစ်တစ်ခု စဖို့ အဆင်သင့် ဖြစ်နေပါပြီ။" },
+      { "en": "Change is in the air, I can feel it.", "my": "ပြောင်းလဲမှုတွေ လာတော့မယ်ဆိုတာ ကျွန်တော် ခံစားလို့ ရပါတယ်။" },
+      { "en": "The results will be out shortly.", "my": "ရလဒ်တွေ မကြာခင် ထွက်လာပါလိမ့်မယ်။" },
+      { "en": "I'm just seconds away from winning!", "my": "နိုင်ဖို့အတွက် စက္ကန့်ပိုင်းပဲ လိုတော့တယ်!" },
+      { "en": "The countdown has begun.", "my": "ပြောင်းပြန်ရေတွက်မှု စတင်နေပါပြီ။" },
+      { "en": "It won't be long until we meet again.", "my": "တို့တွေ ပြန်တွေ့ဖို့ သိပ်မကြာတော့ပါဘူး။" },
+      { "en": "Wait for it... any second now!", "my": "စောင့်ကြည့်လိုက်... အခုပဲ ဖြစ်တော့မယ်!" }
+    ]
+  },
+  {
+    "id": 95,
+    "type": "speaking",
+    "topic": "Lesson 80: Long-term Future",
+    "icon": "📅",
+    "phrases": [
+      { "en": "In our lifetime, things will change significantly.", "my": "တို့တွေရဲ့ သက်တမ်းတစ်လျှောက်မှာ အရာအားလုံး အများကြီး ပြောင်းလဲသွားလိမ့်မယ်။" },
+      { "en": "Only time will tell if we made the right choice.", "my": "တို့တွေ မှန်ကန်တဲ့ ရွေးချယ်မှု လုပ်ခဲ့သလားဆိုတာ အချိန်ကပဲ သက်သေပြပါလိမ့်မယ်။" },
+      { "en": "Looking ahead, I see a lot of growth.", "my": "အနာဂတ်ကို ကြည့်လိုက်ရင် တိုးတက်မှုတွေ အများကြီး မြင်နေရတယ်။" },
+      { "en": "In the long run, it will be worth it.", "my": "ရေရှည်မှာတော့ ဒါက ထိုက်တန်ပါလိမ့်မယ်။" },
+      { "en": "Who knows what the future holds for us?", "my": "အနာဂတ်မှာ တို့တွေအတွက် ဘာတွေ ဖြစ်လာမလဲ ဘယ်သူ သိမှာလဲ။" },
+      { "en": "We're planning for the years to come.", "my": "လာမယ့် နှစ်တွေအတွက် တို့တွေ ကြိုပြီး စီစဉ်နေပါတယ်။" },
+      { "en": "It's a long-term commitment.", "my": "ဒါက ရေရှည်အတွက် ကတိကဝတ် တစ်ခုပါ။" },
+      { "en": "I'm thinking about my retirement plans.", "my": "ကျွန်တော့်ရဲ့ အနားယူမယ့် အစီအစဉ်တွေအကြောင်း စဉ်းစားနေတယ်။" },
+      { "en": "The world will be a different place in fifty years.", "my": "နောက်နှစ် ၅၀ နေရင် ကမ္ဘာကြီးက တခြားနေရာတစ်ခု ဖြစ်သွားလိမ့်မယ်။" },
+      { "en": "I'm hoping for a brighter tomorrow.", "my": "ပိုပြီး တောက်ပတဲ့ မနက်ဖြန်တစ်ခုကို မျှော်လင့်နေပါတယ်။" }
+    ]
+  },
+  {
+    "id": 96,
+    "type": "test",
+    "topic": "🔴 Test 16: Emotional Extremes",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "Whew! That was close.", "my": "ဟူး! ကပ်သီးလေးပဲ။" },
+      { "en": "I'm worried sick.", "my": "ကျွန်တော် တကယ်ကို စိတ်ပူနေပါတယ်။" },
+      { "en": "What a relief!", "my": "တော်သေးတာပေါ့!" },
+      { "en": "It was a stroke of luck.", "my": "ကံကောင်းလို့ပါ။" },
+      { "en": "Better luck next time.", "my": "နောက်တစ်ခါတော့ ကံကောင်းပါစေ။" },
+      { "en": "It's right around the corner.", "my": "လက်တစ်ကမ်းမှာတင် ရှိနေပါပြီ။" },
+      { "en": "Time will tell.", "my": "အချိန်ကပဲ ပြောပြပါလိမ့်မယ်။" },
+      { "en": "I'm over the moon!", "my": "ကျွန်တော် အရမ်းကို ပျော်နေပါတယ်။" },
+      { "en": "In the long run...", "my": "ရေရှည်မှာတော့..." },
+      { "en": "Don't worry yourself.", "my": "စိတ်မပူပါနဲ့။" }
+    ]
+  },
+  {
+    "id": 97,
+    "type": "speaking",
+    "topic": "Lesson 81: Appearance & Decor",
+    "icon": "🏠",
+    "phrases": [
+      { "en": "You have a beautiful home, I love the layout.", "my": "မင်းရဲ့ အိမ်လေးက လှလိုက်တာ၊ အပြင်အဆင်ကို သဘောကျပါတယ်။" },
+      { "en": "That necklace looks stunning on you!", "my": "ဒီဆွဲကြိုးက မင်းနဲ့ တကယ် လိုက်ဖက်တယ်နော်!" },
+      { "en": "I really like the way you've decorated this room.", "my": "ဒီအခန်းကို မင်း ပြင်ဆင်ထားတဲ့ ပုံစံလေးကို ငါ တကယ် သဘောကျတယ်။" },
+      { "en": "You look very sharp in that suit.", "my": "ဒီဝတ်စုံနဲ့ မင်း ကြည့်ရတာ တကယ်ကို ခန့်ညားပါတယ်။" },
+      { "en": "Where did you get that lovely painting?", "my": "ဟို ပန်းချီကားလှလှလေးကို ဘယ်က ရတာလဲ။" },
+      { "en": "Your style is so unique and refreshing.", "my": "မင်းရဲ့ ပုံစံလေးက တကယ်ကို ထူးခြားပြီး လန်းဆန်းပါတယ်။" },
+      { "en": "This place has a wonderful atmosphere.", "my": "ဒီနေရာလေးက တကယ့်ကို ပတ်ဝန်းကျင်ကောင်းလေးပါပဲ။" },
+      { "en": "You've got a great eye for detail.", "my": "မင်းမှာ အသေးစိတ်တွေကို သတိထားကြည့်တတ်တဲ့ မျက်လုံး ရှိတာပဲ။" },
+      { "en": "That color really suits your complexion.", "my": "ဒီအရောင်က မင်းရဲ့ အသားအရေနဲ့ တကယ် လိုက်ပါတယ်။" },
+      { "en": "I'm impressed by your home improvement skills.", "my": "အိမ်ပြင်တဲ့ မင်းရဲ့ အရည်အချင်းကို ငါ အထင်ကြီးမိပါတယ်။" }
+    ]
+  },
+  {
+    "id": 98,
+    "type": "speaking",
+    "topic": "Lesson 82: Cooking & Kids",
+    "icon": "🍳",
+    "phrases": [
+      { "en": "Compliments to the chef! This meal is incredible.", "my": "စားဖိုမှူးကို ချီးကျူးပေးပါဦး! ဒီအစားအသောက်က တကယ် ကောင်းပါတယ်။" },
+      { "en": "Your children are so well-behaved, you must be proud.", "my": "မင်းရဲ့ ကလေးတွေက တကယ်ကို လိမ္မာတယ်နော်၊ မင်း ဂုဏ်ယူသင့်ပါတယ်။" },
+      { "en": "This cake is to die for, can I have the recipe?", "my": "ဒီကိတ်မုန့်က တကယ်ကို စားလို့ကောင်းတယ်၊ နည်းလမ်းလေး ပေးမလား။" },
+      { "en": "You have a real talent for cooking.", "my": "မင်းမှာ ဟင်းချက်တဲ့ ပါရမီ တကယ် ရှိတာပဲ။" },
+      { "en": "Your little one is so adorable!", "my": "မင်းရဲ့ ကလေးလေးက တကယ်ကို ချစ်ဖို့ကောင်းတာပဲ!" },
+      { "en": "How do you manage to keep them so quiet?", "my": "သူတို့ကို ဘယ်လိုများ ငြိမ်အောင် ထားနိုင်တာလဲ။" },
+      { "en": "This soup is just what I needed, thank you.", "my": "ဒီစွပ်ပြုတ်က ကျွန်တော် လိုချင်နေတဲ့အရာပါပဲ၊ ကျေးဇူးပါ။" },
+      { "en": "You're a natural at parenting.", "my": "မင်းက မိဘကောင်းတစ်ယောက် ဖြစ်ဖို့ မွေးဖွားလာသူပါပဲ။" },
+      { "en": "The kids are growing up so fast, aren't they?", "my": "ကလေးတွေက တော်တော် မြန်မြန် ကြီးလာတယ်နော်၊ မဟုတ်ဘူးလား။" },
+      { "en": "I've never tasted anything quite like this before.", "my": "ဒီလို အရသာမျိုး တစ်ခါမှ မစားဖူးဘူး။" }
+    ]
+  },
+  {
+    "id": 99,
+    "type": "speaking",
+    "topic": "Lesson 83: Absolute Certainty",
+    "icon": "💯",
+    "phrases": [
+      { "en": "I'm positive that we can meet the deadline.", "my": "တို့တွေ သတ်မှတ်ချိန် မှီမယ်ဆိုတာ ကျွန်တော် သေချာပါတယ်။" },
+      { "en": "I'm one hundred percent sure about his honesty.", "my": "သူ့ရဲ့ ရိုးသားမှုအပေါ် ကျွန်တော် ၁၀၀ ရာခိုင်နှုန်း သေချာပါတယ်။" },
+      { "en": "There's no doubt in my mind that she'll succeed.", "my": "သူ အောင်မြင်မှာကို ကျွန်တော့် စိတ်ထဲမှာ သံသယ လုံးဝ မရှိပါဘူး။" },
+      { "en": "I'm absolutely certain of the facts.", "my": "အချက်အလက်တွေနဲ့ ပတ်သက်ပြီး ကျွန်တော် လုံးဝ သေချာပါတယ်။" },
+      { "en": "Without a shadow of a doubt, this is the best option.", "my": "သံသယဖြစ်စရာ မလိုဘဲ ဒါဟာ အကောင်းဆုံး ရွေးချယ်မှုပါပဲ။" },
+      { "en": "I'll stake my reputation on it.", "my": "ဒါအတွက် ကျွန်တော့်ရဲ့ ဂုဏ်သိက္ခာကို အာမခံပါတယ်။" },
+      { "en": "You can bet your bottom dollar on that!", "my": "ဒါကတော့ သေချာပေါက်ပါပဲ!" },
+      { "en": "It's a guaranteed success.", "my": "ဒါက သေချာပေါက် အောင်မြင်မယ့် ကိစ္စပါ။" },
+      { "en": "I know it for a fact.", "my": "အချက်အလက်အရ ကျွန်တော် သိပါတယ်။" },
+      { "en": "Rest assured, everything is taken care of.", "my": "စိတ်ချလက်ချ နေပါ၊ အားလုံးကို စီစဉ်ထားပြီးသားပါ။" }
+    ]
+  },
+  {
+    "id": 100,
+    "type": "speaking",
+    "topic": "Lesson 84: Probability & Doubt",
+    "icon": "❓",
+    "phrases": [
+      { "en": "Chances are that it will rain this afternoon.", "my": "ဒီနေ့ နေ့လည်ပိုင်းမှာ မိုးရွာဖို့ အခွင့်အလမ်း များပါတယ်။" },
+      { "en": "I wouldn't bet on it, if I were you.", "my": "ငါသာ မင်းနေရာမှာဆိုရင် အဲဒါကို သိပ်ပြီး မယုံကြည်ဘူး။" },
+      { "en": "It's highly likely that they'll agree.", "my": "သူတို့ သဘောတူဖို့ အလားအလာ အရမ်း များပါတယ်။" },
+      { "en": "I have my doubts about the whole project.", "my": "ဒီပရောဂျက် တစ်ခုလုံးအပေါ် ကျွန်တော့်မှာ သံသယတွေ ရှိနေတယ်။" },
+      { "en": "There's a slim chance of success.", "my": "အောင်မြင်ဖို့ အခွင့်အလမ်းကတော့ နည်းနည်းပဲ ရှိပါတယ်။" },
+      { "en": "It's debatable whether we should proceed.", "my": "တို့တွေ ရှေ့ဆက်သင့်သလားဆိုတာက ငြင်းခုံစရာပါ။" },
+      { "en": "I'm not entirely convinced by your argument.", "my": "မင်းရဲ့ အကြောင်းပြချက်ကို ငါ လုံးဝကြီးတော့ ယုံကြည်မသွားဘူး။" },
+      { "en": "Maybe, but don't count your chickens just yet.", "my": "ဖြစ်နိုင်ပါတယ်၊ ဒါပေမဲ့ စောစောစီးစီးတော့ အောင်ပွဲ မခံပါနဲ့ဦး။" },
+      { "en": "It's a long shot, but we can try.", "my": "ဖြစ်နိုင်ခြေ နည်းပေမဲ့ တို့တွေ ကြိုးစားကြည့်လို့ ရပါတယ်။" },
+      { "en": "I'll believe it when I see it.", "my": "ငါကိုယ်တိုင် တွေ့မှပဲ ယုံမယ်။" }
+    ]
+  },
+  {
+    "id": 101,
+    "type": "speaking",
+    "topic": "Lesson 85: Interest vs. Boredom",
+    "icon": "😴",
+    "phrases": [
+      { "en": "I find this documentary absolutely fascinating.", "my": "ဒီမှတ်တမ်းတင်ဗီဒီယိုက တကယ့်ကို စိတ်ဝင်စားဖို့ ကောင်းပါတယ်။" },
+      { "en": "To be honest, watching this is like watching paint dry.", "my": "အမှန်အတိုင်း ပြောရရင် ဒါကို ကြည့်ရတာ အရမ်းကို ပျင်းဖို့ ကောင်းတယ်။" },
+      { "en": "I'm on the edge of my seat!", "my": "စိတ်လှုပ်ရှားလွန်းလို့ ထိုင်တောင် မနေနိုင်တော့ဘူး!" },
+      { "en": "This is so boring, I'm falling asleep.", "my": "ဒါက အရမ်း ပျင်းဖို့ကောင်းတယ်၊ ငါ အိပ်တောင် ပျော်တော့မယ်။" },
+      { "en": "I can't get enough of this book.", "my": "ဒီစာအုပ်ကို ဖတ်လို့ကို မဝနိုင်ဘူး ဖြစ်နေတယ်။" },
+      { "en": "It's a bit tedious, don't you think?", "my": "ဒါက နည်းနည်းတော့ ပျင်းစရာကောင်းတယ်နော်၊ မထင်ဘူးလား။" },
+      { "en": "I'm completely gripped by the plot.", "my": "ဇာတ်လမ်းကို လုံးဝ စွဲလမ်းသွားပြီ။" },
+      { "en": "I've lost interest in the game.", "my": "ဒီဂိမ်းကို စိတ်မဝင်စားတော့ဘူး။" },
+      { "en": "It's a real page-turner!", "my": "စာမျက်နှာတွေကို မရပ်မနား ဖတ်သွားရလောက်အောင် ကောင်းတဲ့ စာအုပ်ပဲ!" },
+      { "en": "I'm just going through the motions here.", "my": "ငါကတော့ အလုပ်ဖြစ်ရုံပဲ လုပ်နေတာပါ။" }
+    ]
+  },
+  {
+    "id": 102,
+    "type": "test",
+    "topic": "🔴 Test 17: Social Polish",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "Compliments to the chef!", "my": "စားဖိုမှူးကို ချီးကျူးပေးပါဦး!" },
+      { "en": "I'm positive that...", "my": "ကျွန်တော် သေချာပါတယ်..." },
+      { "en": "Chances are...", "my": "ဖြစ်နိုင်ခြေကတော့..." },
+      { "en": "It's absolutely fascinating.", "my": "တကယ်ကို စိတ်ဝင်စားဖို့ ကောင်းပါတယ်။" },
+      { "en": "Watching paint dry.", "my": "အရမ်း ပျင်းဖို့ကောင်းတာ။" },
+      { "en": "You have a beautiful home.", "my": "မင်းရဲ့ အိမ်လေးက လှပါတယ်။" },
+      { "en": "I wouldn't bet on it.", "my": "ငါတော့ အဲဒါကို မယုံဘူး။" },
+      { "en": "I'm one hundred percent sure.", "my": "ကျွန်တော် ၁၀၀ ရာခိုင်နှုန်း သေချာပါတယ်။" },
+      { "en": "It's a bit tedious.", "my": "နည်းနည်းတော့ ပျင်းစရာ ကောင်းပါတယ်။" },
+      { "en": "You look very sharp.", "my": "မင်း ကြည့်ရတာ တကယ်ကို ခန့်ညားပါတယ်။" }
+    ]
+  },
+  {
+    "id": 103,
+    "type": "speaking",
+    "topic": "Lesson 86: Cheering Someone Up",
+    "icon": "☀️",
+    "phrases": [
+      { "en": "Look on the bright side, at least you tried!", "my": "အကောင်းဘက်က တွေးကြည့်ပါ၊ အနည်းဆုံးတော့ မင်း ကြိုးစားခဲ့တာပဲ!" },
+      { "en": "Cheer up! Things will get better soon.", "my": "ရွှင်ရွှင်လန်းလန်း နေပါ! မကြာခင် အားလုံး ပြန်ကောင်းလာမှာပါ။" },
+      { "en": "Don't take it to heart, everyone fails sometimes.", "my": "ဒါကို စိတ်ထဲ ထားမနေပါနဲ့၊ လူတိုင်း တစ်ခါတလေ ကျရှုံးတတ်ကြတာပဲ။" },
+      { "en": "There's a silver lining to every cloud.", "my": "မကောင်းတဲ့ အခြေအနေတိုင်းမှာ အကောင်းဆိုတာ ရှိတတ်ပါတယ်။" },
+      { "en": "Keep your chin up, you're stronger than you think.", "my": "အားတင်းထားပါ၊ မင်းက မင်းထင်ထားတာထက် ပိုပြီး ကြံ့ခိုင်ပါတယ်။" },
+      { "en": "Don't let it get you down.", "my": "ဒါကို စိတ်ဓာတ်ကျအောင် မလုပ်ပါစေနဲ့။" },
+      { "en": "It's not the end of the world!", "my": "ဒါက ကမ္ဘာပျက်မယ့် ကိစ္စ မဟုတ်ပါဘူး!" },
+      { "en": "I'm here for you if you need to vent.", "my": "ရင်ဖွင့်ဖို့ လိုအပ်ရင် ငါ ရှိနေပါတယ်နော်။" },
+      { "en": "Let's go out and do something fun!", "my": "အပြင်သွားပြီး ပျော်စရာတစ်ခုခု လုပ်ကြရအောင်!" },
+      { "en": "Everything happens for a reason.", "my": "အရာရာတိုင်းက အကြောင်းရှိလို့ ဖြစ်လာတာပါ။" }
+    ]
+  },
+  {
+    "id": 104,
+    "type": "speaking",
+    "topic": "Lesson 87: Disappointment",
+    "icon": "😞",
+    "phrases": [
+      { "en": "It didn't live up to my expectations, to be honest.", "my": "အမှန်အတိုင်း ပြောရရင် ဒါက ကျွန်တော် မျှော်လင့်ထားသလို မဖြစ်လာဘူး။" },
+      { "en": "What a letdown! I was really looking forward to it.", "my": "တကယ်ကို စိတ်ပျက်စရာပဲ! ကျွန်တော် တကယ်ကို မျှော်လင့်ထားခဲ့တာ။" },
+      { "en": "I'm so disappointed in his behavior.", "my": "သူ့ရဲ့ အပြုအမူအပေါ် ကျွန်တော် တကယ်ကို စိတ်ပျက်မိပါတယ်။" },
+      { "en": "It was a total anticlimax.", "my": "တကယ့်ကို စိတ်ပျက်စရာကောင်းတဲ့ အဆုံးသတ်ပါပဲ။" },
+      { "en": "I'm gutted that we lost the match.", "my": "ရှုံးသွားတဲ့အတွက် ကျွန်တော် တကယ်ကို စိတ်မကောင်းဖြစ်မိပါတယ်။" },
+      { "en": "It leaves a lot to be desired.", "my": "ဒါက လိုအပ်ချက်တွေ အများကြီး ရှိနေပါသေးတယ်။" },
+      { "en": "I expected more from this company.", "my": "ဒီကုမ္ပဏီဆီကနေ ကျွန်တော် ပိုပြီး မျှော်လင့်ခဲ့တာပါ။" },
+      { "en": "It's a pity things didn't work out.", "my": "အဆင်မပြေသွားတာ နှမြောစရာပါပဲ။" },
+      { "en": "I'm feeling a bit down after the news.", "my": "သတင်းကြားပြီးတော့ ကျွန်တော် နည်းနည်း စိတ်ဓာတ်ကျနေတယ်။" },
+      { "en": "It's a crying shame!", "my": "ဒါက တကယ်ကို ဝမ်းနည်းစရာ ကောင်းတဲ့ အရာပါ။" }
+    ]
+  },
+  {
+    "id": 105,
+    "type": "speaking",
+    "topic": "Lesson 88: Disbelief & Skepticism",
+    "icon": "🤨",
+    "phrases": [
+      { "en": "You're pulling my leg, right?", "my": "မင်း ငါ့ကို နောက်နေတာ (စနေတာ) မဟုတ်လား။" },
+      { "en": "I'll believe it when I see it with my own eyes.", "my": "ငါ့မျက်စိနဲ့ မြင်မှပဲ ယုံမယ်။" },
+      { "en": "That sounds a bit fishy to me.", "my": "ဒါက တစ်မျိုးကြီးပဲလို့ ငါ့ကို ထင်ရတယ်။" },
+      { "en": "You've got to be joking!", "my": "မင်း နောက်နေတာ ဖြစ်ရမယ်!" },
+      { "en": "I find that very hard to swallow.", "my": "အဲဒါကို လက်ခံဖို့ ကျွန်တော့်အတွက် အရမ်း ခက်ခဲပါတယ်။" },
+      { "en": "Tell me another one!", "my": "နောက်တစ်မျိုးလောက် ပြောပါဦး (မယုံဘူးလို့ ဆိုလိုတာ)!" },
+      { "en": "Pull the other one, it's got bells on!", "my": "မင်းပြောတာကို ငါ လုံးဝ မယုံဘူး!" },
+      { "en": "I'm taking that with a pinch of salt.", "my": "အဲဒါကို ကျွန်တော် လုံးဝကြီးတော့ မယုံပါဘူး။" },
+      { "en": "Are you for real?", "my": "မင်း တကယ်ပြောတာလား။" },
+      { "en": "That's hard to believe.", "my": "ဒါက ယုံဖို့ ခက်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 106,
+    "type": "speaking",
+    "topic": "Lesson 89: Lies & Deception",
+    "icon": "🤥",
+    "phrases": [
+      { "en": "He's being economical with the truth.", "my": "သူက အမှန်တရားကို အကုန်မပြောဘဲ ချန်ထားတယ်။" },
+      { "en": "That's a pack of lies!", "my": "ဒါက လိမ်ညာမှုတွေ ချည်းပဲ!" },
+      { "en": "She lied through her teeth.", "my": "သူက လုံးဝကို ပြောင်လိမ်သွားတာ။" },
+      { "en": "It's just a white lie, no harm done.", "my": "ဒါက စေတနာနဲ့ လိမ်တဲ့ အလိမ်အညာလေးပါ၊ ဘာမှ မဖြစ်ပါဘူး။" },
+      { "en": "He's a wolf in sheep's clothing.", "my": "သူက သိုးရေခြုံထားတဲ့ ဝံပုလွေပါ။" },
+      { "en": "Don't try to pull the wool over my eyes!", "my": "ကျွန်တော့်ကို လာပြီး လိမ်ဖို့ မကြိုးစားနဲ့!" },
+      { "en": "The truth will come out eventually.", "my": "အမှန်တရားက နောက်ဆုံးတော့ ပေါ်လာမှာပါ။" },
+      { "en": "I can see right through your lies.", "my": "မင်းရဲ့ အလိမ်အညာတွေကို ငါ အကုန် သိနေတယ်။" },
+      { "en": "He's as fake as a three-dollar bill.", "my": "သူက တကယ့်ကို အတုအယောင်ပါ။" },
+      { "en": "Stop beating around the bush and tell the truth.", "my": "စကားတွေကို လှည့်ပတ်မနေဘဲ အမှန်အတိုင်း ပြောပါ။" }
+    ]
+  },
+  {
+    "id": 107,
+    "type": "speaking",
+    "topic": "Lesson 90: Describing 'Bad' People",
+    "icon": "😠",
+    "phrases": [
+      { "en": "What a creep! He makes me feel uncomfortable.", "my": "တကယ့် လူထူးလူဆန်းပဲ! သူ့ကိုကြည့်ရတာ ငါ့မှာ နေရခက်တယ်။" },
+      { "en": "Don't be such a jerk!", "my": "အဲလောက်ကြီး ရိုင်းစိုင်းတဲ့သူ မဖြစ်ပါနဲ့။" },
+      { "en": "He's a real scumbag, if you ask me.", "my": "ငါ့ကို မေးရင်တော့ သူက တကယ့် လူယုတ်မာပဲ။" },
+      { "en": "She's a bit of a loose cannon.", "my": "သူက ဘာလုပ်မယ်ဆိုတာ ခန့်မှန်းလို့ မရတဲ့သူပါ။" },
+      { "en": "He's a snake in the grass.", "my": "သူက မြက်ပင်ကြားက မြွေလိုပါပဲ (မသိမသာ ရန်ပြုတတ်သူ)။" },
+      { "en": "Stay away from him, he's bad news.", "my": "သူ့နား မသွားနဲ့၊ သူက ပြဿနာပဲ။" },
+      { "en": "She's a real piece of work.", "my": "သူက တကယ်ကို ကိုင်တွယ်ရ ခက်တဲ့သူပါ။" },
+      { "en": "He's as slippery as an eel.", "my": "သူက လျှောခနဲ လျှောခနဲနဲ့ လိမ်မာတဲ့သူပါ။" },
+      { "en": "Don't trust him, he's a backstabber.", "my": "သူ့ကို မယုံနဲ့၊ သူက ကျောပြင်ကို ဓားနဲ့ ထိုးတတ်သူ (သစ္စာဖောက်)။" },
+      { "en": "He's a nasty piece of work.", "my": "သူက တကယ်ကို ဆိုးရွားတဲ့သူပါ။" }
+    ]
+  },
+  {
+    "id": 108,
+    "type": "test",
+    "topic": "🔴 Test 18: Character Judgment",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "You're pulling my leg.", "my": "မင်း ငါ့ကို နောက်နေတာပဲ။" },
+      { "en": "It sounds a bit fishy.", "my": "ဒါက တစ်မျိုးကြီးပဲ။" },
+      { "en": "He's a wolf in sheep's clothing.", "my": "သူက သိုးရေခြုံထားတဲ့ ဝံပုလွေပါ။" },
+      { "en": "Don't be a jerk!", "my": "အဲလောက် မရိုင်းပါနဲ့။" },
+      { "en": "Look on the bright side.", "my": "အကောင်းဘက်က တွေးပါ။" },
+      { "en": "It didn't live up to expectations.", "my": "မျှော်လင့်ထားသလို မဖြစ်လာဘူး။" },
+      { "en": "A pack of lies.", "my": "အလိမ်အညာတွေချည်းပဲ။" },
+      { "en": "He's bad news.", "my": "သူက ပြဿနာပဲ။" },
+      { "en": "Keep your chin up.", "my": "အားတင်းထားပါ။" },
+      { "en": "The truth will come out.", "my": "အမှန်တရား ပေါ်လာမှာပါ။" }
+    ]
+  },
+  {
+    "id": 109,
+    "type": "speaking",
+    "topic": "Lesson 91: Quiet vs. Loud Speech",
+    "icon": "🔈",
+    "phrases": [
+      { "en": "She whispered the secret in my ear.", "my": "သူက ကျွန်တော့်နားထဲမှာ လျှို့ဝှက်ချက်ကို တိုးတိုးလေး ပြောခဲ့တယ်။" },
+      { "en": "He yelled at the top of his lungs!", "my": "သူက အစွမ်းကုန် အော်ဟစ်လိုက်တာပဲ!" },
+      { "en": "Could you speak up a bit, please?", "my": "နည်းနည်းလောက် အသံကျယ်ကျယ် ပြောပေးမလား။" },
+      { "en": "Keep your voice down, we're in a library.", "my": "အသံလျှော့ပါ၊ တို့တွေ စာကြည့်တိုက်ထဲမှာ ရောက်နေတာ။" },
+      { "en": "He's always shouting about something.", "my": "သူက တစ်ခုခုဆို အမြဲတမ်း အော်နေတာပဲ။" },
+      { "en": "She has a very soft-spoken voice.", "my": "သူ့မှာ တကယ့်ကို ညင်သာတဲ့ အသံ ရှိပါတယ်။" },
+      { "en": "Stop screaming, you're giving me a headache!", "my": "မအော်နဲ့တော့၊ ခေါင်းတောင် ကိုက်လာပြီ!" },
+      { "en": "I can barely hear what you're saying.", "my": "မင်းပြောတာကို မနည်း နားထောင်နေရတယ်။" },
+      { "en": "He muttered something under his breath.", "my": "သူက တိုးတိုးလေး တစ်ခုခု ရေရွတ်လိုက်တယ်။" },
+      { "en": "The crowd roared with excitement.", "my": "လူအုပ်ကြီးက စိတ်လှုပ်ရှားစွာနဲ့ ဟစ်အော်လိုက်ကြတယ်။" }
+    ]
+  },
+  {
+    "id": 110,
+    "type": "speaking",
+    "topic": "Lesson 92: Unclear Speech",
+    "icon": "🌫️",
+    "phrases": [
+      { "en": "Stop mumbling and speak clearly!", "my": "ဗလုံးဗထွေး မပြောဘဲ ရှင်းရှင်းလင်းလင်း ပြောစမ်းပါ!" },
+      { "en": "He just rambled on for hours about nothing.", "my": "သူက ဘာမှမဟုတ်တာကို နာရီပေါင်းများစွာ လျှောက်ပြောနေတာ။" },
+      { "en": "I can't make head or tail of what he's saying.", "my": "သူပြောတာကို ဘာမှ နားမလည်ဘူး ဖြစ်နေတယ်။" },
+      { "en": "She's always beating around the bush.", "my": "သူက အမြဲတမ်း စကားတွေကို လှည့်ပတ်ပြောနေတတ်တယ်။" },
+      { "en": "I didn't quite catch that, sorry.", "my": "တောင်းပန်ပါတယ်၊ ကျွန်တော် သေချာ မကြားလိုက်ဘူး။" },
+      { "en": "He's talking in riddles again.", "my": "သူက စကားထာတွေနဲ့ ပြန်ပြီး ပြောနေပြန်ပြီ။" },
+      { "en": "You're not making any sense right now.", "my": "မင်းပြောတာတွေက အခုတော့ ဘာမှ အဓိပ္ပာယ်မရှိဘူး။" },
+      { "en": "Could you get to the point, please?", "my": "အဓိက အချက်ကိုပဲ ပြောပေးမလား။" },
+      { "en": "He slurred his words because he was tired.", "my": "သူ ပင်ပန်းနေလို့ စကားတွေက ဗလုံးဗထွေး ဖြစ်နေတာ။" },
+      { "en": "It's all Greek to me!", "my": "ဒါတွေက ငါ့အတွက်တော့ လုံးဝ နားမလည်နိုင်တဲ့ အရာတွေပဲ!" }
+    ]
+  },
+  {
+    "id": 111,
+    "type": "speaking",
+    "topic": "Lesson 93: Positive Facial Expressions",
+    "icon": "😁",
+    "phrases": [
+      { "en": "She was beaming with joy after the news.", "my": "သတင်းကြားပြီးတော့ သူက ပျော်ရွှင်စွာနဲ့ မျက်နှာလေး ဝင်းပနေတာပဲ။" },
+      { "en": "He was smiling from ear to ear!", "my": "သူက ပါးစပ်ကြီး နားရွက်တက်ချိတ်မတတ် ပြုံးနေတာ!" },
+      { "en": "She gave me a warm and friendly smile.", "my": "သူက ကျွန်တော့်ကို နွေးထွေးပြီး ဖော်ရွေတဲ့ အပြုံးလေး ပြုံးပြတယ်။" },
+      { "en": "He winked at me to show he was joking.", "my": "သူက နောက်နေတာမှန်း သိအောင် မျက်စိတစ်ဖက် မှိတ်ပြတယ်။" },
+      { "en": "Her eyes lit up when she saw the puppy.", "my": "ခွေးကလေးကို မြင်လိုက်တဲ့အခါ သူ့မျက်လုံးလေးတွေ ဝင်းလက်သွားတယ်။" },
+      { "en": "He gave a nod of approval.", "my": "သူက သဘောတူကြောင်း ခေါင်းညိတ်ပြတယ်။" },
+      { "en": "She was grinning like a Cheshire cat.", "my": "သူက တကယ့်ကို သဘောကျပြီး ပြုံးနေတာ။" },
+      { "en": "He has a very expressive face.", "my": "သူ့မျက်နှာက ခံစားချက်တွေကို ကောင်းကောင်း ဖော်ပြနိုင်ပါတယ်။" },
+      { "en": "You look very happy today, what's the secret?", "my": "ဒီနေ့ မင်းကို ကြည့်ရတာ အရမ်း ပျော်နေပုံပဲ၊ ဘာထူးလို့လဲ။" },
+      { "en": "A smile can brighten up anyone's day.", "my": "အပြုံးတစ်ခုက ဘယ်သူ့ရဲ့ နေ့ရက်ကိုမဆို တောက်ပစေနိုင်ပါတယ်။" }
+    ]
+  },
+  {
+    "id": 112,
+    "type": "speaking",
+    "topic": "Lesson 94: Negative Facial Expressions",
+    "icon": "😟",
+    "phrases": [
+      { "en": "He winced in pain when he bumped his toe.", "my": "ခြေမ တိုက်မိတဲ့အခါ သူက နာကျင်လို့ မျက်နှာကြီး ရှုံ့မဲ့သွားတယ်။" },
+      { "en": "She gave me a dirty look for no reason.", "my": "ဘာအကြောင်းမှ မရှိဘဲ သူက ကျွန်တော့်ကို မျက်စောင်း ထိုးသွားတယ်။" },
+      { "en": "He frowned when he read the letter.", "my": "စာကို ဖတ်လိုက်တဲ့အခါ သူက မျက်မှောင်ကြုတ်လိုက်တယ်။" },
+      { "en": "Why the long face? What's wrong?", "my": "ဘာလို့ မျက်နှာ မကောင်းတာလဲ။ ဘာဖြစ်လို့လဲ။" },
+      { "en": "She glared at him in anger.", "my": "သူက သူ့ကို ဒေါသတကြီးနဲ့ စိုက်ကြည့်လိုက်တယ်။" },
+      { "en": "He made a face when he tasted the medicine.", "my": "ဆေးကို မြည်းကြည့်တဲ့အခါ သူက မျက်နှာကြီး ရှုံ့မဲ့သွားတယ်။" },
+      { "en": "Her face was a mask of disappointment.", "my": "သူ့မျက်နှာမှာ စိတ်ပျက်မှုတွေ အပြည့် ဖြစ်နေတယ်။" },
+      { "en": "He shrugged his shoulders, he didn't care.", "my": "သူက ဂရုမစိုက်တဲ့ ပုံစံနဲ့ ပုခုံးတွန့်ပြလိုက်တယ်။" },
+      { "en": "She was pouting because she didn't get her way.", "my": "သူ လိုချင်တာ မရလို့ နှုတ်ခမ်းကြီး စူနေတာ။" },
+      { "en": "He had a look of utter confusion on his face.", "my": "သူ့မျက်နှာမှာ လုံးဝကို ဇဝေဇဝါ ဖြစ်နေတဲ့ ပုံစံ ပေါက်နေတယ်။" }
+    ]
+  },
+  {
+    "id": 113,
+    "type": "speaking",
+    "topic": "Lesson 95: Offending People",
+    "icon": "😤",
+    "phrases": [
+      { "en": "Don't get bent out of shape, it was just a joke!", "my": "စိတ်မဆိုးပါနဲ့ဦး (စိတ်မကောက်ပါနဲ့)! ဒါက နောက်တာပါ။" },
+      { "en": "I'm sorry if I offended you in any way.", "my": "ကျွန်တော် တစ်ခုခု မှားပြောမိရင် တောင်းပန်ပါတယ်။" },
+      { "en": "He's very easily offended, so be careful.", "my": "သူက စိတ်ဆိုးလွယ်တယ်၊ ဒါကြောင့် သတိထားပါ။" },
+      { "en": "I didn't mean to hurt your feelings, truly.", "my": "မင်းရဲ့ စိတ်ကို နာကျင်အောင် လုပ်ဖို့ ရည်ရွယ်ချက် မရှိပါဘူး၊ တကယ်ပါ။" },
+      { "en": "No offense intended, but I disagree.", "my": "စိတ်တော့ မဆိုးပါနဲ့၊ ဒါပေမဲ့ ကျွန်တော် သဘောမတူဘူး။" },
+      { "en": "She took great offense at my comment.", "my": "ကျွန်တော့်ရဲ့ မှတ်ချက်အပေါ် သူ တော်တော်လေး စိတ်ဆိုးသွားတယ်။" },
+      { "en": "Don't take it personally, it's just business.", "my": "ဒါကို ပုဂ္ဂိုလ်ရေးအရ မယူပါနဲ့၊ ဒါက အလုပ်ကိစ္စ သက်သက်ပါ။" },
+      { "en": "I hope we can put this misunderstanding behind us.", "my": "ဒီနားလည်မှု လွဲတာကို တို့တွေ မေ့ပစ်နိုင်မယ်လို့ မျှော်လင့်ပါတယ်။" },
+      { "en": "He has a very thin skin.", "my": "သူက တော်တော်လေး စိတ်ထိခိုက် လွယ်ပါတယ်။" },
+      { "en": "I think I've put my foot in it this time!", "my": "ဒီတစ်ခါတော့ ငါ စကားမှားသွားပြီ ထင်တယ်!" }
+    ]
+  },
+  {
+    "id": 114,
+    "type": "test",
+    "topic": "🔴 Test 19: Non-Verbal & Verbal Cues",
+    "icon": "🎯",
+    "phrases": [
+      { "en": "Why the long face?", "my": "ဘာလို့ မျက်နှာ မကောင်းတာလဲ။" },
+      { "en": "Don't get bent out of shape.", "my": "စိတ်မဆိုးပါနဲ့။" },
+      { "en": "She was beaming with joy.", "my": "သူက ပျော်ရွှင်စွာနဲ့ မျက်နှာလေး ဝင်းပနေတာပဲ။" },
+      { "en": "Could you speak up, please?", "my": "အသံနည်းနည်း ကျယ်ကျယ် ပြောပေးမလား။" },
+      { "en": "Stop mumbling!", "my": "ဗလုံးဗထွေး မပြောပါနဲ့။" },
+      { "en": "He muttered under his breath.", "my": "သူ တိုးတိုးလေး တစ်ခုခု ပြောလိုက်တယ်။" },
+      { "en": "No offense intended.", "my": "စိတ်ဆိုးအောင် လုပ်ဖို့ ရည်ရွယ်ချက် မရှိပါဘူး။" },
+      { "en": "He smiled from ear to ear.", "my": "သူက တကယ်ကို ဝမ်းသာအားရ ပြုံးနေတာ။" },
+      { "en": "I didn't quite catch that.", "my": "ကျွန်တော် သေချာ မကြားလိုက်ဘူး။" },
+      { "en": "He winced in pain.", "my": "သူ နာကျင်လို့ မျက်နှာ ရှုံ့မဲ့သွားတယ်။" }
+    ]
+  },
+  {
+    "id": 115,
+    "type": "speaking",
+    "topic": "Lesson 96: Toasts & Rounds",
+    "icon": "🍻",
+    "phrases": [
+      { "en": "It's on me tonight, what would you like?", "my": "ဒီည ငါ တိုက်မယ်၊ မင်း ဘာသောက်မလဲ။" },
+      { "en": "Let's have another round, shall we?", "my": "နောက်တစ်ခွက် ထပ်သောက်ကြဦးမလား။" },
+      { "en": "I'd like to propose a toast to our success!", "my": "ငါတို့ရဲ့ အောင်မြင်မှုအတွက် ဂုဏ်ပြုသောက်ဖို့ (Toast လုပ်ဖို့) အကြံပြုချင်ပါတယ်။" },
+      { "en": "Cheers, everyone! Drink up!", "my": "ကဲ၊ အားလုံးပဲ ချီးယားစ်! သောက်ကြဟေ့!" },
+      { "en": "This one is on the house, compliments of the bar.", "my": "ဒါက ဘားက လက်ဆောင်ပေးတာပါ၊ အလကား သောက်ပါ။" },
+      { "en": "I'll have the same again, please.", "my": "ကျွန်တော် အရင်ဟာပဲ နောက်တစ်ခွက် ပေးပါ။" },
+      { "en": "Whose turn is it to buy a round?", "my": "ဘယ်သူ တိုက်ရမယ့် အလှည့်လဲ။" },
+      { "en": "Bottoms up!", "my": "ကုန်အောင် သောက်လိုက်ကြစို့!" },
+      { "en": "Here's to a long and happy life!", "my": "ကျန်းမာပျော်ရွှင်တဲ့ ဘဝ ရှည်ရှည် ရပါစေ!" },
+      { "en": "Let's clink our glasses together.", "my": "ဖန်ခွက်ချင်း တိုက်လိုက်ကြရအောင်။" }
+    ]
+  },
+  {
+    "id": 116,
+    "type": "speaking",
+    "topic": "Lesson 97: Being Drunk or Hungover",
+    "icon": "🥴",
+    "phrases": [
+      { "en": "I think I'm a bit tipsy after that glass of wine.", "my": "အဲဒီ ဝိုင်တစ်ခွက်ပြီးတော့ ငါ နည်းနည်းတော့ မူးနေပြီ ထင်တယ်။" },
+      { "en": "He was absolutely wasted last night!", "my": "မနေ့ညက သူ တကယ်ကို အသည်းအသန် မူးနေတာ!" },
+      { "en": "I've got a splitting headache and a terrible hangover.", "my": "ခေါင်းတွေ အရမ်းကို ကိုက်နေပြီး အမူးအကြွင်း (Hangover) တကယ် ဆိုးနေတယ်။" },
+      { "en": "I need a hair of the dog that bit me!", "my": "အမူးပြေအောင် နောက်ထပ် နည်းနည်းလောက် ထပ်သောက်ရမယ်!" },
+      { "en": "Never again! I'm giving up drinking for good.", "my": "နောက်တစ်ခါ မလုပ်တော့ဘူး! သောက်တာကို လုံးဝကို ဖြတ်တော့မယ်။" },
+      { "en": "He's had one too many, I think.", "my": "သူ သောက်တာ နည်းနည်း များသွားပြီ ထင်တယ်။" },
+      { "en": "I'm feeling a bit light-headed right now.", "my": "ကျွန်တော် ခေါင်းထဲမှာ နည်းနည်း မူးနောက်နောက် ဖြစ်နေတယ်။" },
+      { "en": "Drink plenty of water before you go to bed.", "my": "မအိပ်ခင် ရေများများ သောက်သွားဦးနော်။" },
+      { "en": "I can't remember anything about last night.", "my": "မနေ့ညက အကြောင်းတွေ ဘာမှ မမှတ်မိတော့ဘူး။" },
+      { "en": "He's as drunk as a lord!", "my": "သူကတော့ မှောက်နေအောင် မူးနေတာပဲ!" }
+    ]
+  },
+  {
+    "id": 117,
+    "type": "speaking",
+    "topic": "Lesson 98: Comparative Idioms (Physical)",
+    "icon": "⚖️",
+    "phrases": [
+      { "en": "This bag is as light as a feather.", "my": "ဒီအိတ်က ငှက်မွေးတစ်မျှ (အရမ်းကို) ပေါ့ပါးပါတယ်။" },
+      { "en": "The desert was as dry as a bone.", "my": "သဲကန္တာရက အရိုးခြောက်တစ်ခုလို (လုံးဝကို) ခြောက်သွေ့နေတာ။" },
+      { "en": "My hands are as cold as ice.", "my": "ငါ့လက်တွေက ရေခဲလို (အရမ်းကို) အေးနေတာ။" },
+      { "en": "He's as blind as a bat without his glasses.", "my": "မျက်မှန်မပါရင် သူက လင်းနို့လို (ဘာမှကို) မမြင်ရဘူး။" },
+      { "en": "She's as busy as a bee all day long.", "my": "သူက တစ်နေ့လုံး ပျားလေးတစ်ကောင်လို (အရမ်းကို) အလုပ်ရှုပ်နေတာ။" },
+      { "en": "The water was as clear as crystal.", "my": "ရေက ဖန်သားပြင်လို (အရမ်းကို) ကြည်လင်နေတာ။" },
+      { "en": "He's as strong as an ox.", "my": "သူက နွားသိုးတစ်ကောင်လို (အရမ်းကို) သန်မာပါတယ်။" },
+      { "en": "It's as hard as nails!", "my": "ဒါက သံမှိုလို (အရမ်းကို) မာကျောတာ!" },
+      { "en": "She's as thin as a rake.", "my": "သူက တကယ်ကို ပိန်ပိန်ပါးပါးလေးပါ။" },
+      { "en": "The room was as quiet as a mouse.", "my": "အခန်းက ကြွက်ကလေးတစ်ကောင်လို (လုံးဝကို) တိတ်ဆိတ်နေတာ။" }
+    ]
+  },
+  {
+    "id": 118,
+    "type": "speaking",
+    "topic": "Lesson 99: Comparative Idioms (Personality)",
+    "icon": "🦁",
+    "phrases": [
+      { "en": "He's as stubborn as a mule, he won't change his mind.", "my": "သူက မြည်းတစ်ကောင်လို (အရမ်းကို) ခေါင်းမာတယ်၊ စိတ်မပြောင်းဘူး။" },
+      { "en": "She's as brave as a lion in the face of danger.", "my": "သူက အန္တရာယ်နဲ့ ကြုံရရင် ခြင်္သေ့တစ်ကောင်လို (အရမ်းကို) သတ္တိရှိပါတယ်။" },
+      { "en": "He's as sly as a fox, don't trust him.", "my": "သူက မြေခွေးတစ်ကောင်လို (အရမ်းကို) ပါးနပ်တယ် (လိမ်မာတယ်)၊ သူ့ကို မယုံနဲ့။" },
+      { "en": "She's as gentle as a lamb with the children.", "my": "သူက ကလေးတွေအပေါ်မှာ သိုးငယ်လေးတစ်ကောင်လို (အရမ်းကို) သဘောကောင်းပါတယ်။" },
+      { "en": "He's as wise as an owl, everyone asks him for advice.", "my": "သူက ဇီးကွက်တစ်ကောင်လို (အရမ်းကို) အမြော်အမြင် ရှိတယ်၊ အားလုံးက သူ့ဆီ အကြံတောင်းကြတယ်။" },
+      { "en": "She's as cool as a cucumber, even under pressure.", "my": "သူက ဖိအားတွေကြားမှာတောင် သခွားသီးလို (အရမ်းကို) တည်ငြိမ်ပါတယ်။" },
+      { "en": "He's as happy as a lark today.", "my": "ဒီနေ့ သူကတော့ တကယ့်ကို ပျော်ရွှင်နေတာပဲ။" },
+      { "en": "She's as proud as a peacock of her achievements.", "my": "သူ့ရဲ့ အောင်မြင်မှုတွေအပေါ် သူက ဒေါင်းတစ်ကောင်လို (အရမ်းကို) ဂုဏ်ယူနေတာ။" },
+      { "en": "He's as quiet as a grave about his past.", "my": "သူ့ရဲ့ အတိတ်အကြောင်းကို သူက သင်္ချိုင်းဂူတစ်ခုလို (လုံးဝကို) နှုတ်ဆိတ်နေတာ။" },
+      { "en": "She's as sharp as a tack!", "my": "သူက တကယ်ကို ထက်မြက်တဲ့သူပါ!" }
+    ]
+  },
+  {
+    "id": 119,
+    "type": "speaking",
+    "topic": "Lesson 100: Final Mastery",
+    "icon": "🎓",
+    "phrases": [
+      { "en": "I've finally reached the end of the course!", "my": "နောက်ဆုံးတော့ သင်တန်း အဆုံးကို ရောက်လာခဲ့ပြီ!" },
+      { "en": "It's been an incredible journey of learning.", "my": "ဒါဟာ တကယ့်ကို အံ့သြစရာကောင်းတဲ့ သင်ယူမှု ခရီးစဉ်တစ်ခုပါ။" },
+      { "en": "I feel much more confident in my English now.", "my": "အခုတော့ အင်္ဂလိပ်စာ ပြောရတာ ပိုပြီး ယုံကြည်မှု ရှိလာပြီ။" },
+      { "en": "Shadowing has really improved my pronunciation.", "my": "Shadowing လုပ်တာက ကျွန်တော့်ရဲ့ အသံထွက်ကို တကယ် တိုးတက်စေခဲ့တယ်။" },
+      { "en": "I'm looking forward to applying what I've learned.", "my": "သင်ယူခဲ့တာတွေကို လက်တွေ့ အသုံးချဖို့ မျှော်လင့်နေပါတယ်။" },
+      { "en": "Consistency is key to mastering any language.", "my": "ဘယ်ဘာသာစကားမှာမဆို တစိုက်မတ်မတ် လုပ်ဆောင်ဖို့က အဓိကပါပဲ။" },
+      { "en": "I'm ready for the final shadowing exam.", "my": "နောက်ဆုံး Shadowing စာမေးပွဲအတွက် ကျွန်တော် အဆင်သင့်ပါပဲ။" },
+      { "en": "Keep practicing every day, no matter what.", "my": "ဘာပဲဖြစ်ဖြစ် နေ့တိုင်း ဆက်ပြီး လေ့ကျင့်ပါ။" },
+      { "en": "The sky is the limit!", "my": "ကောင်းကင်ကသာ အကန့်အသတ်ပါ (အကန့်အသတ်မရှိ အောင်မြင်နိုင်ပါတယ်)!" },
+      { "en": "I'm so proud of how far I've come.", "my": "ဒီလောက်အထိ ရောက်လာခဲ့တာကို ကျွန်တော် တကယ် ဂုဏ်ယူပါတယ်။" }
+    ]
+  },
+  {
+    "id": 120,
+    "type": "test",
+    "topic": "🔴 Test 20: Final Shadowing Exam",
+    "icon": "🎓",
+    "phrases": [
+      { "en": "As good as new.", "my": "အသစ်အတိုင်းပါပဲ။" },
+      { "en": "Clear as mud.", "my": "လုံးဝကို နားမလည်နိုင်အောင် ရှုပ်ထွေးတာ။" },
+      { "en": "Stubborn as a mule.", "my": "အရမ်း ခေါင်းမာတာ။" },
+      { "en": "Strong as an ox.", "my": "အရမ်း သန်မာတာ။" },
+      { "en": "Tipsy vs. Wasted.", "my": "နည်းနည်းမူးတာ နဲ့ အသည်းအသန် မူးတာ။" },
+      { "en": "Another round, please!", "my": "နောက်တစ်ခွက် ထပ်ပေးပါဦး!" },
+      { "en": "Light as a feather.", "my": "အရမ်း ပေါ့ပါးတာ။" },
+      { "en": "Dry as a bone.", "my": "အရမ်း ခြောက်သွေ့တာ။" },
+      { "en": "It's on me!", "my": "ငါ တိုက်ပါ့မယ်!" },
+      { "en": "Congratulations on finishing the course!", "my": "သင်တန်း ပြီးဆုံးတဲ့အတွက် ဂုဏ်ယူပါတယ်!" }
     ]
   }
 ]

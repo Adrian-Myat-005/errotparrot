@@ -165,7 +165,7 @@ async function init() {
 
 function loadState() {
     try {
-        const saved = localStorage.getItem('errorparrot_master_v3');
+        const saved = localStorage.getItem('errorparrot_master_v4');
         if (saved) {
             const data = JSON.parse(saved);
             Object.keys(data).forEach(k => {
@@ -173,7 +173,7 @@ function loadState() {
             });
         }
     } catch(e) {}
-    if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    if (!state.unlockedLessons || state.unlockedLessons.length === 0) state.unlockedLessons = Array.from({length: 120}, (_, i) => i + 1);
     if (typeof state.isPremium !== 'boolean') state.isPremium = false;
     if (!state.lessonProgress) state.lessonProgress = {};
     if (!state.savedPhrases) state.savedPhrases = [];
@@ -187,7 +187,7 @@ function saveState() {
     delete toSave.audioBlob;
     delete toSave.audioUrl;
     delete toSave.chatHistory;
-    localStorage.setItem('errorparrot_master_v3', JSON.stringify(toSave));
+    localStorage.setItem('errorparrot_master_v4', JSON.stringify(toSave));
 }
 
 function checkDailyRefill() {
@@ -373,6 +373,9 @@ function renderLessons() {
     filtered.forEach((l, index) => {
         if (state.currentType === 'all') {
             if (l.id === 1) html += `<div class="unit-header" style="display:block;">Phase 1: Social Foundations</div>`;
+            else if (l.id === 31) html += `<div class="unit-header" style="display:block;">Phase 2: Daily Life</div>`;
+            else if (l.id === 61) html += `<div class="unit-header" style="display:block;">Phase 3: Complex Situations</div>`;
+            else if (l.id === 91) html += `<div class="unit-header" style="display:block;">Phase 4: Social Mastery</div>`;
         }
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
