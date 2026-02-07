@@ -108,6 +108,7 @@ async function init() {
         },
         active: {
             counter: document.getElementById('current-phrase-num'),
+            totalPhraseNum: document.getElementById('total-phrase-num'),
             grammarNote: document.getElementById('grammar-note'),
             grammarTestArea: document.getElementById('grammar-test-area'),
             grammarQuestion: document.getElementById('grammar-question'),
@@ -226,7 +227,7 @@ function updateHUD() {
     if (ui.hudLvl) ui.hudLvl.textContent = state.userLevel;
     if (ui.progressBar) {
         let p = 0;
-        if (state.currentLesson) p = (state.currentPhraseIndex / 50) * 100;
+        if (state.currentLesson) p = (state.currentPhraseIndex / state.currentLesson.phrases.length) * 100;
         else {
             const threshold = state.userLevel * 200;
             p = (state.userExp / threshold) * 100;
@@ -372,7 +373,7 @@ function renderLessons() {
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
         const isLocked = !state.unlockedLessons.includes(l.id) && !state.isPremium;
         const progress = state.lessonProgress[l.id] || 0;
-        let status = progress > 0 ? `Resume at Step ${progress+1}` : '50 Practice Phrases';
+        let status = progress > 0 ? `Resume at Step ${progress+1}` : `${l.phrases.length} Practice Phrases`;
         
         if (isAdrian && !state.isPremium) status = 'Premium Required ⭐';
         else if (isLocked && state.settings.adsEnabled) status = 'Unlock with Short Ad 📺';
@@ -516,6 +517,7 @@ function renderPhrase() {
     if (!state.currentLesson) return;
     const p = state.currentLesson.phrases[state.currentPhraseIndex];
     if (ui.active.counter) ui.active.counter.textContent = state.currentPhraseIndex + 1;
+    if (ui.active.totalPhraseNum) ui.active.totalPhraseNum.textContent = state.currentLesson.phrases.length;
     
     ui.active.grammarNote.classList.add('hidden');
     ui.active.grammarTestArea.classList.add('hidden');
@@ -691,7 +693,7 @@ function nextPhrase() {
     gainExp(20);
     state.currentPhraseIndex++;
     state.lessonProgress[state.currentLesson.id] = state.currentPhraseIndex;
-    if (state.currentPhraseIndex >= 50) {
+    if (state.currentPhraseIndex >= state.currentLesson.phrases.length) {
         state.lessonProgress[state.currentLesson.id] = 0;
         completeLesson();
     } else {
