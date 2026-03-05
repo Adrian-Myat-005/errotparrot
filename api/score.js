@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
     try {
         await runMiddleware(req, res, upload.single('audio'));
         const audioFile = req.file;
-        const { originalText, userApiKey, tier } = req.body;
+        const { originalText, userApiKey, tier, lessonType, prompt: grammarPrompt } = req.body;
 
         if (!audioFile || !originalText) {
             if (audioFile && fs.existsSync(audioFile.path)) fs.unlinkSync(audioFile.path);
@@ -56,27 +56,53 @@ module.exports = async (req, res) => {
             });
             const transcript = transcription.text;
 
-            const prompt = `
-            Evaluate speech for a friendly but professional shadowing app. 
-            Target Phrase: "${originalText}"
-            User Spoke: "${transcript}"
+            let prompt = "";
+            if (lessonType === 'grammar_speaking') {
+                prompt = `
+                Evaluate a grammar transformation task for a language learner.
+                Task Instruction: "${grammarPrompt || 'Transform the phrase.'}"
+                Target Response: "${originalText}"
+                User Spoke: "${transcript}"
 
-            GUIDELINES:
-            1. Be encouraging but ensure learning. If they missed key words or changed the meaning, they must NOT pass.
-            2. Ignore minor technical artifacts (punctuation, capitalization).
-            3. Focus on: Core vocabulary, phonetic similarity, and natural flow.
-            4. If the score is < 70, provide a specific "Teacher Tip" on what to improve.
-            5. Provide HTML string for 'corrections' using:
-               - <span class='correct-word'> for good words
-               - <span class='wrong'> for mistakes (No underlines)
+                STRICT GUIDELINES:
+                1. Focus on GRAMMATICAL CORRECTNESS. The user must use the correct grammar structure (e.g., negation, question, tense).
+                2. If the user's grammar is wrong (e.g., missed "not", wrong auxiliary verb), the score MUST be < 70.
+                3. Semantic accuracy is priority. If they said something with the same meaning but different grammar than the target, mark it down if it defeats the purpose of the drill.
+                4. Provide a very clear "Teacher Tip" focusing on the grammar rule being tested.
+                5. Provide HTML string for 'corrections' using:
+                   - <span class='correct-word'> for good words
+                   - <span class='wrong'> for mistakes (No underlines)
 
-            Return ONLY JSON:
-            {
-                "score": number (0-100),
-                "feedback": "1 friendly but constructive sentence",
-                "corrections": "HTML string",
-                "passed": boolean (true if score >= 70)
-            }`;
+                Return ONLY JSON:
+                {
+                    "score": number (0-100),
+                    "feedback": "1 friendly but precise sentence about the grammar",
+                    "corrections": "HTML string",
+                    "passed": boolean (true if score >= 70)
+                }`;
+            } else {
+                prompt = `
+                Evaluate speech for a friendly but professional shadowing app. 
+                Target Phrase: "${originalText}"
+                User Spoke: "${transcript}"
+
+                GUIDELINES:
+                1. Be encouraging but ensure learning. If they missed key words or changed the meaning, they must NOT pass.
+                2. Ignore minor technical artifacts (punctuation, capitalization).
+                3. Focus on: Core vocabulary, phonetic similarity, and natural flow.
+                4. If the score is < 70, provide a specific "Teacher Tip" on what to improve.
+                5. Provide HTML string for 'corrections' using:
+                   - <span class='correct-word'> for good words
+                   - <span class='wrong'> for mistakes (No underlines)
+
+                Return ONLY JSON:
+                {
+                    "score": number (0-100),
+                    "feedback": "1 friendly but constructive sentence",
+                    "corrections": "HTML string",
+                    "passed": boolean (true if score >= 70)
+                }`;
+            }
 
             const completion = await groq.chat.completions.create({
                 messages: [{ role: "user", content: prompt }],

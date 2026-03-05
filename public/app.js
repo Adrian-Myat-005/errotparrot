@@ -12,6 +12,7 @@ const state = {
     isPremium: false,
     lastLessonId: null,
     chatHistory: [],
+    blockResults: [], // Track results of the current 5-word block
     
     userLevel: 1,
     userExp: 0,
@@ -102,6 +103,29 @@ function switchScreen(name) {
         renderLessons();
     }
 }
+
+function createRipple(event) {
+    const button = event.target.closest('.btn-pro, .btn-mic-pro, .btn-circle');
+    if (!button) return;
+    
+    button.classList.add('ripple-container');
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+    
+    const rect = button.getBoundingClientRect();
+    
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${event.clientX - rect.left - radius}px`;
+    circle.style.top = `${event.clientY - rect.top - radius}px`;
+    circle.classList.add("ripple-effect");
+    
+    const ripple = button.getElementsByClassName("ripple-effect")[0];
+    if (ripple) ripple.remove();
+    button.appendChild(circle);
+}
+
+document.addEventListener('click', createRipple);
 
 async function init() {
     ui = {
@@ -492,26 +516,9 @@ function proceedToLesson(id) {
     state.currentPhraseIndex = state.lessonProgress[id] || 0;
     
     if (lesson.type === 'grammar_speaking') {
-        // Force restart the block and set the global timer
         state.currentPhraseIndex = 0;
-        blockTimeLeft = state.phraseTimeLimit || 30;
+        state.blockResults = [];
         if (blockTimer) clearInterval(blockTimer);
-        
-        blockTimer = setInterval(() => {
-            blockTimeLeft--;
-            const timerEl = document.getElementById('timer-display');
-            if (timerEl) timerEl.textContent = blockTimeLeft + 's';
-            if (blockTimeLeft <= 0) {
-                clearInterval(blockTimer);
-                if (state.isRecording && mediaRecorder) {
-                    mediaRecorder.stop();
-                    // We'll let the stop handler call showPhraseFeedback
-                } else {
-                    // Time's up while they weren't recording
-                    showPhraseFeedback({ score: 0, feedback: "Time out!", transcript: "..." }, true);
-                }
-            }
-        }, 1000);
     } else {
         if (blockTimer) clearInterval(blockTimer);
     }
@@ -610,6 +617,27 @@ function playSound(type) {
     }
 }
 
+function startPhraseTimer() {
+    if (blockTimer) clearInterval(blockTimer);
+    blockTimeLeft = state.phraseTimeLimit || 15; // Per phrase timer
+    const timerEl = document.getElementById('timer-display');
+    if (timerEl) timerEl.textContent = blockTimeLeft + 's';
+
+    blockTimer = setInterval(() => {
+        blockTimeLeft--;
+        const tEl = document.getElementById('timer-display');
+        if (tEl) tEl.textContent = blockTimeLeft + 's';
+        if (blockTimeLeft <= 0) {
+            clearInterval(blockTimer);
+            if (state.isRecording && mediaRecorder) {
+                mediaRecorder.stop();
+            } else {
+                showPhraseFeedback({ score: 0, feedback: "Time out!", transcript: "..." }, true);
+            }
+        }
+    }, 1000);
+}
+
 function renderPhrase() {
     if (!state.currentLesson) return;
     const p = state.currentLesson.phrases[state.currentPhraseIndex];
@@ -625,12 +653,22 @@ function renderPhrase() {
     ui.active.karaoke.classList.remove('hidden');
     
     if (state.currentLesson.type === 'grammar_speaking') {
-        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:24px; border-radius:24px; font-weight:800; color:var(--text); line-height:1.4;">
-            <div id="timer-display" style="font-size: 2.2rem; color: var(--danger); font-weight: 900; margin-bottom: 12px;">${blockTimeLeft}s</div>
-            <div style="font-size: 1.4rem;">${p.my}</div>
+        let task = "Transform";
+        let sentence = p.my;
+        if (p.my.includes(': ')) {
+            const parts = p.my.split(': ');
+            task = parts[0];
+            sentence = parts.slice(1).join(': ');
+        }
+
+        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--surface); padding:32px; border-radius:32px; border: 2px solid var(--border); box-shadow: var(--shadow-md);">
+            <div id="timer-display" style="font-size: 2.5rem; color: var(--danger); font-weight: 900; margin-bottom: 20px; font-variant-numeric: tabular-nums;">${blockTimeLeft}s</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700;">Task: ${task}</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: var(--text); line-height: 1.3;">"${sentence}"</div>
         </div>`;
         ui.active.translation.textContent = ""; 
         ui.active.btnListen.classList.add('hidden');
+        startPhraseTimer();
         
     } else if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
@@ -665,37 +703,37 @@ function renderPhrase() {
 }
 
 function showPhraseFeedback(data, forceFail = false) {
+    if (blockTimer) clearInterval(blockTimer);
+    
     if (state.currentLesson.type === 'grammar_speaking' && (forceFail || blockTimeLeft <= 0)) {
         forceFail = true;
     }
 
     const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70) && !forceFail;
     
+    if (state.currentLesson.type === 'grammar_speaking') {
+        state.blockResults[state.currentPhraseIndex] = {
+            isPassed,
+            correctAnswer: state.currentLesson.phrases[state.currentPhraseIndex].en,
+            userTranscript: data.transcript || "..."
+        };
+    }
+
     const overlay = ui.active.feedback;
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${isPassed ? data.score : 0}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Correct!" : "Incorrect";
     
     if (state.currentLesson.type === 'grammar_speaking') {
-        ui.active.correction.innerHTML = isPassed ? "Perfect Transformation!" : "Transformation Failed.";
-        ui.active.tip.textContent = forceFail ? "Time's up for the block!" : "Try to be precise with your grammar.";
+        ui.active.correction.innerHTML = data.corrections || (isPassed ? "Perfect Transformation!" : "Transformation Failed.");
+        ui.active.tip.textContent = forceFail ? "Time's up for this word!" : (data.feedback || "Try to be precise with your grammar.");
         
         playSound(isPassed ? 'pass' : 'fail');
         
-        if (!isPassed) {
-             if (blockTimer) clearInterval(blockTimer);
-             ui.active.btnNextStep.style.display = 'none';
-             ui.active.btnRetryStep.style.display = 'flex';
-             ui.active.btnRetryStep.textContent = "TRAIN AGAIN";
-             ui.active.btnRetryStep.onclick = () => {
-                  ui.active.feedback.classList.remove('active');
-                  proceedToLesson(state.currentLesson.id); 
-             };
-        } else {
-             ui.active.btnNextStep.style.display = 'flex';
-             ui.active.btnRetryStep.style.display = 'none';
-             ui.active.btnNextStep.textContent = "NEXT";
-        }
+        ui.active.btnNextStep.style.display = 'flex';
+        ui.active.btnRetryStep.style.display = 'none';
+        ui.active.btnNextStep.textContent = "CONTINUE";
+        ui.active.btnRecord.classList.add('hidden');
     } else {
         // Original logic for normal lessons
         ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
@@ -818,6 +856,10 @@ async function handleRecord() {
                     showChallengeFeedback(data);
                 } else {
                     formData.append('originalText', phrase.en);
+                    formData.append('lessonType', state.currentLesson.type);
+                    if (state.currentLesson.type === 'grammar_speaking') {
+                        formData.append('prompt', phrase.my);
+                    }
                     const res = await fetch('/api/score', { method: 'POST', body: formData });
                     showPhraseFeedback(await res.json());
                 }
@@ -830,6 +872,13 @@ async function handleRecord() {
 function nextPhrase() {
     gainExp(20);
     state.currentPhraseIndex++;
+    
+    // Check if we just finished a 5-word block for grammar_speaking
+    if (state.currentLesson.type === 'grammar_speaking' && state.currentPhraseIndex % 5 === 0 && state.currentPhraseIndex > 0) {
+        showBlockSummary();
+        return;
+    }
+
     state.lessonProgress[state.currentLesson.id] = state.currentPhraseIndex;
     if (state.currentPhraseIndex >= state.currentLesson.phrases.length) {
         state.lessonProgress[state.currentLesson.id] = 0;
@@ -839,6 +888,57 @@ function nextPhrase() {
         renderPhrase();
         saveState();
     }
+}
+
+function showBlockSummary() {
+    const results = state.blockResults.slice(state.currentPhraseIndex - 5, state.currentPhraseIndex);
+    const correctCount = results.filter(r => r && r.isPassed).length;
+    const isBlockPassed = correctCount >= 4;
+
+    const overlay = ui.active.feedback;
+    overlay.className = `feedback-overlay active ${isBlockPassed ? 'correct' : 'wrong'}`;
+    ui.active.feedbackIcon.innerHTML = `📊 <span style="font-weight:900;">${correctCount}/5</span>`;
+    ui.active.feedbackLabel.textContent = isBlockPassed ? "Section Passed!" : "Section Failed";
+    
+    let html = `<div style="text-align:left; font-size:0.9rem; margin-top:10px; max-height:200px; overflow-y:auto; padding-right:10px;">`;
+    results.forEach((r, i) => {
+        const p = state.currentLesson.phrases[state.currentPhraseIndex - 5 + i];
+        html += `
+            <div style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid rgba(0,0,0,0.05);">
+                <div style="color:var(--text-muted); font-size:0.75rem; font-weight:800; text-transform:uppercase;">Word ${i+1}: ${r && r.isPassed ? '✅' : '❌'}</div>
+                <div style="font-weight:700; color:var(--text); margin:4px 0;">Prompt: ${p.my}</div>
+                <div style="color:var(--primary-dark); font-weight:800;">Answer: ${p.en}</div>
+            </div>`;
+    });
+    html += `</div>`;
+    
+    ui.active.correction.innerHTML = html;
+    ui.active.tip.textContent = isBlockPassed ? "Great job! You mastered this section." : "You need at least 4/5 correct to continue.";
+    
+    ui.active.btnNextStep.style.display = isBlockPassed ? 'flex' : 'none';
+    ui.active.btnRetryStep.style.display = isBlockPassed ? 'none' : 'flex';
+    
+    ui.active.btnNextStep.textContent = "CONTINUE LESSON";
+    ui.active.btnRetryStep.textContent = "RETRY SECTION";
+    
+    ui.active.btnNextStep.onclick = () => {
+        overlay.classList.remove('active');
+        state.lessonProgress[state.currentLesson.id] = state.currentPhraseIndex;
+        if (state.currentPhraseIndex >= state.currentLesson.phrases.length) {
+            completeLesson();
+        } else {
+            renderPhrase();
+        }
+    };
+    
+    ui.active.btnRetryStep.onclick = () => {
+        overlay.classList.remove('active');
+        state.currentPhraseIndex -= 5; // Go back to start of block
+        state.blockResults.splice(state.currentPhraseIndex, 5); // Clear block results
+        renderPhrase();
+    };
+    
+    playSound(isBlockPassed ? 'pass' : 'fail');
 }
 
 function completeLesson() {

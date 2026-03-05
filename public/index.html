@@ -34,34 +34,34 @@
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 24px 24px;">
-                        <div style="background: var(--bg); padding: 16px; border-radius: 20px; text-align: center;">
+                        <div style="background: var(--surface); padding: 16px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
                             <span id="stat-streak" style="display: block; font-size: 1.4rem; font-weight: 800;">0</span>
                             <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">Streak</span>
                         </div>
-                        <div style="background: var(--bg); padding: 16px; border-radius: 20px; text-align: center;">
+                        <div style="background: var(--surface); padding: 16px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
                             <span id="stat-xp" style="display: block; font-size: 1.4rem; font-weight: 800;">0</span>
                             <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">Total XP</span>
                         </div>
-                        <div style="background: var(--bg); padding: 16px; border-radius: 20px; text-align: center;">
+                        <div style="background: var(--surface); padding: 16px; border-radius: 20px; text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--border);">
                             <span id="stat-done" style="display: block; font-size: 1.4rem; font-weight: 800;">0</span>
                             <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">Units</span>
                         </div>
                     </div>
 
                     <div style="padding: 0 24px 24px;">
-                        <button id="btn-resume" class="btn-pro">🚀 RESUME LEARNING</button>
+                        <button id="btn-resume" class="btn-pro primary">🚀 RESUME LEARNING</button>
                     </div>
 
-                    <div style="position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 10; display: flex; gap: 8px; overflow-x: auto; padding: 16px 24px; scrollbar-width: none;">
-                        <button class="tab-btn active" data-type="all" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">All</button>
-                        <button class="tab-btn" data-type="teacher" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">👨‍🏫 Teacher</button>
-                        <button class="tab-btn" data-type="test" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">Tests</button>
-                        <button class="tab-btn" data-type="grammar" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">🗣️ Grammar</button>
-                        <button class="tab-btn" data-type="memory" style="padding: 10px 20px; border-radius: 100px; border: none; background: var(--bg); font-weight: 800; cursor: pointer;">⭐ Memory</button>
+                    <div style="position: sticky; top: 0; background: var(--bg); backdrop-filter: blur(10px); z-index: 10; display: flex; gap: 8px; overflow-x: auto; padding: 16px 24px; scrollbar-width: none; border-bottom: 1px solid var(--border);">
+                        <button class="tab-btn active" data-type="all" style="padding: 10px 20px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-weight: 800; cursor: pointer; box-shadow: var(--shadow-sm);">All</button>
+                        <button class="tab-btn" data-type="teacher" style="padding: 10px 20px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-weight: 800; cursor: pointer; box-shadow: var(--shadow-sm);">👨‍🏫 Teacher</button>
+                        <button class="tab-btn" data-type="test" style="padding: 10px 20px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-weight: 800; cursor: pointer; box-shadow: var(--shadow-sm);">Tests</button>
+                        <button class="tab-btn" data-type="grammar" style="padding: 10px 20px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-weight: 800; cursor: pointer; box-shadow: var(--shadow-sm);">🗣️ Grammar</button>
+                        <button class="tab-btn" data-type="memory" style="padding: 10px 20px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-weight: 800; cursor: pointer; box-shadow: var(--shadow-sm);">⭐ Memory</button>
                     </div>
 
                     <div style="padding: 12px 24px 20px;">
-                        <input type="text" id="lesson-search" placeholder="Search lessons..." style="width: 100%; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg); font-family: inherit; font-weight: 700;">
+                        <input type="text" id="lesson-search" placeholder="Search lessons..." style="width: 100%; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); font-family: inherit; font-weight: 700; box-shadow: var(--shadow-sm);">
                     </div>
 
                     <div id="lesson-list">

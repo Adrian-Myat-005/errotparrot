@@ -8440,5 +8440,295 @@
         "my": "Question: He is going to slice the meat."
       }
     ]
+  },
+  {
+    "id": 253,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Tense Shift (Present to Past)",
+    "icon": "⏳",
+    "phrases": [
+      {
+        "en": "I ate the pizza.",
+        "my": "Past Tense: I eat the pizza."
+      },
+      {
+        "en": "She baked the bread.",
+        "my": "Past Tense: She bakes the bread."
+      },
+      {
+        "en": "He boiled the eggs.",
+        "my": "Past Tense: He boils the eggs."
+      },
+      {
+        "en": "We washed the cups.",
+        "my": "Past Tense: We wash the cups."
+      },
+      {
+        "en": "They mixed the food.",
+        "my": "Past Tense: They mix the food."
+      }
+    ]
+  },
+  {
+    "id": 254,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Tense Shift (Present to Future)",
+    "icon": "🚀",
+    "phrases": [
+      {
+        "en": "I will eat the pizza.",
+        "my": "Future Tense: I eat the pizza."
+      },
+      {
+        "en": "She will bake the bread.",
+        "my": "Future Tense: She bakes the bread."
+      },
+      {
+        "en": "He will boil the eggs.",
+        "my": "Future Tense: He boils the eggs."
+      },
+      {
+        "en": "We will wash the cups.",
+        "my": "Future Tense: We wash the cups."
+      },
+      {
+        "en": "They will mix the food.",
+        "my": "Future Tense: They mix the food."
+      }
+    ]
+  },
+  {
+    "id": 255,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Pronoun Swap (Subject to 'He')",
+    "icon": "👤",
+    "phrases": [
+      {
+        "en": "He eats the pizza.",
+        "my": "Change to 'He': I eat the pizza."
+      },
+      {
+        "en": "He washes the cups.",
+        "my": "Change to 'He': We wash the cups."
+      },
+      {
+        "en": "He boils the eggs.",
+        "my": "Change to 'He': They boil the eggs."
+      },
+      {
+        "en": "He mixes the food.",
+        "my": "Change to 'He': You mix the food."
+      },
+      {
+        "en": "He bakes the bread.",
+        "my": "Change to 'He': I bake the bread."
+      }
+    ]
+  },
+  {
+    "id": 256,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Pronoun Swap (Subject to 'She')",
+    "icon": "👤",
+    "phrases": [
+      {
+        "en": "She eats the pizza.",
+        "my": "Change to 'She': I eat the pizza."
+      },
+      {
+        "en": "She washes the cups.",
+        "my": "Change to 'She': We wash the cups."
+      },
+      {
+        "en": "She boils the eggs.",
+        "my": "Change to 'She': They boil the eggs."
+      },
+      {
+        "en": "She mixes the food.",
+        "my": "Change to 'She': You mix the food."
+      },
+      {
+        "en": "She bakes the bread.",
+        "my": "Change to 'She': I bake the bread."
+      }
+    ]
+  },
+  {
+    "id": 257,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Adverb Insertion ('Always')",
+    "icon": "🔄",
+    "phrases": [
+      {
+        "en": "I always eat the pizza.",
+        "my": "Add 'Always': I eat the pizza."
+      },
+      {
+        "en": "She always bakes the bread.",
+        "my": "Add 'Always': She bakes the bread."
+      },
+      {
+        "en": "He always boils the eggs.",
+        "my": "Add 'Always': He boils the eggs."
+      },
+      {
+        "en": "We always wash the cups.",
+        "my": "Add 'Always': We wash the cups."
+      },
+      {
+        "en": "They always mix the food.",
+        "my": "Add 'Always': They mix the food."
+      }
+    ]
+  },
+  {
+    "id": 258,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Adverb Insertion ('Never')",
+    "icon": "🔄",
+    "phrases": [
+      {
+        "en": "I never eat the pizza.",
+        "my": "Add 'Never': I eat the pizza."
+      },
+      {
+        "en": "She never bakes the bread.",
+        "my": "Add 'Never': She bakes the bread."
+      },
+      {
+        "en": "He never boils the eggs.",
+        "my": "Add 'Never': He boils the eggs."
+      },
+      {
+        "en": "We never wash the cups.",
+        "my": "Add 'Never': We wash the cups."
+      },
+      {
+        "en": "They never mix the food.",
+        "my": "Add 'Never': They mix the food."
+      }
+    ]
+  },
+  {
+    "id": 259,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Possessive Swap ('My' to 'His')",
+    "icon": "🔑",
+    "phrases": [
+      {
+        "en": "He washed his car.",
+        "my": "Change to 'His': He washed my car."
+      },
+      {
+        "en": "He found his spoon.",
+        "my": "Change to 'His': He found my spoon."
+      },
+      {
+        "en": "He cleaned his oven.",
+        "my": "Change to 'His': He cleaned my oven."
+      },
+      {
+        "en": "He used his blender.",
+        "my": "Change to 'His': He used my blender."
+      },
+      {
+        "en": "He sold his house.",
+        "my": "Change to 'His': He sold my house."
+      }
+    ]
+  },
+  {
+    "id": 260,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Modal Shift (Can to Could)",
+    "icon": "💫",
+    "phrases": [
+      {
+        "en": "I could eat the pizza.",
+        "my": "Change to 'Could': I can eat the pizza."
+      },
+      {
+        "en": "She could bake the bread.",
+        "my": "Change to 'Could': She can bake the bread."
+      },
+      {
+        "en": "He could boil the eggs.",
+        "my": "Change to 'Could': He can boil the eggs."
+      },
+      {
+        "en": "We could wash the cups.",
+        "my": "Change to 'Could': We can wash the cups."
+      },
+      {
+        "en": "They could mix the food.",
+        "my": "Change to 'Could': They can mix the food."
+      }
+    ]
+  },
+  {
+    "id": 261,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Modal Shift (Will to Would)",
+    "icon": "💫",
+    "phrases": [
+      {
+        "en": "I would eat the pizza.",
+        "my": "Change to 'Would': I will eat the pizza."
+      },
+      {
+        "en": "She would bake the bread.",
+        "my": "Change to 'Would': She will bake the bread."
+      },
+      {
+        "en": "He would boil the eggs.",
+        "my": "Change to 'Would': He will boil the eggs."
+      },
+      {
+        "en": "We would wash the cups.",
+        "my": "Change to 'Would': We will wash the cups."
+      },
+      {
+        "en": "They would mix the food.",
+        "my": "Change to 'Would': They will mix the food."
+      }
+    ]
+  },
+  {
+    "id": 262,
+    "type": "grammar_speaking",
+    "category": "grammar",
+    "topic": "Grammar: Passive Transformation (Simple)",
+    "icon": "🔄",
+    "phrases": [
+      {
+        "en": "The pizza was eaten.",
+        "my": "Make Passive: I ate the pizza."
+      },
+      {
+        "en": "The bread was baked.",
+        "my": "Make Passive: She baked the bread."
+      },
+      {
+        "en": "The eggs were boiled.",
+        "my": "Make Passive: He boiled the eggs."
+      },
+      {
+        "en": "The cups were washed.",
+        "my": "Make Passive: We washed the cups."
+      },
+      {
+        "en": "The food was mixed.",
+        "my": "Make Passive: They mixed the food."
+      }
+    ]
   }
 ]
