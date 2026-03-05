@@ -725,14 +725,14 @@ function showPhraseFeedback(data, forceFail = false) {
     ui.active.feedbackLabel.textContent = isPassed ? "Correct!" : "Incorrect";
     
     if (state.currentLesson.type === 'grammar_speaking') {
-        ui.active.correction.innerHTML = data.corrections || (isPassed ? "Perfect Transformation!" : "Transformation Failed.");
-        ui.active.tip.textContent = forceFail ? "Time's up for this word!" : (data.feedback || "Try to be precise with your grammar.");
+        ui.active.correction.innerHTML = isPassed ? "<div style='font-size:2rem;'>✅</div>" : "<div style='font-size:2rem;'>❌</div>";
+        ui.active.tip.textContent = forceFail ? "Time's up!" : (isPassed ? "Good job!" : "Incorrect transformation.");
         
         playSound(isPassed ? 'pass' : 'fail');
         
         ui.active.btnNextStep.style.display = 'flex';
         ui.active.btnRetryStep.style.display = 'none';
-        ui.active.btnNextStep.textContent = "CONTINUE";
+        ui.active.btnNextStep.textContent = "NEXT WORD";
         ui.active.btnRecord.classList.add('hidden');
     } else {
         // Original logic for normal lessons
