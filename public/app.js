@@ -653,20 +653,10 @@ function showPhraseFeedback(data) {
     const overlay = ui.active.feedback;
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
-    ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
+    ui.active.feedbackLabel.textContent = isPassed ? "Correct!" : "Incorrect";
     
-    const p = state.currentLesson.phrases[state.currentPhraseIndex];
-    if (isPassed) {
-        ui.active.correction.innerHTML = "Success!";
-    } else {
-        // Show True Answer vs User Attempt
-        ui.active.correction.innerHTML = `
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.05em;">True Answer</div>
-            <div style="color:var(--primary-dark); margin-bottom:16px; font-size:1.1rem;">${p.en}</div>
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.05em;">Your Attempt</div>
-            <div style="font-size:1.1rem;">${data.corrections || data.transcript}</div>
-        `;
-    }
+    // STRICT TEST: Never show the answer
+    ui.active.correction.innerHTML = isPassed ? "Perfect Transformation!" : "Transformation Failed. Try again.";
     ui.active.tip.textContent = ""; 
     
     playSound(isPassed ? 'pass' : 'fail');
