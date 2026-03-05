@@ -7235,7 +7235,7 @@
         "my": "Negate: He grates the cheese."
       },
       {
-        "en": "She does not mashe the potatoes.",
+        "en": "She does not mash the potatoes.",
         "my": "Negate: She mashes the potatoes."
       },
       {
@@ -7264,7 +7264,7 @@
         "my": "Negate: He squeezes the lemon."
       },
       {
-        "en": "She does not crushe the garlic.",
+        "en": "She does not crush the garlic.",
         "my": "Negate: She crushes the garlic."
       },
       {
@@ -7699,11 +7699,11 @@
         "my": "Question: He grates the cheese."
       },
       {
-        "en": "She mashes the potatoes?",
+        "en": "Does she mash the potatoes?",
         "my": "Question: She mashes the potatoes."
       },
       {
-        "en": "It tastes very spicy?",
+        "en": "Does it taste very spicy?",
         "my": "Question: It tastes very spicy."
       },
       {
@@ -7728,7 +7728,7 @@
         "my": "Question: He squeezes the lemon."
       },
       {
-        "en": "She crushes the garlic?",
+        "en": "Does she crush the garlic?",
         "my": "Question: She crushes the garlic."
       },
       {
@@ -7931,19 +7931,19 @@
         "my": "Negate: I cleaned the stove."
       },
       {
-        "en": "You did not wip the counter.",
+        "en": "You did not wipe the counter.",
         "my": "Negate: You wiped the counter."
       },
       {
-        "en": "He boiled the eggs.",
+        "en": "He did not boil the eggs.",
         "my": "Negate: He boiled the eggs."
       },
       {
-        "en": "She did not bak the bread.",
+        "en": "She did not bake the bread.",
         "my": "Negate: She baked the bread."
       },
       {
-        "en": "It did not tast very good.",
+        "en": "It did not taste very good.",
         "my": "Negate: It tasted very good."
       }
     ]
@@ -7968,11 +7968,11 @@
         "my": "Negate: I peeled the lemon."
       },
       {
-        "en": "You did not chopp the meat.",
+        "en": "You did not chop the meat.",
         "my": "Negate: You chopped the meat."
       },
       {
-        "en": "He did not slic the cheese.",
+        "en": "He did not slice the cheese.",
         "my": "Negate: He sliced the cheese."
       }
     ]
@@ -8221,7 +8221,7 @@
         "my": "Question: I cleaned the stove."
       },
       {
-        "en": "Did you wip the counter?",
+        "en": "Did you wipe the counter?",
         "my": "Question: You wiped the counter."
       },
       {
@@ -8229,11 +8229,11 @@
         "my": "Question: He boiled the eggs."
       },
       {
-        "en": "Did she bak the bread?",
+        "en": "Did she bake the bread?",
         "my": "Question: She baked the bread."
       },
       {
-        "en": "Did it tast very good?",
+        "en": "Did it taste very good?",
         "my": "Question: It tasted very good."
       }
     ]
@@ -8258,11 +8258,11 @@
         "my": "Question: I peeled the lemon."
       },
       {
-        "en": "Did you chopp the meat?",
+        "en": "Did you chop the meat?",
         "my": "Question: You chopped the meat."
       },
       {
-        "en": "Did he slic the cheese?",
+        "en": "Did he slice the cheese?",
         "my": "Question: He sliced the cheese."
       }
     ]
