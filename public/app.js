@@ -666,7 +666,7 @@ function renderPhrase() {
             <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700;">Task: ${task}</div>
             <div style="font-size: 1.8rem; font-weight: 800; color: var(--text); line-height: 1.3;">"${sentence}"</div>
         </div>`;
-        ui.active.translation.textContent = ""; 
+        ui.active.translation.classList.add('hidden'); // CRITICAL: HIDE TRANSLATION AREA
         ui.active.btnListen.classList.add('hidden');
         startPhraseTimer();
         
@@ -692,7 +692,10 @@ function renderPhrase() {
     } else {
         ui.active.karaoke.innerHTML = p.en.split(/\s+/).map(w => `<span class="word">${w}</span>`).join(' ');
         ui.active.translation.textContent = p.my;
-        playTTS(p.en);
+        ui.active.translation.classList.remove('hidden');
+        if (state.currentLesson.type !== 'grammar_speaking') {
+            playTTS(p.en);
+        }
     }
     
     ui.active.feedback.classList.remove('active');
