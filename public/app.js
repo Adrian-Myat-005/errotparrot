@@ -655,8 +655,18 @@ function showPhraseFeedback(data) {
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
     
-    // NO HINTS
-    ui.active.correction.innerHTML = isPassed ? "Success!" : "Failed Attempt";
+    const p = state.currentLesson.phrases[state.currentPhraseIndex];
+    if (isPassed) {
+        ui.active.correction.innerHTML = "Success!";
+    } else {
+        // Show True Answer vs User Attempt
+        ui.active.correction.innerHTML = `
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.05em;">True Answer</div>
+            <div style="color:var(--primary-dark); margin-bottom:16px; font-size:1.1rem;">${p.en}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.05em;">Your Attempt</div>
+            <div style="font-size:1.1rem;">${data.corrections || data.transcript}</div>
+        `;
+    }
     ui.active.tip.textContent = ""; 
     
     playSound(isPassed ? 'pass' : 'fail');
