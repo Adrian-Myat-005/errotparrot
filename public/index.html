@@ -189,6 +189,20 @@
         </div>
     </div>
 
+    <div id="modal-timer" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Set Your Pace</h2>
+            <p style="color: var(--text-muted); font-weight: 600; margin-bottom: 24px;">How much time do you need to translate each phrase?</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <button class="btn-pro ghost" onclick="selectTimer(5)" style="border: 1px solid var(--border);">5 SECONDS</button>
+                <button class="btn-pro ghost" onclick="selectTimer(10)" style="border: 1px solid var(--border);">10 SECONDS</button>
+                <button class="btn-pro ghost" onclick="selectTimer(15)" style="border: 1px solid var(--border);">15 SECONDS</button>
+                <button class="btn-pro ghost" onclick="selectTimer(20)" style="border: 1px solid var(--border);">20 SECONDS</button>
+            </div>
+            <button onclick="closeAllModals()" style="margin-top: 16px; background: none; border: none; color: var(--text-muted); font-weight: 800; cursor: pointer;">Cancel</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="app.js"></script>
 </body>

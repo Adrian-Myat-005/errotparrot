@@ -28,6 +28,7 @@ const state = {
     currentType: 'all',
     startTime: Date.now(),
     ttsCache: {},
+    phraseTimeLimit: 10,
 
     settings: {
         adsEnabled: true,
@@ -40,6 +41,8 @@ let ui = {};
 let mediaRecorder;
 let ytPlayer;
 let ytApiReady = false;
+let countdownTimer = null;
+let timeLeft = 0;
 
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -49,7 +52,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 window.onYouTubeIframeAPIReady = () => { ytApiReady = true; };
 
 function closeAllModals() {
-    ['modal-energy', 'modal-ad', 'modal-adrian'].forEach(id => {
+    ['modal-energy', 'modal-ad', 'modal-adrian', 'modal-timer'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.classList.add('hidden');
@@ -58,6 +61,13 @@ function closeAllModals() {
     });
     if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
 }
+
+function selectTimer(seconds) {
+    state.phraseTimeLimit = seconds;
+    closeAllModals();
+    proceedToLesson(state.pendingLessonId);
+}
+window.selectTimer = selectTimer;
 
 function switchScreen(name) {
     const screens = {
@@ -86,6 +96,7 @@ function switchScreen(name) {
 
     if (name === 'lessons') {
         state.currentLesson = null;
+        if (countdownTimer) clearInterval(countdownTimer);
         renderDashboard();
         renderLessons();
     }
@@ -145,7 +156,6 @@ async function init() {
     updateHUD();
     bindEvents();
 
-    // Fetch lessons independently
     fetch('lessons.json?v=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -155,7 +165,6 @@ async function init() {
         })
         .catch(e => console.error("Failed to load lessons", e));
 
-    // Fetch settings
     fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'getSettings' }) })
         .then(res => res.json())
         .then(data => { if (data) state.settings = { ...state.settings, ...data }; })
@@ -436,6 +445,18 @@ window.removeSavedPhrase = (i) => { state.savedPhrases.splice(i, 1); saveState()
 function startLesson(id) {
     const lesson = state.lessons.find(l => l.id === id);
     if (!lesson) return;
+    
+    state.pendingLessonId = id;
+    const modal = document.getElementById('modal-timer');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+    }
+}
+
+function proceedToLesson(id) {
+    const lesson = state.lessons.find(l => l.id === id);
+    if (!lesson) return;
     const isAdrian = lesson.topic.toLowerCase().includes("adrian") || lesson.topic.toLowerCase().includes("teacher");
 
     if (isAdrian && !state.isPremium) {
@@ -483,11 +504,9 @@ function simulateAd() {
     ui.btnWatchAd.disabled = true;
     const container = document.getElementById('ad-video-container');
     container.style.display = 'block';
-    container.classList.remove('hidden'); // Ensure visibility
+    container.classList.remove('hidden'); 
     
     document.getElementById('btn-close-ad').style.display = 'none';
-    
-    // Clear previous player if exists
     if (ytPlayer && typeof ytPlayer.destroy === 'function') ytPlayer.destroy();
     
     let timer = null;
@@ -505,23 +524,12 @@ function simulateAd() {
             'modestbranding': 1, 
             'iv_load_policy': 3,
             'fs': 0,
-            'mute': 1 // Mute to ensure autoplay works on most browsers
+            'mute': 1
         },
         events: {
-            'onStateChange': (event) => {
-                // If ended or paused by system, try to resume
-                if (event.data === YT.PlayerState.PAUSED) {
-                    // Optional: could force play, but let's just leave it
-                }
-                if (event.data === YT.PlayerState.ENDED) {
-                    // Early finish?
-                }
-            },
             'onReady': (event) => {
                 event.target.playVideo();
-                
                 ui.btnWatchAd.textContent = `Reward in ${secondsLeft}s...`;
-                
                 timer = setInterval(() => {
                     secondsLeft--;
                     if (secondsLeft > 0) {
@@ -533,8 +541,6 @@ function simulateAd() {
                 }, 1000);
             },
             'onError': (e) => {
-                console.error("Ad Error", e);
-                alert("Ad failed to load. Granting reward anyway.");
                 completeAd();
             }
         }
@@ -542,12 +548,9 @@ function simulateAd() {
 
     function completeAd() {
         if (timer) clearInterval(timer);
-        
-        // Unlock logic
         if (!state.unlockedLessons.includes(state.pendingLessonId)) {
             state.unlockedLessons.push(state.pendingLessonId);
         }
-        
         ui.btnWatchAd.disabled = false;
         ui.btnWatchAd.textContent = "LESSON UNLOCKED! 🔓";
         ui.btnWatchAd.style.background = "var(--primary)";
@@ -555,7 +558,7 @@ function simulateAd() {
 
         setTimeout(() => {
             closeAllModals();
-            ui.btnWatchAd.style.background = ""; // Reset
+            ui.btnWatchAd.style.background = ""; 
             ui.btnWatchAd.style.color = "";
             startLesson(state.pendingLessonId);
             renderLessons();
@@ -582,6 +585,9 @@ function renderPhrase() {
     if (ui.active.counter) ui.active.counter.textContent = state.currentPhraseIndex + 1;
     if (ui.active.totalPhraseNum) ui.active.totalPhraseNum.textContent = state.currentLesson.phrases.length;
     
+    if (countdownTimer) clearInterval(countdownTimer);
+    timeLeft = state.phraseTimeLimit || 10;
+
     ui.active.grammarNote.classList.add('hidden');
     ui.active.grammarTestArea.classList.add('hidden');
     ui.active.translation.classList.remove('hidden');
@@ -590,7 +596,26 @@ function renderPhrase() {
     ui.active.btnRecord.classList.remove('hidden');
     ui.active.karaoke.classList.remove('hidden');
     
-    if (state.currentLesson.type === 'grammar') {
+    if (state.currentLesson.type === 'grammar_speaking') {
+        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--bg); padding:24px; border-radius:24px; font-weight:800; color:var(--text); line-height:1.4;">
+            <div id="timer-display" style="font-size: 2.2rem; color: var(--danger); font-weight: 900; margin-bottom: 12px;">${timeLeft}s</div>
+            <div style="font-size: 1.4rem;">${p.my}</div>
+        </div>`;
+        ui.active.translation.textContent = ""; 
+        ui.active.btnListen.classList.add('hidden');
+        
+        countdownTimer = setInterval(() => {
+            timeLeft--;
+            const timerEl = document.getElementById('timer-display');
+            if (timerEl) timerEl.textContent = timeLeft + 's';
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                if (!state.isRecording) {
+                   showPhraseFeedback({ score: 0, feedback: "Time up!", transcript: "..." });
+                }
+            }
+        }, 1000);
+    } else if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
         ui.active.grammarNote.innerHTML = `<strong>Grammar Focus:</strong> ${state.currentLesson.explanation || 'Learn this structure.'}`;
         ui.active.btnListen.classList.add('hidden');
@@ -623,13 +648,17 @@ function renderPhrase() {
 }
 
 function showPhraseFeedback(data) {
+    if (countdownTimer) clearInterval(countdownTimer);
     const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70);
     const overlay = ui.active.feedback;
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
-    ui.active.correction.innerHTML = data.corrections || data.transcript;
-    ui.active.tip.textContent = data.feedback;
+    
+    // NO HINTS
+    ui.active.correction.innerHTML = isPassed ? "Success!" : "Failed Attempt";
+    ui.active.tip.textContent = ""; 
+    
     playSound(isPassed ? 'pass' : 'fail');
     if (isPassed) { 
         ui.active.btnNextStep.style.display = 'flex'; 
@@ -647,8 +676,8 @@ function showChallengeFeedback(data) {
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
     ui.active.feedbackIcon.innerHTML = `${isPassed ? '🎯' : '⚠️'} <span style="font-weight:900;">${data.score}%</span>`;
     ui.active.feedbackLabel.textContent = isPassed ? "Success!" : "Keep Trying";
-    ui.active.correction.innerHTML = `"${data.userText}"`;
-    ui.active.tip.textContent = data.feedback;
+    ui.active.correction.innerHTML = isPassed ? "Good response" : "Response too short";
+    ui.active.tip.textContent = ""; 
     playSound(isPassed ? 'pass' : 'fail');
     if (isPassed) { 
         ui.active.btnNextStep.style.display = 'flex'; 
