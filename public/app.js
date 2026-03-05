@@ -363,6 +363,8 @@ function renderLessons() {
     let filtered = state.lessons || [];
     if (state.currentType === 'teacher') {
         filtered = filtered.filter(l => l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher"));
+    } else if (state.currentType === 'grammar') {
+        filtered = filtered.filter(l => l.type === 'grammar_speaking');
     } else if (state.currentType !== 'all') {
         filtered = filtered.filter(l => l.type === state.currentType);
     }
@@ -377,6 +379,7 @@ function renderLessons() {
             else if (l.id === 31) html += `<div class="unit-header" style="display:block;">Phase 2: Daily Life</div>`;
             else if (l.id === 61) html += `<div class="unit-header" style="display:block;">Phase 3: Complex Situations</div>`;
             else if (l.id === 91) html += `<div class="unit-header" style="display:block;">Phase 4: Social Mastery</div>`;
+            else if (l.id === 201) html += `<div class="unit-header" style="display:block;">Verbal Grammar Drills</div>`;
         }
         const isCompleted = state.completedLessons.includes(l.id);
         const isAdrian = l.topic.toLowerCase().includes("adrian") || l.topic.toLowerCase().includes("teacher");
