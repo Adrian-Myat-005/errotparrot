@@ -714,7 +714,7 @@ function showPhraseFeedback(data, forceFail = false) {
     if (state.currentLesson.type === 'grammar_speaking') {
         state.blockResults[state.currentPhraseIndex] = {
             isPassed,
-            correctAnswer: state.currentLesson.phrases[state.currentPhraseIndex].en,
+            correctAnswer: state.currentLesson.phrases[state.currentPhraseIndex].en, // Ensure this is the transformed version
             userTranscript: data.transcript || "..."
         };
     }

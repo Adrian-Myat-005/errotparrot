@@ -59,27 +59,24 @@ module.exports = async (req, res) => {
             let prompt = "";
             if (lessonType === 'grammar_speaking') {
                 prompt = `
-                Evaluate a grammar transformation task for a language learner.
-                Task Instruction: "${grammarPrompt || 'Transform the phrase.'}"
-                Target Response: "${originalText}"
+                Evaluate a grammar transformation task. 
+                Task: "${grammarPrompt}"
+                Target (Transformed) Answer: "${originalText}"
                 User Spoke: "${transcript}"
 
-                STRICT GUIDELINES:
-                1. Focus on GRAMMATICAL CORRECTNESS. The user must use the correct grammar structure (e.g., negation, question, tense).
-                2. If the user's grammar is wrong (e.g., missed "not", wrong auxiliary verb), the score MUST be < 70.
-                3. Semantic accuracy is priority. If they said something with the same meaning but different grammar than the target, mark it down if it defeats the purpose of the drill.
-                4. Provide a very clear "Teacher Tip" focusing on the grammar rule being tested.
-                5. NEVER INCLUDE THE CORRECT ANSWER OR THE TARGET PHRASE IN THE FEEDBACK.
-                6. Provide HTML string for 'corrections' using:
-                   - <span class='correct-word'> for good words
-                   - <span class='wrong'> for mistakes (No underlines)
+                STRICT CRITERIA:
+                1. If the User's speech is identical to the source phrase within the Task (Shadowing), SCORE IS 0.
+                2. If the User's speech matches the Target (Transformed) Answer exactly or closely (Grammatically), SCORE IS 90-100.
+                3. NEVER show the correct answer in the feedback.
+                4. Focus strictly on whether they performed the transformation (e.g., if task is 'Negate', did they add 'not'?).
+                5. If they said the wrong grammar (e.g., kept it positive), they FAIL.
 
                 Return ONLY JSON:
                 {
                     "score": number (0-100),
-                    "feedback": "1 friendly but precise sentence about the grammar",
-                    "corrections": "HTML string",
-                    "passed": boolean (true if score >= 70)
+                    "feedback": "1 sentence on the grammar rule used",
+                    "corrections": "HTML string highlighting mistakes",
+                    "passed": boolean
                 }`;
             } else {
                 prompt = `
