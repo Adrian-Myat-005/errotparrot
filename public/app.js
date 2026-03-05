@@ -619,7 +619,7 @@ function playSound(type) {
 
 function startPhraseTimer() {
     if (blockTimer) clearInterval(blockTimer);
-    blockTimeLeft = state.phraseTimeLimit || 15; // Per phrase timer
+    blockTimeLeft = 15; // Strictly 15 seconds for grammar
     const timerEl = document.getElementById('timer-display');
     if (timerEl) timerEl.textContent = blockTimeLeft + 's';
 

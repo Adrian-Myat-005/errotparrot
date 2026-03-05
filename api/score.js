@@ -69,7 +69,8 @@ module.exports = async (req, res) => {
                 2. If the user's grammar is wrong (e.g., missed "not", wrong auxiliary verb), the score MUST be < 70.
                 3. Semantic accuracy is priority. If they said something with the same meaning but different grammar than the target, mark it down if it defeats the purpose of the drill.
                 4. Provide a very clear "Teacher Tip" focusing on the grammar rule being tested.
-                5. Provide HTML string for 'corrections' using:
+                5. NEVER INCLUDE THE CORRECT ANSWER OR THE TARGET PHRASE IN THE FEEDBACK.
+                6. Provide HTML string for 'corrections' using:
                    - <span class='correct-word'> for good words
                    - <span class='wrong'> for mistakes (No underlines)
 
