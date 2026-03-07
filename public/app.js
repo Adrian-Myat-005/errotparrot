@@ -716,11 +716,17 @@ function showPhraseFeedback(data, forceFail = false) {
     
     if (state.currentLesson.type === 'grammar_speaking') {
         if (!isPassed && blockTimeLeft > 0) {
-            // RETRY CASE: Wrong but time remains
+            // RETRY CASE: Signal failure visually and audibly
+            playSound('fail');
             ui.active.tip.textContent = "❌ WRONG! Try again fast...";
             ui.active.tip.style.color = "var(--danger)";
             
-            // Brief pulse on the mic button to show it failed
+            const box = document.querySelector('.mission-box');
+            if (box) {
+                box.classList.add('shake');
+                setTimeout(() => box.classList.remove('shake'), 400);
+            }
+
             ui.active.btnRecord.classList.remove('recording');
             ui.active.btnRecord.style.background = "var(--danger)";
             
