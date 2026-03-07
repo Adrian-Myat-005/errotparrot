@@ -655,16 +655,18 @@ function renderPhrase() {
     
     if (state.currentLesson.type === 'grammar_speaking') {
         let sentence = p.my;
+        console.log("Original p.my:", sentence);
         if (sentence.includes(': ')) {
             sentence = sentence.split(': ').slice(1).join(': ');
         }
+        console.log("Stripped sentence:", sentence);
 
         ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--surface); padding:40px 32px; border-radius:32px; border: 2px solid var(--border); box-shadow: var(--shadow-md);">
             <div id="timer-display" style="font-size: 2.5rem; color: var(--danger); font-weight: 900; margin-bottom: 24px; font-variant-numeric: tabular-nums;">${blockTimeLeft}s</div>
             <div style="font-size: 2rem; font-weight: 800; color: var(--text); line-height: 1.3;">${sentence}</div>
         </div>`;
         ui.active.translation.classList.add('hidden');
-        ui.active.translation.style.display = 'none'; // ADDED TO ENSURE IT IS HIDDEN
+        ui.active.translation.style.setProperty('display', 'none', 'important');
         ui.active.btnListen.classList.add('hidden');
         startPhraseTimer();
         
