@@ -903,11 +903,14 @@ function showBlockSummary() {
     let html = `<div style="text-align:left; font-size:0.9rem; margin-top:10px; max-height:200px; overflow-y:auto; padding-right:10px;">`;
     results.forEach((r, i) => {
         const p = state.currentLesson.phrases[state.currentPhraseIndex - 5 + i];
+        let sentence = p.my;
+        if (p.my.includes(': ')) {
+            sentence = p.my.split(': ').slice(1).join(': ');
+        }
         html += `
             <div style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid rgba(0,0,0,0.05);">
                 <div style="color:var(--text-muted); font-size:0.75rem; font-weight:800; text-transform:uppercase;">Word ${i+1}: ${r && r.isPassed ? '✅' : '❌'}</div>
-                <div style="font-weight:700; color:var(--text); margin:4px 0;">Prompt: ${p.my}</div>
-                <div style="color:var(--primary-dark); font-weight:800;">Answer: ${p.en}</div>
+                <div style="font-weight:700; color:var(--text); margin:4px 0;">Sentence: ${sentence}</div>
             </div>`;
     });
     html += `</div>`;
