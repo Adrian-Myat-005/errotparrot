@@ -758,21 +758,20 @@ function showPhraseFeedback(data, forceFail = false) {
 
     const overlay = ui.active.feedback;
     overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
-        // Original logic for normal lessons
-        ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
-        ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
-        ui.active.correction.innerHTML = data.corrections || data.transcript;
-        ui.active.tip.textContent = data.feedback;
-        
-        playSound(isPassed ? 'pass' : 'fail');
-        if (isPassed) { 
-            ui.active.btnNextStep.style.display = 'flex'; 
-            ui.active.btnRetryStep.style.display = 'none'; 
-            ui.active.btnRecord.classList.add('hidden');
-        } else { 
-            ui.active.btnNextStep.style.display = 'none'; 
-            ui.active.btnRetryStep.style.display = 'flex'; 
-        }
+    // Original logic for normal lessons
+    ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
+    ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
+    ui.active.correction.innerHTML = data.corrections || data.transcript;
+    ui.active.tip.textContent = data.feedback;
+    
+    playSound(isPassed ? 'pass' : 'fail');
+    if (isPassed) { 
+        ui.active.btnNextStep.style.display = 'flex'; 
+        ui.active.btnRetryStep.style.display = 'none'; 
+        ui.active.btnRecord.classList.add('hidden');
+    } else { 
+        ui.active.btnNextStep.style.display = 'none'; 
+        ui.active.btnRetryStep.style.display = 'flex'; 
     }
 }
 
