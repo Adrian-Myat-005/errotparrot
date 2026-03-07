@@ -56,26 +56,24 @@ module.exports = async (req, res) => {
             });
             const transcript = transcription.text;
 
-            let prompt = "";
             if (lessonType === 'grammar_speaking') {
                 prompt = `
                 Evaluate a grammar transformation task. 
-                Task: "${grammarPrompt}"
-                Target (Transformed) Answer: "${originalText}"
-                User Spoke: "${transcript}"
+                Task Instruction: "${grammarPrompt}" (This is what the user saw, e.g., "Negate: The soup is thick.")
+                Correct Transformed Answer: "${originalText}" (This is what the user SHOULD say, e.g., "The soup is not thick.")
+                User's Actual Speech: "${transcript}"
 
-                STRICT CRITERIA:
-                1. If the User's speech is identical to the source phrase within the Task (Shadowing), SCORE IS 0.
-                2. If the User's speech matches the Target (Transformed) Answer exactly or closely (Grammatically), SCORE IS 90-100.
-                3. NEVER show the correct answer in the feedback.
-                4. If the task is 'Negate' and the User's speech HAS NO NEGATION (e.g., missing "not", "no", "don't", "can't", etc.), THE SCORE IS 0 AND PASSED IS FALSE.
-                5. If they said the wrong grammar (e.g., kept it positive), they FAIL.
+                STRICT EVALUATION CRITERIA:
+                1. MATCH: If the User's Speech matches the "Correct Transformed Answer" (exactly or grammatically), they PASS with SCORE 90-100.
+                2. SHADOWING: If the User's Speech is identical to the source phrase within the Instruction (e.g., they said "The soup is thick." instead of negating it), they FAIL with SCORE 0 and passed: false.
+                3. NEGATION CHECK: If the task is 'Negate' and the User's Speech HAS NO NEGATION (missing "not", "no", "don't", etc.), they FAIL with SCORE 0.
+                4. NEVER show the correct answer in the feedback.
 
                 Return ONLY JSON:
                 {
                     "score": number (0-100),
-                    "feedback": "1 sentence on the grammar rule used",
-                    "corrections": "HTML string highlighting mistakes",
+                    "feedback": "1 short sentence explaining the grammar rule used",
+                    "corrections": "HTML highlighting if they made a typo",
                     "passed": boolean
                 }`;
             } else {
