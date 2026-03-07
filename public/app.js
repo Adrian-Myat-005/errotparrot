@@ -712,37 +712,52 @@ function showPhraseFeedback(data, forceFail = false) {
         forceFail = true;
     }
 
-    const isPassed = data.score >= (state.currentLesson.type === 'exam' ? 85 : 70) && !forceFail;
+    const isPassed = state.currentLesson.type === 'grammar_speaking' ? data.passed : (data.score >= (state.currentLesson.type === 'exam' ? 85 : 70) && !forceFail);
     
     if (state.currentLesson.type === 'grammar_speaking') {
         if (!isPassed && blockTimeLeft > 0) {
-            // They failed but have time! Don't show full overlay, just a hint
-            ui.active.tip.textContent = "Incorrect! Try again fast...";
-            ui.active.feedbackIcon.innerHTML = "❌";
-            overlay.className = "feedback-overlay active wrong";
+            // RETRY CASE: Wrong but time remains
+            ui.active.tip.textContent = "❌ WRONG! Try again fast...";
+            ui.active.tip.style.color = "var(--danger)";
+            
+            // Brief pulse on the mic button to show it failed
+            ui.active.btnRecord.classList.remove('recording');
+            ui.active.btnRecord.style.background = "var(--danger)";
+            
             setTimeout(() => { 
-                overlay.classList.remove('active'); 
-                if (!state.isRecording) handleRecord(); // Auto-restart recording
-            }, 800);
-            return; // Exit early to allow retry
+                ui.active.btnRecord.style.background = "";
+                if (!state.isRecording && blockTimeLeft > 0) handleRecord(); 
+            }, 600);
+            return;
         }
 
+        // FINAL CASE: Passed OR Timer Out
+        if (blockTimer) clearInterval(blockTimer);
         state.blockResults[state.currentPhraseIndex] = {
             isPassed,
             correctAnswer: state.currentLesson.phrases[state.currentPhraseIndex].en,
             userTranscript: data.transcript || "..."
         };
 
-        ui.active.correction.innerHTML = isPassed ? "<div style='font-size:2rem;'>✅</div>" : "<div style='font-size:2rem;'>❌</div>";
-        ui.active.tip.textContent = forceFail ? "Time's up!" : (isPassed ? "Good job!" : "Incorrect transformation.");
+        const overlay = ui.active.feedback;
+        overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
+        ui.active.feedbackIcon.innerHTML = isPassed ? "✅" : "⏰";
+        ui.active.feedbackLabel.textContent = isPassed ? "Correct!" : "Out of Time";
+        ui.active.correction.innerHTML = isPassed ? "<div style='font-size:3rem; margin:10px 0;'>✨ 100% ✨</div>" : "<div style='color:var(--danger); font-size:1.2rem;'>Failed to transform in time.</div>";
+        ui.active.tip.textContent = isPassed ? "Grammar logic accepted!" : "You must speak faster next time.";
+        ui.active.tip.style.color = "";
         
         playSound(isPassed ? 'pass' : 'fail');
         
         ui.active.btnNextStep.style.display = 'flex';
         ui.active.btnRetryStep.style.display = 'none';
-        ui.active.btnNextStep.textContent = "NEXT WORD";
+        ui.active.btnNextStep.textContent = "CONTINUE";
         ui.active.btnRecord.classList.add('hidden');
-    } else {
+        return;
+    }
+
+    const overlay = ui.active.feedback;
+    overlay.className = `feedback-overlay active ${isPassed ? 'correct' : 'wrong'}`;
         // Original logic for normal lessons
         ui.active.feedbackIcon.innerHTML = `${isPassed ? '✅' : '❌'} <span style="font-weight:900;">${data.score}%</span>`;
         ui.active.feedbackLabel.textContent = isPassed ? "Mastered!" : "Not Quite";
