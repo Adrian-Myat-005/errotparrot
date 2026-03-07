@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
                 1. If the User's speech is identical to the source phrase within the Task (Shadowing), SCORE IS 0.
                 2. If the User's speech matches the Target (Transformed) Answer exactly or closely (Grammatically), SCORE IS 90-100.
                 3. NEVER show the correct answer in the feedback.
-                4. Focus strictly on whether they performed the transformation (e.g., if task is 'Negate', did they add 'not'?).
+                4. If the task is 'Negate' and the User's speech HAS NO NEGATION (e.g., missing "not", "no", "don't", "can't", etc.), THE SCORE IS 0 AND PASSED IS FALSE.
                 5. If they said the wrong grammar (e.g., kept it positive), they FAIL.
 
                 Return ONLY JSON:

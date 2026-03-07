@@ -653,20 +653,17 @@ function renderPhrase() {
     ui.active.karaoke.classList.remove('hidden');
     
     if (state.currentLesson.type === 'grammar_speaking') {
-        let task = "Transform";
         let sentence = p.my;
         if (p.my.includes(': ')) {
             const parts = p.my.split(': ');
-            task = parts[0];
             sentence = parts.slice(1).join(': ');
         }
 
-        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--surface); padding:32px; border-radius:32px; border: 2px solid var(--border); box-shadow: var(--shadow-md);">
-            <div id="timer-display" style="font-size: 2.5rem; color: var(--danger); font-weight: 900; margin-bottom: 20px; font-variant-numeric: tabular-nums;">${blockTimeLeft}s</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700;">Task: ${task}</div>
-            <div style="font-size: 1.8rem; font-weight: 800; color: var(--text); line-height: 1.3;">"${sentence}"</div>
+        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--surface); padding:40px 32px; border-radius:32px; border: 2px solid var(--border); box-shadow: var(--shadow-md);">
+            <div id="timer-display" style="font-size: 2.5rem; color: var(--danger); font-weight: 900; margin-bottom: 24px; font-variant-numeric: tabular-nums;">${blockTimeLeft}s</div>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--text); line-height: 1.3;">${sentence}</div>
         </div>`;
-        ui.active.translation.classList.add('hidden'); // CRITICAL: HIDE TRANSLATION AREA
+        ui.active.translation.classList.add('hidden'); 
         ui.active.btnListen.classList.add('hidden');
         startPhraseTimer();
         
