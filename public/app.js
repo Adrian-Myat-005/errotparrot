@@ -654,16 +654,11 @@ function renderPhrase() {
     ui.active.karaoke.classList.remove('hidden');
     
     if (state.currentLesson.type === 'grammar_speaking') {
-        let sentence = p.my;
-        console.log("Original p.my:", sentence);
-        if (sentence.includes(': ')) {
-            sentence = sentence.split(': ').slice(1).join(': ');
-        }
-        console.log("Stripped sentence:", sentence);
+        const displayTask = p.my;
 
         ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--surface); padding:40px 32px; border-radius:32px; border: 2px solid var(--border); box-shadow: var(--shadow-md);">
             <div id="timer-display" style="font-size: 2.5rem; color: var(--danger); font-weight: 900; margin-bottom: 24px; font-variant-numeric: tabular-nums;">${blockTimeLeft}s</div>
-            <div style="font-size: 2rem; font-weight: 800; color: var(--text); line-height: 1.3;">${sentence}</div>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--text); line-height: 1.3;">${displayTask}</div>
         </div>`;
         ui.active.translation.classList.add('hidden');
         ui.active.translation.style.setProperty('display', 'none', 'important');
@@ -906,14 +901,10 @@ function showBlockSummary() {
     let html = `<div style="text-align:left; font-size:0.9rem; margin-top:10px; max-height:200px; overflow-y:auto; padding-right:10px;">`;
     results.forEach((r, i) => {
         const p = state.currentLesson.phrases[state.currentPhraseIndex - 5 + i];
-        let sentence = p.my;
-        if (p.my.includes(': ')) {
-            sentence = p.my.split(': ').slice(1).join(': ');
-        }
         html += `
             <div style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid rgba(0,0,0,0.05);">
                 <div style="color:var(--text-muted); font-size:0.75rem; font-weight:800; text-transform:uppercase;">Word ${i+1}: ${r && r.isPassed ? '✅' : '❌'}</div>
-                <div style="font-weight:700; color:var(--text); margin:4px 0;">Sentence: ${sentence}</div>
+                <div style="font-weight:700; color:var(--text); margin:4px 0;">Task: ${p.my}</div>
             </div>`;
     });
     html += `</div>`;
