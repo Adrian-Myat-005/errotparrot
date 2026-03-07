@@ -656,7 +656,7 @@ function renderPhrase() {
     if (state.currentLesson.type === 'grammar_speaking') {
         const displayTask = p.my;
 
-        ui.active.karaoke.innerHTML = `<div class="mission-box" style="background:var(--surface); padding:40px 32px; border-radius:32px; border: 2px solid var(--border); box-shadow: var(--shadow-md);">
+        ui.active.karaoke.innerHTML = `<div class="mission-box grammar-active" style="background:var(--surface); padding:40px 32px; border-radius:32px; border: 2px solid var(--border); box-shadow: var(--shadow-md); transition: all 0.3s ease;">
             <div id="timer-display" style="font-size: 2.5rem; color: var(--danger); font-weight: 900; margin-bottom: 24px; font-variant-numeric: tabular-nums;">${blockTimeLeft}s</div>
             <div style="font-size: 2rem; font-weight: 800; color: var(--text); line-height: 1.3;">${displayTask}</div>
         </div>`;
@@ -664,6 +664,11 @@ function renderPhrase() {
         ui.active.translation.style.setProperty('display', 'none', 'important');
         ui.active.btnListen.classList.add('hidden');
         startPhraseTimer();
+        
+        // Auto-start recording for grammar for a faster pace
+        setTimeout(() => {
+            if (!state.isRecording) handleRecord();
+        }, 400);
         
     } else if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
