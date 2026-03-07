@@ -29,7 +29,7 @@ const state = {
     currentType: 'all',
     startTime: Date.now(),
     ttsCache: {},
-    phraseTimeLimit: 30, // Default to 30s block
+    phraseTimeLimit: 5, // Default to 5s block
 
     settings: {
         adsEnabled: true,
