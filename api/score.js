@@ -59,21 +59,23 @@ module.exports = async (req, res) => {
             if (lessonType === 'grammar_speaking') {
                 prompt = `
                 Evaluate a grammar transformation task. 
-                Task Instruction: "${grammarPrompt}" (This is what the user saw, e.g., "Negate: The soup is thick.")
-                Correct Transformed Answer: "${originalText}" (This is what the user SHOULD say, e.g., "The soup is not thick.")
-                User's Actual Speech: "${transcript}"
+                Focus ONLY on the grammar rule. IGNORE pronunciation, accents, and minor typos.
+                
+                Task Instruction: "${grammarPrompt}"
+                Target Answer (Transformed): "${originalText}"
+                User Spoke: "${transcript}"
 
                 STRICT EVALUATION CRITERIA:
-                1. MATCH: If the User's Speech matches the "Correct Transformed Answer" (exactly or grammatically), they PASS with SCORE 90-100.
-                2. SHADOWING: If the User's Speech is identical to the source phrase within the Instruction (e.g., they said "The soup is thick." instead of negating it), they FAIL with SCORE 0 and passed: false.
-                3. NEGATION CHECK: If the task is 'Negate' and the User's Speech HAS NO NEGATION (missing "not", "no", "don't", etc.), they FAIL with SCORE 0.
-                4. NEVER show the correct answer in the feedback.
-
+                1. GRAMMAR FIRST: If the user included the key transformation (e.g., added "not"/"don't" for negation, or used "Verb + Subject" for questions), they MUST PASS with SCORE 100.
+                2. LENIENCY: Treat the User's Speech as if it was autocorrected. Do not penalize for mispronounced words if the grammar structure is visible.
+                3. SHADOWING: Only fail if they repeat the base phrase from the Instruction exactly without any transformation (e.g., saying "The soup is thick" when told to negate it).
+                4. NEGATION CHECK: If the task is 'Negate' and they did NOT say "not", "no", "don't", "can't", etc., they FAIL.
+                
                 Return ONLY JSON:
                 {
-                    "score": number (0-100),
-                    "feedback": "1 short sentence explaining the grammar rule used",
-                    "corrections": "HTML highlighting if they made a typo",
+                    "score": 100 (if grammar is correct) or 0 (if they shadowed),
+                    "feedback": "1 short sentence on the grammar rule used",
+                    "corrections": "Clean HTML string",
                     "passed": boolean
                 }`;
             } else {
