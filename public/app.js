@@ -664,12 +664,6 @@ function renderPhrase() {
         ui.active.translation.style.setProperty('display', 'none', 'important');
         ui.active.btnListen.classList.add('hidden');
         startPhraseTimer();
-        
-        // Auto-start recording for grammar for a faster pace
-        setTimeout(() => {
-            if (!state.isRecording) handleRecord();
-        }, 400);
-        
     } else if (state.currentLesson.type === 'grammar') {
         ui.active.grammarNote.classList.remove('hidden');
         ui.active.grammarNote.innerHTML = `<strong>Grammar Focus:</strong> ${state.currentLesson.explanation || 'Learn this structure.'}`;
@@ -732,7 +726,6 @@ function showPhraseFeedback(data, forceFail = false) {
             
             setTimeout(() => { 
                 ui.active.btnRecord.style.background = "";
-                if (!state.isRecording && blockTimeLeft > 0) handleRecord(); 
             }, 600);
             return;
         }
